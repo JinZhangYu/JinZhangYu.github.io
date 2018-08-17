@@ -6,7 +6,7 @@
       <title>My First Blog</title>
       <link href="/2018/08/16/My-First-Blog/"/>
       <url>/2018/08/16/My-First-Blog/</url>
-      <content type="html"><![CDATA[<p>##This is My First Blog. Welcome!</p>]]></content>
+      <content type="html"><![CDATA[<h2 id="This-is-My-First-Blog-Welcome"><a href="#This-is-My-First-Blog-Welcome" class="headerlink" title="This is My First Blog. Welcome!"></a>This is My First Blog. Welcome!</h2>]]></content>
       
       <categories>
           
