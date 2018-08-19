@@ -5,9 +5,9 @@
   
   <link href="/atom.xml" rel="self"/>
   
-  <link href="http://yoursite.com/"/>
+  <link href="https://jinzhangyu.github.io/"/>
   <updated>2018-08-19T09:58:16.457Z</updated>
-  <id>http://yoursite.com/</id>
+  <id>https://jinzhangyu.github.io/</id>
   
   <author>
     <name>Jin ZhangYu</name>
@@ -18,8 +18,8 @@
   
   <entry>
     <title>OpenCV-Python教程(3) --- 图像基本操作</title>
-    <link href="http://yoursite.com/2018/08/19/2018-08-19-OpenCV-Python%E6%95%99%E7%A8%8B-3-%E5%9B%BE%E5%83%8F%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/"/>
-    <id>http://yoursite.com/2018/08/19/2018-08-19-OpenCV-Python教程-3-图像基本操作/</id>
+    <link href="https://jinzhangyu.github.io/2018/08/19/2018-08-19-OpenCV-Python%E6%95%99%E7%A8%8B-3-%E5%9B%BE%E5%83%8F%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/"/>
+    <id>https://jinzhangyu.github.io/2018/08/19/2018-08-19-OpenCV-Python教程-3-图像基本操作/</id>
     <published>2018-08-19T07:08:53.000Z</published>
     <updated>2018-08-19T09:58:16.457Z</updated>
     
@@ -38,20 +38,20 @@
     </summary>
     
     
-      <category term="macOS=10.13.6" scheme="http://yoursite.com/tags/macOS-10-13-6/"/>
+      <category term="macOS=10.13.6" scheme="https://jinzhangyu.github.io/tags/macOS-10-13-6/"/>
     
-      <category term="opencv=3.4.1" scheme="http://yoursite.com/tags/opencv-3-4-1/"/>
+      <category term="opencv=3.4.1" scheme="https://jinzhangyu.github.io/tags/opencv-3-4-1/"/>
     
-      <category term="python=3.5" scheme="http://yoursite.com/tags/python-3-5/"/>
+      <category term="python=3.5" scheme="https://jinzhangyu.github.io/tags/python-3-5/"/>
     
-      <category term="图像处理" scheme="http://yoursite.com/tags/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/"/>
+      <category term="图像处理" scheme="https://jinzhangyu.github.io/tags/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/"/>
     
   </entry>
   
   <entry>
     <title>OpenCV-Python教程(2) --- 图片的加载和显示</title>
-    <link href="http://yoursite.com/2018/08/18/2018-08-18-OpenCV-Python%E6%95%99%E7%A8%8B-2-%E5%9B%BE%E7%89%87%E7%9A%84%E5%8A%A0%E8%BD%BD%E5%92%8C%E6%98%BE%E7%A4%BA/"/>
-    <id>http://yoursite.com/2018/08/18/2018-08-18-OpenCV-Python教程-2-图片的加载和显示/</id>
+    <link href="https://jinzhangyu.github.io/2018/08/18/2018-08-18-OpenCV-Python%E6%95%99%E7%A8%8B-2-%E5%9B%BE%E7%89%87%E7%9A%84%E5%8A%A0%E8%BD%BD%E5%92%8C%E6%98%BE%E7%A4%BA/"/>
+    <id>https://jinzhangyu.github.io/2018/08/18/2018-08-18-OpenCV-Python教程-2-图片的加载和显示/</id>
     <published>2018-08-18T07:05:11.000Z</published>
     <updated>2018-08-19T09:59:30.290Z</updated>
     
@@ -66,20 +66,20 @@
     </summary>
     
     
-      <category term="macOS=10.13.6" scheme="http://yoursite.com/tags/macOS-10-13-6/"/>
+      <category term="macOS=10.13.6" scheme="https://jinzhangyu.github.io/tags/macOS-10-13-6/"/>
     
-      <category term="opencv=3.4.1" scheme="http://yoursite.com/tags/opencv-3-4-1/"/>
+      <category term="opencv=3.4.1" scheme="https://jinzhangyu.github.io/tags/opencv-3-4-1/"/>
     
-      <category term="python=3.5" scheme="http://yoursite.com/tags/python-3-5/"/>
+      <category term="python=3.5" scheme="https://jinzhangyu.github.io/tags/python-3-5/"/>
     
-      <category term="图像处理" scheme="http://yoursite.com/tags/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/"/>
+      <category term="图像处理" scheme="https://jinzhangyu.github.io/tags/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/"/>
     
   </entry>
   
   <entry>
     <title>OpenCV-Python教程(1) --- 安装与导入</title>
-    <link href="http://yoursite.com/2018/08/17/2018-08-17-OpenCV-Python%E6%95%99%E7%A8%8B-1-%E5%AE%89%E8%A3%85%E4%B8%8E%E5%AF%BC%E5%85%A5/"/>
-    <id>http://yoursite.com/2018/08/17/2018-08-17-OpenCV-Python教程-1-安装与导入/</id>
+    <link href="https://jinzhangyu.github.io/2018/08/17/2018-08-17-OpenCV-Python%E6%95%99%E7%A8%8B-1-%E5%AE%89%E8%A3%85%E4%B8%8E%E5%AF%BC%E5%85%A5/"/>
+    <id>https://jinzhangyu.github.io/2018/08/17/2018-08-17-OpenCV-Python教程-1-安装与导入/</id>
     <published>2018-08-17T09:33:56.000Z</published>
     <updated>2018-08-18T08:31:22.483Z</updated>
     
@@ -93,13 +93,13 @@
     </summary>
     
     
-      <category term="macOS=10.13.6" scheme="http://yoursite.com/tags/macOS-10-13-6/"/>
+      <category term="macOS=10.13.6" scheme="https://jinzhangyu.github.io/tags/macOS-10-13-6/"/>
     
-      <category term="opencv=3.4.1" scheme="http://yoursite.com/tags/opencv-3-4-1/"/>
+      <category term="opencv=3.4.1" scheme="https://jinzhangyu.github.io/tags/opencv-3-4-1/"/>
     
-      <category term="python=3.5" scheme="http://yoursite.com/tags/python-3-5/"/>
+      <category term="python=3.5" scheme="https://jinzhangyu.github.io/tags/python-3-5/"/>
     
-      <category term="图像处理" scheme="http://yoursite.com/tags/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/"/>
+      <category term="图像处理" scheme="https://jinzhangyu.github.io/tags/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/"/>
     
   </entry>
   
