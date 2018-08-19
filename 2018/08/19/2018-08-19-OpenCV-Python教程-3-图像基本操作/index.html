@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="Jin ZhangYu" />
+
+
+
+<meta name="description" content="OpenCV-Python教程(3) — 图像基本操作Targets 获取和修改像素点的值 获取图片的宽、高、通道数等属性 截取感兴趣区域 ROI (Region of interest) 通道分离合并 为图像扩边（填充）">
+<meta name="keywords" content="macOS=10.13.6,opencv=3.4.1,python=3.5,图像处理">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OpenCV-Python教程(3) --- 图像基本操作">
+<meta property="og:url" content="http://yoursite.com/2018/08/19/2018-08-19-OpenCV-Python教程-3-图像基本操作/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="OpenCV-Python教程(3) — 图像基本操作Targets 获取和修改像素点的值 获取图片的宽、高、通道数等属性 截取感兴趣区域 ROI (Region of interest) 通道分离合并 为图像扩边（填充）">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2018/08/19/2018-08-19-OpenCV-Python教程-3-图像基本操作/Messi.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/08/19/2018-08-19-OpenCV-Python教程-3-图像基本操作/Messi_Balls.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/08/19/2018-08-19-OpenCV-Python教程-3-图像基本操作/RGB_lena.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/08/19/2018-08-19-OpenCV-Python教程-3-图像基本操作/3.jpg">
+<meta property="og:updated_time" content="2018-08-19T09:58:16.457Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="OpenCV-Python教程(3) --- 图像基本操作">
+<meta name="twitter:description" content="OpenCV-Python教程(3) — 图像基本操作Targets 获取和修改像素点的值 获取图片的宽、高、通道数等属性 截取感兴趣区域 ROI (Region of interest) 通道分离合并 为图像扩边（填充）">
+<meta name="twitter:image" content="http://yoursite.com/2018/08/19/2018-08-19-OpenCV-Python教程-3-图像基本操作/Messi.jpg">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>OpenCV-Python教程(3) --- 图像基本操作 | Hexo</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: true
+    }
+</script>
+
+
+    <script>
+        yiliaConfig.jquery_ui = [true, "//cdn.bootcss.com/jqueryui/1.10.4/jquery-ui.min.js", "//cdn.bootcss.com/jqueryui/1.10.4/css/jquery-ui.min.css"];
+    </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">Jin ZhangYu</a></h1>
+        </hgroup>
+
+        
+
+        
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="false" />
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class='no-result'>No results found <i class='fa fa-spinner fa-pulse'></i></p>
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="mailto:king.jinzhangyu@gmail.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" href="https://github.com/JinZhangYu" title="GitHub"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/macOS-10-13-6/">macOS=10.13.6</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/opencv-3-4-1/">opencv=3.4.1</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python-3-5/">python=3.5</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/图像处理/">图像处理</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://github.com/JinZhangYu">GitHub</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">JinZhangYu</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">Jin ZhangYu</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">Jin ZhangYu</a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:king.jinzhangyu@gmail.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="https://github.com/JinZhangYu" title="GitHub"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-2018-08-19-OpenCV-Python教程-3-图像基本操作" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/08/19/2018-08-19-OpenCV-Python教程-3-图像基本操作/" class="article-date">
+      <time datetime="2018-08-19T07:08:53.000Z" itemprop="datePublished">2018-08-19</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      OpenCV-Python教程(3) --- 图像基本操作
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/macOS-10-13-6/">macOS=10.13.6</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/opencv-3-4-1/">opencv=3.4.1</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python-3-5/">python=3.5</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/图像处理/">图像处理</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h2 id="OpenCV-Python教程-3-—-图像基本操作"><a href="#OpenCV-Python教程-3-—-图像基本操作" class="headerlink" title="OpenCV-Python教程(3) — 图像基本操作"></a>OpenCV-Python教程(3) — 图像基本操作</h2><h3 id="Targets"><a href="#Targets" class="headerlink" title="Targets"></a>Targets</h3><ul>
+<li>获取和修改像素点的值</li>
+<li>获取图片的宽、高、通道数等属性</li>
+<li>截取感兴趣区域 ROI (Region of interest)</li>
+<li>通道分离合并</li>
+<li>为图像扩边（填充）</li>
+</ul>
+<a id="more"></a>
+<h3 id="Accessing-and-Modifying-pixel-values"><a href="#Accessing-and-Modifying-pixel-values" class="headerlink" title="Accessing and Modifying pixel values"></a>Accessing and Modifying pixel values</h3><p>我们先读取一张图片，彩色图和灰度图都读取</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Python <span class="number">3.5</span><span class="number">.4</span> |Continuum Analytics, Inc.| (default, Aug <span class="number">14</span> <span class="number">2017</span>, <span class="number">12</span>:<span class="number">43</span>:<span class="number">10</span>)</span><br><span class="line">[GCC <span class="number">4.2</span><span class="number">.1</span> Compatible Apple LLVM <span class="number">6.0</span> (clang<span class="number">-600.0</span><span class="number">.57</span>)] on darwin</span><br><span class="line">Type <span class="string">"help"</span>, <span class="string">"copyright"</span>, <span class="string">"credits"</span> <span class="keyword">or</span> <span class="string">"license"</span> <span class="keyword">for</span> more information.</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> cv2</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>img_1 = cv2.imread(<span class="string">'lena.jpg'</span>,<span class="number">1</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>img_2 = cv2.imread(<span class="string">'lena.jpg'</span>,<span class="number">0</span>)</span><br><span class="line">&gt;&gt;&gt;</span><br></pre></td></tr></table></figure>
+<p>通过行列的坐标来获取某像素点的值.</p>
+<p><strong>经验之谈：还记得吗？行对应的是y，列对应的是x，所以其实是<code>img[y, x]</code>，即<code>img[行数，列数]</code>需要注意噢(●ˇ∀ˇ●)</strong></p>
+<p>对于彩色图，这个值是B,G,R三个值的列表，对于灰度图，只有一个值：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>print(img_1[<span class="number">100</span>,<span class="number">100</span>])</span><br><span class="line">[ <span class="number">75</span>  <span class="number">64</span> <span class="number">174</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>print(img_2[<span class="number">100</span>,<span class="number">100</span>])</span><br><span class="line"><span class="number">98</span></span><br><span class="line">&gt;&gt;&gt;</span><br></pre></td></tr></table></figure>
+<p>修改像素的值也是同样的方式:<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>img_1[<span class="number">100</span>,<span class="number">100</span>] = <span class="number">255</span>    <span class="comment"># 将一个值赋给一个数组，会把这个数组所有的元素都变成这个值</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>print(img_1[<span class="number">100</span>,<span class="number">100</span>])</span><br><span class="line">[<span class="number">255</span> <span class="number">255</span> <span class="number">255</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>img_1[<span class="number">100</span>,<span class="number">100</span>] = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]  <span class="comment"># 正规的按数组赋值</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>print(img_1[<span class="number">100</span>,<span class="number">100</span>])</span><br><span class="line">[<span class="number">1</span> <span class="number">2</span> <span class="number">3</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>img_2[<span class="number">100</span>,<span class="number">100</span>] = <span class="number">255</span>      </span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>print(img_2[<span class="number">100</span>,<span class="number">100</span>])</span><br><span class="line"><span class="number">255</span></span><br><span class="line">&gt;&gt;&gt;</span><br></pre></td></tr></table></figure></p>
+<h3 id="Accessing-Image-Properties"><a href="#Accessing-Image-Properties" class="headerlink" title="Accessing Image Properties"></a>Accessing Image Properties</h3><p><code>img.shape</code>获取图像的形状，图片是彩色的话，返回一个包含高度、宽度和通道数的元组，灰度图只返回高度和宽度：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">Python <span class="number">3.5</span><span class="number">.4</span> |Continuum Analytics, Inc.| (default, Aug <span class="number">14</span> <span class="number">2017</span>, <span class="number">12</span>:<span class="number">43</span>:<span class="number">10</span>)</span><br><span class="line">[GCC <span class="number">4.2</span><span class="number">.1</span> Compatible Apple LLVM <span class="number">6.0</span> (clang<span class="number">-600.0</span><span class="number">.57</span>)] on darwin</span><br><span class="line">Type <span class="string">"help"</span>, <span class="string">"copyright"</span>, <span class="string">"credits"</span> <span class="keyword">or</span> <span class="string">"license"</span> <span class="keyword">for</span> more information.</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> cv2</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>img_1 = cv2.imread(<span class="string">'lena.jpg'</span>,<span class="number">1</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>img_2 = cv2.imread(<span class="string">'lena.jpg'</span>,<span class="number">0</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>img_1.shape</span><br><span class="line">(<span class="number">350</span>, <span class="number">350</span>, <span class="number">3</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>img_2.shape</span><br><span class="line">(<span class="number">350</span>, <span class="number">350</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>height, width, channels = img_1.shape <span class="comment"># 形状中包括高度、宽度和通道数</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>height</span><br><span class="line"><span class="number">350</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>width</span><br><span class="line"><span class="number">350</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>channels</span><br><span class="line"><span class="number">3</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>height, width = img_2.shape           <span class="comment"># 灰度图只返回高度和宽度</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>height</span><br><span class="line"><span class="number">350</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>width</span><br><span class="line"><span class="number">350</span></span><br><span class="line">&gt;&gt;&gt;</span><br></pre></td></tr></table></figure>
+<p><code>img.size</code>获取图像总像素数：<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>img_1.size</span><br><span class="line"><span class="number">367500</span>      <span class="comment"># 350 * 350 * 3 = 367500</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>img_2.size</span><br><span class="line"><span class="number">122500</span>      <span class="comment"># 350 * 350 = 122500</span></span><br><span class="line">&gt;&gt;&gt;</span><br></pre></td></tr></table></figure></p>
+<p><code>img.dtype</code>获取图像数据类型：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>img_1.dtype</span><br><span class="line">dtype(<span class="string">'uint8'</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>img_2.dtype</span><br><span class="line">dtype(<span class="string">'uint8'</span>)</span><br><span class="line">&gt;&gt;&gt;</span><br></pre></td></tr></table></figure>
+<p><strong>经验之谈：很多错误都是因为数据类型不对导致的，所以健壮的代码需要对这个属性加以判断</strong></p>
+<h3 id="Image-ROI-Region-of-Interest"><a href="#Image-ROI-Region-of-Interest" class="headerlink" title="Image ROI (Region of Interest)"></a>Image ROI (Region of Interest)</h3><p>ROI：region of interest，感兴趣区域。什么意思呢？先上原图</p>
+<div align="center"><br><img src="/2018/08/19/2018-08-19-OpenCV-Python教程-3-图像基本操作/Messi.jpg" alt=""><br></div>
+
+<p>比如我们要检测球，那么我们就需要截取出球的那一部分来，截取的语句如下</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Python <span class="number">3.5</span><span class="number">.4</span> |Continuum Analytics, Inc.| (default, Aug <span class="number">14</span> <span class="number">2017</span>, <span class="number">12</span>:<span class="number">43</span>:<span class="number">10</span>)</span><br><span class="line">[GCC <span class="number">4.2</span><span class="number">.1</span> Compatible Apple LLVM <span class="number">6.0</span> (clang<span class="number">-600.0</span><span class="number">.57</span>)] on darwin</span><br><span class="line">Type <span class="string">"help"</span>, <span class="string">"copyright"</span>, <span class="string">"credits"</span> <span class="keyword">or</span> <span class="string">"license"</span> <span class="keyword">for</span> more information.</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> cv2</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>img = cv2.imread(<span class="string">'Messi.jpg'</span>,<span class="number">1</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>img.shape</span><br><span class="line">(<span class="number">350</span>, <span class="number">590</span>, <span class="number">3</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>ball = img[<span class="number">125</span>:<span class="number">241</span>,<span class="number">24</span>:<span class="number">131</span>]  <span class="comment"># 截取行数从125至241，列数从24至131的长方形</span></span><br><span class="line">&gt;&gt;&gt;</span><br></pre></td></tr></table></figure>
+<p>这样<code>ball</code>这个三维数组就存储了球的位置，把图片上相同大小的某部分替换成<code>ball</code>则可用如下方式：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>img[<span class="number">50</span>:<span class="number">157</span>,<span class="number">10</span>:<span class="number">126</span>] = ball</span><br><span class="line">&gt;&gt;&gt;</span><br></pre></td></tr></table></figure>
+<p>接下来就是用<code>matplotlib</code>把结果画出来了，完整代码如下<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line">img = cv2.imread(<span class="string">'Messi.jpg'</span>,<span class="number">1</span>)</span><br><span class="line">img = img[:,:,::<span class="number">-1</span>]</span><br><span class="line"></span><br><span class="line">ball = img[<span class="number">24</span>:<span class="number">131</span>,<span class="number">125</span>:<span class="number">241</span>]</span><br><span class="line"></span><br><span class="line">img2 = img.copy()</span><br><span class="line">img2[<span class="number">50</span>:<span class="number">157</span>,<span class="number">10</span>:<span class="number">126</span>] = ball</span><br><span class="line"></span><br><span class="line">plt.figure()</span><br><span class="line"></span><br><span class="line">plt.subplot(<span class="number">1</span>,<span class="number">3</span>,<span class="number">1</span>)</span><br><span class="line">plt.imshow(img)</span><br><span class="line">plt.title(<span class="string">'Original Figure'</span>)</span><br><span class="line">plt.xticks([]), plt.yticks([])</span><br><span class="line"></span><br><span class="line">plt.subplot(<span class="number">1</span>,<span class="number">3</span>,<span class="number">2</span>)</span><br><span class="line">plt.imshow(ball)</span><br><span class="line">plt.title(<span class="string">'Ball'</span>)</span><br><span class="line">plt.xticks([]), plt.yticks([])</span><br><span class="line"></span><br><span class="line">plt.subplot(<span class="number">1</span>,<span class="number">3</span>,<span class="number">3</span>)</span><br><span class="line">plt.imshow(img2)</span><br><span class="line">plt.title(<span class="string">'Messi with Two Balls'</span>)</span><br><span class="line">plt.xticks([]), plt.yticks([])</span><br><span class="line"></span><br><span class="line">plt.savefig(<span class="string">'Messi_Balls.jpg'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></p>
+<p>结果如下图</p>
+<center><br><img src="/2018/08/19/2018-08-19-OpenCV-Python教程-3-图像基本操作/Messi_Balls.jpg" alt=""><br></center>
+
+<h3 id="Splitting-and-Merging-Image-Channels"><a href="#Splitting-and-Merging-Image-Channels" class="headerlink" title="Splitting and Merging Image Channels"></a>Splitting and Merging Image Channels</h3><p>我们用OpenCV读入一个图像，之后打算用<code>matplotlib</code>画出来他RGB每个通道的图像。</p>
+<p>先读取图片</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line">img = cv2.imread(<span class="string">'lena.jpg'</span>,<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<p>当读进去图像的时候，<code>img</code>内部是以BGR的形式存储的，即<code>img[:,:,0]</code>是蓝色通道，<code>img[:,:,1]</code>是绿色通道，<code>img[:,:,2]</code>是红色通道。</p>
+<p>但是<code>matplotlib</code>是以RGB为基础显示的，所以如果啥都不动，直接让<code>matplotlib</code>显示opencv读进来的图时，会出现红蓝通道颠倒的情况。</p>
+<p>现在需要将BGR转换成RGB，有如下两种方法：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">img = img[:,:,::<span class="number">-1</span>]</span><br><span class="line"><span class="comment"># img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)</span></span><br></pre></td></tr></table></figure>
+<p>在此之后<code>img[:,:,0]</code>是红色通道，<code>img[:,:,1]</code>是绿色通道，<code>img[:,:,2]</code>是蓝色通道。</p>
+<p>但遗憾的是<code>matplotlib</code>的<code>plt.imshow()</code>函数会把所有的图像都当成RGB顺序的三维数组来显示，即<code>plt.imshow(img[:,:,0])</code>是无法显示红色通道的，所以我们必须手工创造如下图像：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">red           = img.copy()  </span><br><span class="line">red[:,:,<span class="number">1</span>]    = <span class="number">0</span></span><br><span class="line">red[:,:,<span class="number">2</span>]    = <span class="number">0</span></span><br><span class="line">green         = img.copy()</span><br><span class="line">green[:,:,<span class="number">0</span>]  = <span class="number">0</span></span><br><span class="line">green[:,:,<span class="number">2</span>]  = <span class="number">0</span></span><br><span class="line">blue          = img.copy()</span><br><span class="line">blue[:,:,<span class="number">0</span>]   = <span class="number">0</span></span><br><span class="line">blue[:,:,<span class="number">1</span>]   = <span class="number">0</span></span><br></pre></td></tr></table></figure>
+<p>之后就是一通<code>matplotlib</code>绘图操作了，</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">plt.figure()</span><br><span class="line"></span><br><span class="line">plt.subplot(<span class="number">3</span>,<span class="number">3</span>,<span class="number">2</span>)</span><br><span class="line">plt.imshow(img)</span><br><span class="line">plt.title(<span class="string">'Original Figure'</span>)</span><br><span class="line">plt.xticks([]), plt.yticks([])  <span class="comment"># 隐藏x和y轴</span></span><br><span class="line"></span><br><span class="line">plt.subplot(<span class="number">3</span>,<span class="number">3</span>,<span class="number">4</span>)</span><br><span class="line">plt.imshow(red)</span><br><span class="line">plt.title(<span class="string">'Red Channel'</span>)</span><br><span class="line">plt.xticks([]), plt.yticks([])  <span class="comment"># 隐藏x和y轴</span></span><br><span class="line"></span><br><span class="line">plt.subplot(<span class="number">3</span>,<span class="number">3</span>,<span class="number">5</span>)</span><br><span class="line">plt.imshow(green)</span><br><span class="line">plt.title(<span class="string">'Green Channel'</span>)</span><br><span class="line">plt.xticks([]), plt.yticks([])  <span class="comment"># 隐藏x和y轴</span></span><br><span class="line"></span><br><span class="line">plt.subplot(<span class="number">3</span>,<span class="number">3</span>,<span class="number">6</span>)</span><br><span class="line">plt.imshow(blue)</span><br><span class="line">plt.title(<span class="string">'Blue Channel'</span>)</span><br><span class="line">plt.xticks([]), plt.yticks([])  <span class="comment"># 隐藏x和y轴</span></span><br><span class="line"></span><br><span class="line">plt.subplot(<span class="number">3</span>,<span class="number">3</span>,<span class="number">8</span>)</span><br><span class="line">plt.title(<span class="string">'Red+Green+Blue Channels'</span>)</span><br><span class="line">plt.imshow(red+green+blue)      <span class="comment"># 同维度同大小的矩阵直接相加即可</span></span><br><span class="line">plt.xticks([]), plt.yticks([])  <span class="comment"># 隐藏x和y轴</span></span><br><span class="line"></span><br><span class="line">plt.savefig(<span class="string">'RGB_lena.jpg'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p>结果如下图所示</p>
+<p><div align="center"><br><img src="/2018/08/19/2018-08-19-OpenCV-Python教程-3-图像基本操作/RGB_lena.jpg" alt=""><br></div><br>同样可以参考 <a href="https://stackoverflow.com/questions/15072736/extracting-a-region-from-an-image-using-slicing-in-python-opencv/15074748#15074748" target="_blank" rel="noopener">RGB vs BGR in Matplotlib and OpenCV</a> 阅读并尝试理解它</p>
+<h3 id="Making-Borders-for-Images-Padding"><a href="#Making-Borders-for-Images-Padding" class="headerlink" title="Making Borders for Images (Padding)"></a>Making Borders for Images (Padding)</h3><p>如果你想在图像周围创建一个边框，就像相框一样。你可以使用 <code>cv2.copyMakeBorder()</code> 函数。这经常在卷积计算或 0 填充时被用到。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">cv2.copyMakeBorder(src, top, bottom, left, right, borderType[, dst[, value]]) -&gt; dst</span><br><span class="line">@param: src: 输入图像</span><br><span class="line">@param: top, bottom, left, right</span><br><span class="line">    - Parameter specifying how many pixels in each direction from the source</span><br><span class="line">    image rectangle to extrapolate.</span><br><span class="line">    - For example, top=1, bottom=1, left=1, right=1 mean that 1 pixel-wide</span><br><span class="line">    border needs to be built.</span><br><span class="line">@param: borderType</span><br><span class="line">    - cv2.BORDER_CONSTANT 添加有颜色的常数值边界, 还需要下一个参数(value)</span><br><span class="line">    - cv2.BORDER_REFLECT 边界元素的镜像。比如: fedcba|abcdefgh|hgfedcb</span><br><span class="line">    - cv2.BORDER_REFLECT_101 or cv2.BORDER_DEFAULT 更上面一样，但是稍作改动:</span><br><span class="line">     gfedcb|abcdefgh|gfedcba</span><br><span class="line">    - cv2.BORDER_REPLICATE 重复最后一个元素: aaaaaa|abcdefgh|hhhhhhh</span><br><span class="line">    - cv2.BORDER_WRAP 我也不知道咋说，反正就是后边这样: bcdefgh|abcdefgh|abcdefg</span><br><span class="line">@param: value</span><br><span class="line">    Color of border if border type is cv2.BORDER_CONSTANT</span><br></pre></td></tr></table></figure></p>
+<p>我们现在演示一下所有的borderType，具体代码如下<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> matplotlib <span class="keyword">import</span> pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line">BLUE = [<span class="number">0</span>,<span class="number">0</span>,<span class="number">255</span>]</span><br><span class="line"></span><br><span class="line">img1 = cv2.imread(<span class="string">'lion.png'</span>)</span><br><span class="line">img1 = img1[:,:,::<span class="number">-1</span>]</span><br><span class="line"></span><br><span class="line">replicate = cv2.copyMakeBorder(img1,<span class="number">10</span>,<span class="number">10</span>,<span class="number">10</span>,<span class="number">10</span>,cv2.BORDER_REPLICATE)</span><br><span class="line">reflect = cv2.copyMakeBorder(img1,<span class="number">10</span>,<span class="number">10</span>,<span class="number">10</span>,<span class="number">10</span>,cv2.BORDER_REFLECT)</span><br><span class="line">reflect101 = cv2.copyMakeBorder(img1,<span class="number">10</span>,<span class="number">10</span>,<span class="number">10</span>,<span class="number">10</span>,cv2.BORDER_REFLECT_101)</span><br><span class="line">wrap = cv2.copyMakeBorder(img1,<span class="number">10</span>,<span class="number">10</span>,<span class="number">10</span>,<span class="number">10</span>,cv2.BORDER_WRAP)</span><br><span class="line">constant= cv2.copyMakeBorder(img1,<span class="number">10</span>,<span class="number">10</span>,<span class="number">10</span>,<span class="number">10</span>,cv2.BORDER_CONSTANT,value=BLUE)</span><br><span class="line"></span><br><span class="line">plt.subplot(<span class="number">231</span>),plt.imshow(img1,<span class="string">'gray'</span>)</span><br><span class="line">plt.title(<span class="string">'ORIGINAL'</span>),plt.xticks([]), plt.yticks([])</span><br><span class="line">plt.subplot(<span class="number">232</span>),plt.imshow(replicate,<span class="string">'gray'</span>)</span><br><span class="line">plt.title(<span class="string">'REPLICATE'</span>),plt.xticks([]), plt.yticks([])</span><br><span class="line">plt.subplot(<span class="number">233</span>),plt.imshow(reflect,<span class="string">'gray'</span>)</span><br><span class="line">plt.title(<span class="string">'REFLECT'</span>),plt.xticks([]), plt.yticks([])</span><br><span class="line">plt.subplot(<span class="number">234</span>),plt.imshow(reflect101,<span class="string">'gray'</span>)</span><br><span class="line">plt.title(<span class="string">'REFLECT_101'</span>),plt.xticks([]), plt.yticks([])</span><br><span class="line">plt.subplot(<span class="number">235</span>),plt.imshow(wrap,<span class="string">'gray'</span>)</span><br><span class="line">plt.title(<span class="string">'WRAP'</span>),plt.xticks([]), plt.yticks([])</span><br><span class="line">plt.subplot(<span class="number">236</span>),plt.imshow(constant,<span class="string">'gray'</span>)</span><br><span class="line">plt.title(<span class="string">'CONSTANT'</span>),plt.xticks([]), plt.yticks([])</span><br><span class="line"></span><br><span class="line">plt.savefig(<span class="string">'3.jpg'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></p>
+<p>结果如下</p>
+<center><br><img src="/2018/08/19/2018-08-19-OpenCV-Python教程-3-图像基本操作/3.jpg" alt=""><br></center>
+
+
+<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><p><a href="http://ex2tron.top/2017/12/07/Python-OpenCV教程4：图像基本操作/" target="_blank" rel="noopener">EX2TRON’S BLOG: Python+OpenCV教程4：图像基本操作</a><br><a href="https://opencv-python-tutroals.readthedocs.io/en/latest/py_tutorials/py_core/py_basic_ops/py_basic_ops.html#basic-ops" target="_blank" rel="noopener">OpenCV-Python 官方教程: Basic Operations on Images</a><br><a href="https://github.com/makelove/OpenCV-Python-Tutorial" target="_blank" rel="noopener">OpenCV-Python-Tutorial</a></p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2018/08/19/2018-08-19-OpenCV-Python教程-3-图像基本操作/">OpenCV-Python教程(3) --- 图像基本操作</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">Jin ZhangYu</a></p>
+        <p><span>发布时间:</span>2018-08-19, 15:08:53</p>
+        <p><span>最后更新:</span>2018-08-19, 17:58:16</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2018/08/19/2018-08-19-OpenCV-Python教程-3-图像基本操作/" title="OpenCV-Python教程(3) --- 图像基本操作">http://yoursite.com/2018/08/19/2018-08-19-OpenCV-Python教程-3-图像基本操作/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2018/08/19/2018-08-19-OpenCV-Python教程-3-图像基本操作/　　作者: Jin ZhangYu" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2018/08/18/2018-08-18-OpenCV-Python教程-2-图片的加载和显示/">
+                    OpenCV-Python教程(2) --- 图片的加载和显示
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#OpenCV-Python教程-3-—-图像基本操作"><span class="toc-number">1.</span> <span class="toc-text">OpenCV-Python教程(3) — 图像基本操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Targets"><span class="toc-number">1.1.</span> <span class="toc-text">Targets</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Accessing-and-Modifying-pixel-values"><span class="toc-number">1.2.</span> <span class="toc-text">Accessing and Modifying pixel values</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Accessing-Image-Properties"><span class="toc-number">1.3.</span> <span class="toc-text">Accessing Image Properties</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Image-ROI-Region-of-Interest"><span class="toc-number">1.4.</span> <span class="toc-text">Image ROI (Region of Interest)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Splitting-and-Merging-Image-Channels"><span class="toc-number">1.5.</span> <span class="toc-text">Splitting and Merging Image Channels</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Making-Borders-for-Images-Padding"><span class="toc-number">1.6.</span> <span class="toc-text">Making Borders for Images (Padding)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Reference"><span class="toc-number">1.7.</span> <span class="toc-text">Reference</span></a></li></ol></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"OpenCV-Python教程(3) --- 图像基本操作　| Hexo　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2018/08/18/2018-08-18-OpenCV-Python教程-2-图片的加载和显示/" title="下一篇: OpenCV-Python教程(2) --- 图片的加载和显示">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/08/19/2018-08-19-OpenCV-Python教程-3-图像基本操作/">OpenCV-Python教程(3) --- 图像基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/18/2018-08-18-OpenCV-Python教程-2-图片的加载和显示/">OpenCV-Python教程(2) --- 图片的加载和显示</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/17/2018-08-17-OpenCV-Python教程-1-安装与导入/">OpenCV-Python教程(1) --- 安装与导入</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2018 Jin ZhangYu
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script src="//cdn.bootcss.com/mathjax/2.6.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+    <script>
+        var originTitle = document.title;
+        var titleTime;
+        document.addEventListener("visibilitychange", function() {
+            if (document.hidden) {
+                document.title = "ξ( ✿＞◡❛) 我藏好了哦~ " + originTitle;
+                clearTimeout(titleTime);
+            }
+            else {
+                document.title = "ԅ(¯﹃¯ԅ) 被你发现啦~ " + originTitle;
+                titleTime = setTimeout(function() {
+                    document.title = originTitle;
+                }, 2000);
+            }
+        })
+    </script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>
