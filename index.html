@@ -263,6 +263,93 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-2018-08-20-OpenCV-Python教程-4-绘图功能" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/08/19/2018-08-20-OpenCV-Python教程-4-绘图功能/" class="article-date">
+      <time datetime="2018-08-19T14:08:35.000Z" itemprop="datePublished">2018-08-19</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/08/19/2018-08-20-OpenCV-Python教程-4-绘图功能/">OpenCV-Python教程(4) --- 绘图功能</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h2 id="Targets"><a href="#Targets" class="headerlink" title="Targets"></a>Targets</h2><ul>
+<li>学习画线、圆和矩形等多种几何形状</li>
+<li>给图片添加文字</li>
+</ul>
+<h2 id="Common-Arguments"><a href="#Common-Arguments" class="headerlink" title="Common Arguments"></a>Common Arguments</h2><p>绘制形状的函数有一些共同的参数，提前在此说明一下：</p>
+<ul>
+<li><code>img</code> : The image where you want to draw the shapes</li>
+<li><code>color</code> : Color of the shape. for BGR, pass it as a tuple, eg: (255,0,0) for blue. For grayscale, just pass the scalar value.</li>
+<li><code>thickness</code> : Thickness of the line or circle etc. If -1 is passed for closed figures like circles, it will fill the shape. default thickness = 1</li>
+<li><code>lineType</code> : 线条的类型，具体分为：<ul>
+<li><code>LINE_8</code> (or omitted)  8-connected line.</li>
+<li><code>LINE_4</code> - 4-connected line.</li>
+<li><code>LINE_AA</code> - antialiased line.<br>详细的解释见 <a href="http://www.imageprocessingplace.com/downloads_V3/root_downloads/tutorials/contour_tracing_Abeer_George_Ghuneim/connect.html" target="_blank" rel="noopener">八连通、四连通线</a> 以及 <a href="https://en.wikipedia.org/wiki/Xiaolin_Wu%27s_line_algorithm" target="_blank" rel="noopener">抗锯齿线</a></li>
+</ul>
+</li>
+</ul>
+<p>下图就是本教程绘制的最终效果：<br><img src="/2018/08/19/2018-08-20-OpenCV-Python教程-4-绘图功能/2.jpg" alt="最终效果"><br>下面我们一步一步来：</p>
+<h2 id="Drawing-Line"><a href="#Drawing-Line" class="headerlink" title="Drawing Line"></a>Drawing Line</h2><p>画线只需知道起点和终点的坐标就行：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">cv2.line(img, pt1, pt2, color[, thickness[, lineType[, shift]]]) → img</span><br><span class="line">@param: img</span><br><span class="line">@param: pt1 - First point of the line segment.</span><br><span class="line">@param: pt2 - Second point of the line segment.</span><br><span class="line">@param: color - 见上</span><br><span class="line">@param: thickness - 见上</span><br><span class="line">@param: lineType - 见上</span><br><span class="line">@param: shift – Number of fractional bits in the point coordinates.</span><br></pre></td></tr></table></figure></p>
+<p>对于<code>cv2.line</code>函数，需要有如下注意点，但是一般都不会碰到下述问题：</p>
+<ul>
+<li>The line is clipped by the image boundaries.</li>
+<li>For non-antialiased lines with integer coordinates, the 8-connected or 4-connected Bresenham algorithm is used.</li>
+<li>Thick lines are drawn with rounding endings.</li>
+<li>Antialiased lines are drawn using Gaussian filtering.</li>
+</ul>
+<p><strong>经验之谈：所有绘图函数均会直接影响原图片，这点要注意</strong></p>
+<h3 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h3><p>我们来画一条直线：<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建一副黑色的图片</span></span><br><span class="line">img = np.zeros((<span class="number">512</span>, <span class="number">512</span>, <span class="number">3</span>), np.uint8)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 画一条线宽为5的红色直线，参数2：起点，参数3：终点</span></span><br><span class="line">cv2.line(img, (<span class="number">0</span>, <span class="number">0</span>), (<span class="number">512</span>, <span class="number">512</span>), (<span class="number">255</span>, <span class="number">0</span>, <span class="number">0</span>), <span class="number">5</span>)</span><br><span class="line"></span><br><span class="line">img = img[:,:,::<span class="number">-1</span>]</span><br><span class="line">cv2.imshow(<span class="string">'test'</span>,img)</span><br><span class="line">k = cv2.waitKey(<span class="number">0</span>)</span><br><span class="line"><span class="keyword">if</span> k == ord(<span class="string">'q'</span>):</span><br><span class="line">    cv2.imwrite(<span class="string">'line.jpg'</span>,img)</span><br><span class="line">    cv2.closeAllWindows()</span><br></pre></td></tr></table></figure></p>
+<p>结果如下图：<br><img src="/2018/08/19/2018-08-20-OpenCV-Python教程-4-绘图功能/line.jpg" alt="Line"></p>
+<h2 id="Drawing-Rectangle"><a href="#Drawing-Rectangle" class="headerlink" title="Drawing Rectangle"></a>Drawing Rectangle</h2>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/macOS-10-13-6/">macOS=10.13.6</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/opencv-3-4-1/">opencv=3.4.1</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python-3-5/">python=3.5</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/图像处理/">图像处理</a></li></ul>
+    </div>
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-2018-08-19-OpenCV-Python教程-3-图像基本操作" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -292,7 +379,7 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-              <h2 id="OpenCV-Python教程-3-—-图像基本操作"><a href="#OpenCV-Python教程-3-—-图像基本操作" class="headerlink" title="OpenCV-Python教程(3) — 图像基本操作"></a>OpenCV-Python教程(3) — 图像基本操作</h2><h3 id="Targets"><a href="#Targets" class="headerlink" title="Targets"></a>Targets</h3><ul>
+              <h2 id="Targets"><a href="#Targets" class="headerlink" title="Targets"></a>Targets</h2><ul>
 <li>获取和修改像素点的值</li>
 <li>获取图片的宽、高、通道数等属性</li>
 <li>截取感兴趣区域 ROI (Region of interest)</li>
@@ -362,7 +449,7 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-              <h2 id="OpenCV-Python教程-2-—-图片的加载和显示"><a href="#OpenCV-Python教程-2-—-图片的加载和显示" class="headerlink" title="OpenCV-Python教程(2) — 图片的加载和显示"></a>OpenCV-Python教程(2) — 图片的加载和显示</h2><h3 id="Targets"><a href="#Targets" class="headerlink" title="Targets"></a>Targets</h3><ul>
+              <h2 id="Targets"><a href="#Targets" class="headerlink" title="Targets"></a>Targets</h2><ul>
 <li>加载图片，显示图片，保存图片</li>
 </ul>
           
@@ -428,7 +515,7 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-              <h2 id="OpenCV-Python教程-1-—-安装与导入"><a href="#OpenCV-Python教程-1-—-安装与导入" class="headerlink" title="OpenCV-Python教程(1) — 安装与导入"></a>OpenCV-Python教程(1) — 安装与导入</h2><h3 id="Targets"><a href="#Targets" class="headerlink" title="Targets"></a>Targets</h3><ul>
+              <h2 id="Targets"><a href="#Targets" class="headerlink" title="Targets"></a>Targets</h2><ul>
 <li>安装Anaconda，安装OpenCV环境，可以在环境中使用OpenCV</li></ul>
           
       
