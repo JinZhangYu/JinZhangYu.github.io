@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="Jin ZhangYu" />
+
+
+
+<meta name="description" content="Targets 学习使用 OpenCV 处理鼠标事件">
+<meta name="keywords" content="macOS=10.13.6,opencv=3.4.1,python=3.5,图像处理">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OpenCV-Python教程(5) --- 鼠标当画笔">
+<meta property="og:url" content="https://jinzhangyu.github.io/2018/08/21/2018-08-21-OpenCV-Python教程-5-鼠标当画笔/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Targets 学习使用 OpenCV 处理鼠标事件">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://jinzhangyu.github.io/2018/08/21/2018-08-21-OpenCV-Python教程-5-鼠标当画笔/1.gif">
+<meta property="og:updated_time" content="2018-08-21T04:38:40.301Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="OpenCV-Python教程(5) --- 鼠标当画笔">
+<meta name="twitter:description" content="Targets 学习使用 OpenCV 处理鼠标事件">
+<meta name="twitter:image" content="https://jinzhangyu.github.io/2018/08/21/2018-08-21-OpenCV-Python教程-5-鼠标当画笔/1.gif">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>OpenCV-Python教程(5) --- 鼠标当画笔 | Hexo</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: true
+    }
+</script>
+
+
+    <script>
+        yiliaConfig.jquery_ui = [true, "//cdn.bootcss.com/jqueryui/1.10.4/jquery-ui.min.js", "//cdn.bootcss.com/jqueryui/1.10.4/css/jquery-ui.min.css"];
+    </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">Jin ZhangYu</a></h1>
+        </hgroup>
+
+        
+
+        
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="false" />
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class='no-result'>No results found <i class='fa fa-spinner fa-pulse'></i></p>
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="mailto:king.jinzhangyu@gmail.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" href="https://github.com/JinZhangYu" title="GitHub"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/macOS-10-13-6/">macOS=10.13.6</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/opencv-3-4-1/">opencv=3.4.1</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python-3-5/">python=3.5</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/图像处理/">图像处理</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://github.com/JinZhangYu">GitHub</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">JinZhangYu</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">Jin ZhangYu</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">Jin ZhangYu</a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:king.jinzhangyu@gmail.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="https://github.com/JinZhangYu" title="GitHub"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-2018-08-21-OpenCV-Python教程-5-鼠标当画笔" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/08/21/2018-08-21-OpenCV-Python教程-5-鼠标当画笔/" class="article-date">
+      <time datetime="2018-08-21T02:33:20.000Z" itemprop="datePublished">2018-08-21</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      OpenCV-Python教程(5) --- 鼠标当画笔
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/macOS-10-13-6/">macOS=10.13.6</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/opencv-3-4-1/">opencv=3.4.1</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python-3-5/">python=3.5</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/图像处理/">图像处理</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h2 id="Targets"><a href="#Targets" class="headerlink" title="Targets"></a>Targets</h2><ul>
+<li>学习使用 OpenCV 处理鼠标事件</li>
+</ul>
+<a id="more"></a>
+<h2 id="Where-is-your-mouse"><a href="#Where-is-your-mouse" class="headerlink" title="Where is your mouse"></a>Where is your mouse</h2><p>OpenCV中，我们需要创建一个鼠标的回调函数来知道鼠标当前的位置，当前的事件如左键按下、左键释放或是右键单击等等，然后执行相应的功能。</p>
+<p>这个功能是用<code>cv2.setMouseCallback()</code>来实现的，函数具体内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cv2.setMouseCallback(windowName, onMouse[, param]) → None</span><br><span class="line">@param: winname – Window name</span><br><span class="line">@param: onMouse – Mouse callback, # 鼠标响应处理函数</span><br><span class="line">@param: userdata – The optional parameter passed to the callback. #处理函数的ID</span><br></pre></td></tr></table></figure>
+<p>其中鼠标的 <strong>回调函数(onMouse)</strong> 有特定格式，当鼠标事件触发时，该函数执行。</p>
+<p><strong>鼠标事件</strong> 有很多种，比如左键右键，双击等等，该函数提供鼠标点击的坐标。对应事件的触发和鼠标点击的坐标位置，我们可以做任何事，下面代码输出了鼠标事件的种类</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">Python <span class="number">3.5</span><span class="number">.4</span> |Continuum Analytics, Inc.| (default, Aug <span class="number">14</span> <span class="number">2017</span>, <span class="number">12</span>:<span class="number">43</span>:<span class="number">10</span>)</span><br><span class="line">[GCC <span class="number">4.2</span><span class="number">.1</span> Compatible Apple LLVM <span class="number">6.0</span> (clang<span class="number">-600.0</span><span class="number">.57</span>)] on darwin</span><br><span class="line">Type <span class="string">"help"</span>, <span class="string">"copyright"</span>, <span class="string">"credits"</span> <span class="keyword">or</span> <span class="string">"license"</span> <span class="keyword">for</span> more information.</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> cv2</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>[i <span class="keyword">for</span> i <span class="keyword">in</span> dir(cv2) <span class="keyword">if</span> <span class="string">'EVENT'</span> <span class="keyword">in</span> i]</span><br><span class="line">[</span><br><span class="line">  <span class="string">'EVENT_FLAG_ALTKEY'</span>,</span><br><span class="line">  <span class="string">'EVENT_FLAG_CTRLKEY'</span>,</span><br><span class="line">  <span class="string">'EVENT_FLAG_LBUTTON'</span>,</span><br><span class="line">  <span class="string">'EVENT_FLAG_MBUTTON'</span>,</span><br><span class="line">  <span class="string">'EVENT_FLAG_RBUTTON'</span>,</span><br><span class="line">  <span class="string">'EVENT_FLAG_SHIFTKEY'</span>,</span><br><span class="line">  <span class="string">'EVENT_LBUTTONDBLCLK'</span>,</span><br><span class="line">  <span class="string">'EVENT_LBUTTONDOWN'</span>,</span><br><span class="line">  <span class="string">'EVENT_LBUTTONUP'</span>,</span><br><span class="line">  <span class="string">'EVENT_MBUTTONDBLCLK'</span>,</span><br><span class="line">  <span class="string">'EVENT_MBUTTONDOWN'</span>,</span><br><span class="line">  <span class="string">'EVENT_MBUTTONUP'</span>,</span><br><span class="line">  <span class="string">'EVENT_MOUSEHWHEEL'</span>,</span><br><span class="line">  <span class="string">'EVENT_MOUSEMOVE'</span>,</span><br><span class="line">  <span class="string">'EVENT_MOUSEWHEEL'</span>,</span><br><span class="line">  <span class="string">'EVENT_RBUTTONDBLCLK'</span>,</span><br><span class="line">  <span class="string">'EVENT_RBUTTONDOWN'</span>,</span><br><span class="line">  <span class="string">'EVENT_RBUTTONUP'</span></span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<p>具体鼠标事件解释如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">event：</span><br><span class="line">EVENT_LBUTTONDBLCLK = 7         左键双击</span><br><span class="line">EVENT_LBUTTONDOWN = 1           左键点击</span><br><span class="line">EVENT_LBUTTONUP = 4             左键释放</span><br><span class="line">EVENT_MBUTTONDBLCLK = 9         中间释放</span><br><span class="line">EVENT_MBUTTONDOWN = 3           中间点击</span><br><span class="line">EVENT_MBUTTONUP = 6             中间释放</span><br><span class="line">EVENT_MOUSEHWHEEL = 11          滚轮事件</span><br><span class="line">EVENT_MOUSEMOVE = 0             滑动</span><br><span class="line">EVENT_MOUSEWHEEL = 10           滚轮事件</span><br><span class="line">EVENT_RBUTTONDBLCLK = 8         右键双击</span><br><span class="line">EVENT_RBUTTONDOWN = 2           右键点击</span><br><span class="line">EVENT_RBUTTONUP = 5             右键释放</span><br><span class="line"></span><br><span class="line">flags:</span><br><span class="line">EVENT_FLAG_ALTKEY = 32          按Alt不放事件</span><br><span class="line">EVENT_FLAG_CTRLKEY = 8          按Ctrl不放事件</span><br><span class="line">EVENT_FLAG_LBUTTON = 1          左键拖拽</span><br><span class="line">EVENT_FLAG_MBUTTON = 4          中键拖拽</span><br><span class="line">EVENT_FLAG_RBUTTON = 2          右键拖拽</span><br><span class="line">EVENT_FLAG_SHIFTKEY = 16        按Shift不放事件</span><br></pre></td></tr></table></figure>
+<h3 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h3><p>我们在左键单击的时候，打印出当前鼠标的位置：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="comment"># 鼠标的回调函数</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">mouse_event</span><span class="params">(event, x, y, flags, param)</span>:</span></span><br><span class="line">    <span class="comment"># 通过event判断具体是什么事件，这里是左键按下</span></span><br><span class="line">    <span class="keyword">if</span> event == cv2.EVENT_LBUTTONDOWN:</span><br><span class="line">        print((x, y))</span><br><span class="line"></span><br><span class="line">img = np.zeros((<span class="number">512</span>, <span class="number">512</span>, <span class="number">3</span>), np.uint8)</span><br><span class="line">cv2.namedWindow(<span class="string">'image'</span>)</span><br><span class="line"></span><br><span class="line">cv2.setMouseCallback(<span class="string">'image'</span>, mouse_event)</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span>(<span class="keyword">True</span>):</span><br><span class="line">    cv2.imshow(<span class="string">'image'</span>, img)</span><br><span class="line">    <span class="comment"># 按下ESC键退出</span></span><br><span class="line">    <span class="keyword">if</span> cv2.waitKey(<span class="number">20</span>) == ord(<span class="string">'q'</span>):</span><br><span class="line">        cv2.destroyAllWindows()</span><br><span class="line">        <span class="keyword">break</span></span><br></pre></td></tr></table></figure>
+<p>上面的代码先定义鼠标的回调函数<code>mouse_event()</code>，然后在回调函数中判断是否是左键单击事件<code>EVENT_LBUTTONDOWN</code>，是的话就打印出坐标。</p>
+<p><strong>需要注意的是，回调函数的参数格式是固定的，不要随意更改。</strong></p>
+<h2 id="Complex-Demo"><a href="#Complex-Demo" class="headerlink" title="Complex Demo"></a>Complex Demo</h2><p>现在我们来实现一个综合的例子，这个实例会帮助你理解图像交互的一些思想：</p>
+<p>在图像上用鼠标画图，可以画圆或矩形，按m键在两种模式下切换，按c会清空所有的内容，按q会直接退出。左键按下时开始画图，移动到哪儿画到哪儿，左键释放时结束画图。听上去很复杂，是吗？一步步分析下：</p>
+<p>接下来是具体代码：<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">mode = <span class="string">'rectangle'</span></span><br><span class="line">drawing = <span class="keyword">False</span></span><br><span class="line">start = (<span class="number">0</span>,<span class="number">0</span>)</span><br><span class="line">end = (<span class="number">0</span>,<span class="number">0</span>)</span><br><span class="line">img = np.zeros((<span class="number">512</span>, <span class="number">512</span>, <span class="number">3</span>), np.uint8)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">mouse_event</span><span class="params">(event, x, y, flags, param)</span>:</span></span><br><span class="line">    <span class="keyword">global</span> mode, drawing, start, img, end</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 鼠标按下，开始画图：记录下起点</span></span><br><span class="line">    <span class="keyword">if</span> event == cv2.EVENT_LBUTTONDOWN <span class="keyword">and</span> drawing == <span class="keyword">False</span>:</span><br><span class="line">        drawing = <span class="keyword">True</span></span><br><span class="line">        start = (x,y)</span><br><span class="line">    <span class="comment"># 实时移动的位置作为矩形终点</span></span><br><span class="line">    <span class="keyword">elif</span> event == cv2.EVENT_MOUSEMOVE <span class="keyword">and</span> drawing == <span class="keyword">True</span>:</span><br><span class="line">        end = (x,y)</span><br><span class="line">    <span class="comment"># 鼠标释放后，停止绘图，并画出最终结果</span></span><br><span class="line">    <span class="keyword">elif</span> event == cv2.EVENT_LBUTTONUP <span class="keyword">and</span> drawing == <span class="keyword">True</span>:</span><br><span class="line">        drawing = <span class="keyword">False</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 只需要完成松手时画图出来就行了</span></span><br><span class="line">        <span class="keyword">if</span> mode == <span class="string">'rectangle'</span>:</span><br><span class="line">            cv2.rectangle(img, start, (x, y), (<span class="number">0</span>, <span class="number">255</span>, <span class="number">0</span>), <span class="number">3</span>)</span><br><span class="line">        <span class="keyword">elif</span> mode == <span class="string">'circle'</span>:</span><br><span class="line">            radius = int(((start[<span class="number">0</span>] - x)**<span class="number">2</span> + (start[<span class="number">1</span>] - y)**<span class="number">2</span> )**<span class="number">0.5</span>)</span><br><span class="line">            cv2.circle(img, start, radius, (<span class="number">0</span>, <span class="number">0</span>, <span class="number">255</span>), <span class="number">3</span>)</span><br><span class="line"></span><br><span class="line">        start = end = (<span class="number">0</span>, <span class="number">0</span>)</span><br></pre></td></tr></table></figure></p>
+<p>接下来是主函数<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">global</span> img, mode, start, end</span><br><span class="line">    cv2.namedWindow(<span class="string">'image'</span>)</span><br><span class="line">    cv2.setMouseCallback(<span class="string">'image'</span>, mouse_event)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span>(<span class="keyword">True</span>):</span><br><span class="line">        <span class="comment"># 下面这句话很关键，拷贝出原图，这样才可以实时画图形</span></span><br><span class="line">        temp = np.copy(img)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> drawing == <span class="keyword">True</span> <span class="keyword">and</span> mode == <span class="string">'rectangle'</span>:</span><br><span class="line">            cv2.rectangle(temp, start, end, (<span class="number">0</span>, <span class="number">255</span>, <span class="number">0</span>), <span class="number">3</span>)</span><br><span class="line">        <span class="keyword">elif</span> drawing == <span class="keyword">True</span> <span class="keyword">and</span> mode == <span class="string">'circle'</span>:</span><br><span class="line">            radius = int(((start[<span class="number">0</span>] - end[<span class="number">0</span>])**<span class="number">2</span> + (start[<span class="number">1</span>] - end[<span class="number">1</span>])**<span class="number">2</span> )**<span class="number">0.5</span>)</span><br><span class="line">            cv2.circle(temp, start, radius, (<span class="number">0</span>, <span class="number">0</span>, <span class="number">255</span>), <span class="number">3</span>)</span><br><span class="line"></span><br><span class="line">        cv2.imshow(<span class="string">'image'</span>, temp)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 等待功能键的输入</span></span><br><span class="line">        key = cv2.waitKey(<span class="number">70</span>)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> key == ord(<span class="string">'q'</span>):</span><br><span class="line">            cv2.destroyAllWindows()</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">        <span class="keyword">elif</span> key == ord(<span class="string">'m'</span>) <span class="keyword">and</span> mode == <span class="string">'rectangle'</span>:</span><br><span class="line">            mode = <span class="string">'circle'</span></span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        <span class="keyword">elif</span> key == ord(<span class="string">'m'</span>) <span class="keyword">and</span> mode == <span class="string">'circle'</span> :</span><br><span class="line">            mode = <span class="string">'rectangle'</span></span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        <span class="keyword">elif</span> key == ord(<span class="string">'c'</span>):</span><br><span class="line">            img = np.zeros((<span class="number">512</span>, <span class="number">512</span>, <span class="number">3</span>), np.uint8)</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure></p>
+<p>结果如下图动画所示：</p>
+<p><img src="/2018/08/21/2018-08-21-OpenCV-Python教程-5-鼠标当画笔/1.gif" alt=""></p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a href="http://ex2tron.top/2017/12/09/Python-OpenCV教程番外篇5：鼠标绘图/" target="_blank" rel="noopener">EX2TRON’S BLOG: Python+OpenCV教程番外篇5：鼠标绘图</a><br><a href="https://opencv-python-tutroals.readthedocs.io/en/latest/py_tutorials/py_gui/py_mouse_handling/py_mouse_handling.html" target="_blank" rel="noopener">OpenCV-Python 官方教程: Mouse as a Paint-Brush</a><br><a href="https://blog.csdn.net/akadiao/article/details/80312254" target="_blank" rel="noopener">CSDN: opencv3/python 鼠标响应操作</a><br><a href="https://blog.csdn.net/tengfei461807914/article/details/62438959" target="_blank" rel="noopener">CSDN: python opencv入门 鼠标绘图（4）</a></p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2018/08/21/2018-08-21-OpenCV-Python教程-5-鼠标当画笔/">OpenCV-Python教程(5) --- 鼠标当画笔</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">Jin ZhangYu</a></p>
+        <p><span>发布时间:</span>2018-08-21, 10:33:20</p>
+        <p><span>最后更新:</span>2018-08-21, 12:38:40</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2018/08/21/2018-08-21-OpenCV-Python教程-5-鼠标当画笔/" title="OpenCV-Python教程(5) --- 鼠标当画笔">https://jinzhangyu.github.io/2018/08/21/2018-08-21-OpenCV-Python教程-5-鼠标当画笔/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://jinzhangyu.github.io/2018/08/21/2018-08-21-OpenCV-Python教程-5-鼠标当画笔/　　作者: Jin ZhangYu" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2018/08/19/2018-08-20-OpenCV-Python教程-4-绘图功能/">
+                    OpenCV-Python教程(4) --- 绘图功能
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Targets"><span class="toc-number">1.</span> <span class="toc-text">Targets</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Where-is-your-mouse"><span class="toc-number">2.</span> <span class="toc-text">Where is your mouse</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Example"><span class="toc-number">2.1.</span> <span class="toc-text">Example</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Complex-Demo"><span class="toc-number">3.</span> <span class="toc-text">Complex Demo</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-number">4.</span> <span class="toc-text">Reference</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"OpenCV-Python教程(5) --- 鼠标当画笔　| Hexo　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2018/08/19/2018-08-20-OpenCV-Python教程-4-绘图功能/" title="下一篇: OpenCV-Python教程(4) --- 绘图功能">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/08/21/2018-08-21-OpenCV-Python教程-5-鼠标当画笔/">OpenCV-Python教程(5) --- 鼠标当画笔</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/19/2018-08-20-OpenCV-Python教程-4-绘图功能/">OpenCV-Python教程(4) --- 绘图功能</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/19/2018-08-19-OpenCV-Python教程-3-图像基本操作/">OpenCV-Python教程(3) --- 图像基本操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/18/2018-08-18-OpenCV-Python教程-2-图片的加载和显示/">OpenCV-Python教程(2) --- 图片的加载和显示</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/17/2018-08-17-OpenCV-Python教程-1-安装与导入/">OpenCV-Python教程(1) --- 安装与导入</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2018 Jin ZhangYu
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script src="//cdn.bootcss.com/mathjax/2.6.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+    <script>
+        var originTitle = document.title;
+        var titleTime;
+        document.addEventListener("visibilitychange", function() {
+            if (document.hidden) {
+                document.title = "ξ( ✿＞◡❛) 我藏好了哦~ " + originTitle;
+                clearTimeout(titleTime);
+            }
+            else {
+                document.title = "ԅ(¯﹃¯ԅ) 被你发现啦~ " + originTitle;
+                titleTime = setTimeout(function() {
+                    document.title = originTitle;
+                }, 2000);
+            }
+        })
+    </script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>
