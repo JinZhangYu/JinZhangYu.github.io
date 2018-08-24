@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.4.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.4.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.4.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.4.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.4.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.4.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="Targets 颜色空间转换，如BGR↔Gray，BGR↔HSV等 OpenCV函数：cv2.cvtColor(),cv2.inRange()">
+<meta name="keywords" content="macOS=10.13.6,opencv=3.4.1,python=3.5,图像处理">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OpenCV-Python教程(8) --- 色彩空间变换">
+<meta property="og:url" content="https://jinzhangyu.github.io/2018/08/24/2018-08-24-OpenCV-Python教程-8-色彩空间变换/index.html">
+<meta property="og:site_name" content="Gwyn, Lord of Cinder">
+<meta property="og:description" content="Targets 颜色空间转换，如BGR↔Gray，BGR↔HSV等 OpenCV函数：cv2.cvtColor(),cv2.inRange()">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://jinzhangyu.github.io/2018/08/24/2018-08-24-OpenCV-Python教程-8-色彩空间变换/2.png">
+<meta property="og:image" content="https://jinzhangyu.github.io/2018/08/24/2018-08-24-OpenCV-Python教程-8-色彩空间变换/1.png">
+<meta property="og:image" content="https://jinzhangyu.github.io/2018/08/24/2018-08-24-OpenCV-Python教程-8-色彩空间变换/1.jpg">
+<meta property="og:updated_time" content="2018-08-24T07:21:14.828Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="OpenCV-Python教程(8) --- 色彩空间变换">
+<meta name="twitter:description" content="Targets 颜色空间转换，如BGR↔Gray，BGR↔HSV等 OpenCV函数：cv2.cvtColor(),cv2.inRange()">
+<meta name="twitter:image" content="https://jinzhangyu.github.io/2018/08/24/2018-08-24-OpenCV-Python教程-8-色彩空间变换/2.png">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Gwyn, Lord of Cinder" type="application/atom+xml" />
+
+
+
+
+  <link rel="canonical" href="https://jinzhangyu.github.io/2018/08/24/2018-08-24-OpenCV-Python教程-8-色彩空间变换/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>OpenCV-Python教程(8) --- 色彩空间变换 | Gwyn, Lord of Cinder</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Gwyn, Lord of Cinder</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />About</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />Tags</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />Categories</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-schedule">
+    <a href="/schedule/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-calendar"></i> <br />Schedule</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-sitemap">
+    <a href="/sitemap.xml" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />Sitemap</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-commonweal">
+    <a href="/404/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />Commonweal 404</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://jinzhangyu.github.io/2018/08/24/2018-08-24-OpenCV-Python教程-8-色彩空间变换/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Jin ZhangYu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Gwyn, Lord of Cinder">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">OpenCV-Python教程(8) --- 色彩空间变换
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-08-24 14:09:52 / Modified: 15:21:14" itemprop="dateCreated datePublished" datetime="2018-08-24T14:09:52+08:00">2018-08-24</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Targets"><a href="#Targets" class="headerlink" title="Targets"></a>Targets</h2><ul>
+<li>颜色空间转换，如BGR↔Gray，BGR↔HSV等</li>
+<li>OpenCV函数：cv2.cvtColor(),cv2.inRange()</li>
+</ul>
+<a id="more"></a>
+<h2 id="Changing-Color-Space"><a href="#Changing-Color-Space" class="headerlink" title="Changing Color-Space"></a>Changing Color-Space</h2><p>在opencv中有超过150种颜色空间转换方法，但是经常用的只有 BGR-灰度图 和 BGR-HSV。</p>
+<p>具体的来说，使用<code>cv2.cvtColor()</code>函数来完成色彩空间的变换：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cv2.cvtColor(src, code[, dst[, dstCn]]) → dst</span><br><span class="line">@param: src – input image: 8-bit unsigned, 16-bit unsigned ( CV_16UC... ),</span><br><span class="line">              or single-precision floating-point. 要转换的图片</span><br><span class="line">@param: code – color space conversion code (see the description below).</span><br><span class="line">@output: dst – output image of the same size and depth as src.</span><br></pre></td></tr></table></figure></p>
+<p>我们主要用到的色彩空间转换只有下属两种：</p>
+<ul>
+<li>RGB $\leftrightarrow$ GRAY ( <code>COLOR_BGR2GRAY</code>, <code>COLOR_RGB2GRAY</code>, <code>COLOR_GRAY2BGR</code>, <code>COLOR_GRAY2RGB</code> ),变换的原理如下：<br>$$RGB\text{ }to\text{ }Gray: Y \leftarrow 0.299\cdot R+0.587\cdot G+0.114\cdot B$$<br>and<br>$$Gray\text{ }to\text{ }RGB: R\leftarrow Y,G\leftarrow Y,B\leftarrow Y$$</li>
+</ul>
+<p>一般我们不会选择从灰度图到RGB，一般都是从RGB到灰度图</p>
+<ul>
+<li>RGB $\leftrightarrow$ HSV ( <code>COLOR_BGR2HSV</code>, <code>COLOR_RGB2HSV</code>, <code>COLOR_HSV2BGR</code>, <code>COLOR_HSV2RGB</code> )<br><img src="/2018/08/24/2018-08-24-OpenCV-Python教程-8-色彩空间变换/2.png" alt=""></li>
+</ul>
+<p>想要看所有的色彩变化方法，只需要输入如下即可<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Python <span class="number">3.5</span><span class="number">.4</span> |Continuum Analytics, Inc.| (default, Aug <span class="number">14</span> <span class="number">2017</span>, <span class="number">12</span>:<span class="number">43</span>:<span class="number">10</span>)</span><br><span class="line">[GCC <span class="number">4.2</span><span class="number">.1</span> Compatible Apple LLVM <span class="number">6.0</span> (clang<span class="number">-600.0</span><span class="number">.57</span>)] on darwin</span><br><span class="line">Type <span class="string">"help"</span>, <span class="string">"copyright"</span>, <span class="string">"credits"</span> <span class="keyword">or</span> <span class="string">"license"</span> <span class="keyword">for</span> more information.</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> cv2</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">&gt;&gt;&gt;</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>[i <span class="keyword">for</span> i <span class="keyword">in</span> dir(cv2) <span class="keyword">if</span> i.startswith(<span class="string">'COLOR_'</span>)]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>[<span class="string">'COLOR_BAYER_BG2BGR'</span>, <span class="string">'COLOR_BAYER_BG2BGR_EA'</span>, <span class="string">'COLOR_BAYER_BG2BGR_VNG'</span>, <span class="string">'COLOR_BAYER_BG2GRAY'</span>, <span class="string">'COLOR_BAYER_BG2RGB'</span>, <span class="string">'COLOR_BAYER_BG2RGB_EA'</span>, <span class="string">'COLOR_BAYER_BG2RGB_VNG'</span>, <span class="string">'COLOR_BAYER_GB2BGR'</span>, <span class="string">'COLOR_BAYER_GB2BGR_EA'</span>, <span class="string">'COLOR_BAYER_GB2BGR_VNG'</span>, <span class="string">'COLOR_BAYER_GB2GRAY'</span>, <span class="string">'COLOR_BAYER_GB2RGB'</span>, <span class="string">'COLOR_BAYER_GB2RGB_EA'</span>, <span class="string">'COLOR_BAYER_GB2RGB_VNG'</span>, <span class="string">'COLOR_BAYER_GR2BGR'</span>, <span class="string">'COLOR_BAYER_GR2BGR_EA'</span>, <span class="string">'COLOR_BAYER_GR2BGR_VNG'</span>, <span class="string">'COLOR_BAYER_GR2GRAY'</span>, <span class="string">'COLOR_BAYER_GR2RGB'</span>, <span class="string">'COLOR_BAYER_GR2RGB_EA'</span>, <span class="string">'COLOR_BAYER_GR2RGB_VNG'</span>, <span class="string">'COLOR_BAYER_RG2BGR'</span>, <span class="string">'COLOR_BAYER_RG2BGR_EA'</span>, <span class="string">'COLOR_BAYER_RG2BGR_VNG'</span>, <span class="string">'COLOR_BAYER_RG2GRAY'</span>, <span class="string">'COLOR_BAYER_RG2RGB'</span>, <span class="string">'COLOR_BAYER_RG2RGB_EA'</span>, <span class="string">'COLOR_BAYER_RG2RGB_VNG'</span>, <span class="string">'COLOR_BGR2BGR555'</span>, <span class="string">'COLOR_BGR2BGR565'</span>, <span class="string">'COLOR_BGR2BGRA'</span>, <span class="string">'COLOR_BGR2GRAY'</span>, <span class="string">'COLOR_BGR2HLS'</span>, <span class="string">'COLOR_BGR2HLS_FULL'</span>, <span class="string">'COLOR_BGR2HSV'</span>, <span class="string">'COLOR_BGR2HSV_FULL'</span>, <span class="string">'COLOR_BGR2LAB'</span>, <span class="string">'COLOR_BGR2LUV'</span>, <span class="string">'COLOR_BGR2Lab'</span>, <span class="string">'COLOR_BGR2Luv'</span>, <span class="string">'COLOR_BGR2RGB'</span>, <span class="string">'COLOR_BGR2RGBA'</span>, <span class="string">'COLOR_BGR2XYZ'</span>, <span class="string">'COLOR_BGR2YCR_CB'</span>, <span class="string">'COLOR_BGR2YCrCb'</span>, <span class="string">'COLOR_BGR2YUV'</span>, <span class="string">'COLOR_BGR2YUV_I420'</span>, <span class="string">'COLOR_BGR2YUV_IYUV'</span>, <span class="string">'COLOR_BGR2YUV_YV12'</span>, <span class="string">'COLOR_BGR5552BGR'</span>, <span class="string">'COLOR_BGR5552BGRA'</span>, <span class="string">'COLOR_BGR5552GRAY'</span>, <span class="string">'COLOR_BGR5552RGB'</span>, <span class="string">'COLOR_BGR5552RGBA'</span>, <span class="string">'COLOR_BGR5652BGR'</span>, <span class="string">'COLOR_BGR5652BGRA'</span>, <span class="string">'COLOR_BGR5652GRAY'</span>, <span class="string">'COLOR_BGR5652RGB'</span>, <span class="string">'COLOR_BGR5652RGBA'</span>, <span class="string">'COLOR_BGRA2BGR'</span>, <span class="string">'COLOR_BGRA2BGR555'</span>, <span class="string">'COLOR_BGRA2BGR565'</span>, <span class="string">'COLOR_BGRA2GRAY'</span>, <span class="string">'COLOR_BGRA2RGB'</span>, <span class="string">'COLOR_BGRA2RGBA'</span>, <span class="string">'COLOR_BGRA2YUV_I420'</span>, <span class="string">'COLOR_BGRA2YUV_IYUV'</span>, <span class="string">'COLOR_BGRA2YUV_YV12'</span>, <span class="string">'COLOR_BayerBG2BGR'</span>, <span class="string">'COLOR_BayerBG2BGR_EA'</span>, <span class="string">'COLOR_BayerBG2BGR_VNG'</span>, <span class="string">'COLOR_BayerBG2GRAY'</span>, <span class="string">'COLOR_BayerBG2RGB'</span>, <span class="string">'COLOR_BayerBG2RGB_EA'</span>, <span class="string">'COLOR_BayerBG2RGB_VNG'</span>, <span class="string">'COLOR_BayerGB2BGR'</span>, <span class="string">'COLOR_BayerGB2BGR_EA'</span>, <span class="string">'COLOR_BayerGB2BGR_VNG'</span>, <span class="string">'COLOR_BayerGB2GRAY'</span>, <span class="string">'COLOR_BayerGB2RGB'</span>, <span class="string">'COLOR_BayerGB2RGB_EA'</span>, <span class="string">'COLOR_BayerGB2RGB_VNG'</span>, <span class="string">'COLOR_BayerGR2BGR'</span>, <span class="string">'COLOR_BayerGR2BGR_EA'</span>, <span class="string">'COLOR_BayerGR2BGR_VNG'</span>, <span class="string">'COLOR_BayerGR2GRAY'</span>, <span class="string">'COLOR_BayerGR2RGB'</span>, <span class="string">'COLOR_BayerGR2RGB_EA'</span>, <span class="string">'COLOR_BayerGR2RGB_VNG'</span>, <span class="string">'COLOR_BayerRG2BGR'</span>, <span class="string">'COLOR_BayerRG2BGR_EA'</span>, <span class="string">'COLOR_BayerRG2BGR_VNG'</span>, <span class="string">'COLOR_BayerRG2GRAY'</span>, <span class="string">'COLOR_BayerRG2RGB'</span>, <span class="string">'COLOR_BayerRG2RGB_EA'</span>, <span class="string">'COLOR_BayerRG2RGB_VNG'</span>, <span class="string">'COLOR_COLORCVT_MAX'</span>, <span class="string">'COLOR_GRAY2BGR'</span>, <span class="string">'COLOR_GRAY2BGR555'</span>, <span class="string">'COLOR_GRAY2BGR565'</span>, <span class="string">'COLOR_GRAY2BGRA'</span>, <span class="string">'COLOR_GRAY2RGB'</span>, <span class="string">'COLOR_GRAY2RGBA'</span>, <span class="string">'COLOR_HLS2BGR'</span>, <span class="string">'COLOR_HLS2BGR_FULL'</span>, <span class="string">'COLOR_HLS2RGB'</span>, <span class="string">'COLOR_HLS2RGB_FULL'</span>, <span class="string">'COLOR_HSV2BGR'</span>, <span class="string">'COLOR_HSV2BGR_FULL'</span>, <span class="string">'COLOR_HSV2RGB'</span>, <span class="string">'COLOR_HSV2RGB_FULL'</span>, <span class="string">'COLOR_LAB2BGR'</span>, <span class="string">'COLOR_LAB2LBGR'</span>, <span class="string">'COLOR_LAB2LRGB'</span>, <span class="string">'COLOR_LAB2RGB'</span>, <span class="string">'COLOR_LBGR2LAB'</span>, <span class="string">'COLOR_LBGR2LUV'</span>, <span class="string">'COLOR_LBGR2Lab'</span>, <span class="string">'COLOR_LBGR2Luv'</span>, <span class="string">'COLOR_LRGB2LAB'</span>, <span class="string">'COLOR_LRGB2LUV'</span>, <span class="string">'COLOR_LRGB2Lab'</span>, <span class="string">'COLOR_LRGB2Luv'</span>, <span class="string">'COLOR_LUV2BGR'</span>, <span class="string">'COLOR_LUV2LBGR'</span>, <span class="string">'COLOR_LUV2LRGB'</span>, <span class="string">'COLOR_LUV2RGB'</span>, <span class="string">'COLOR_Lab2BGR'</span>, <span class="string">'COLOR_Lab2LBGR'</span>, <span class="string">'COLOR_Lab2LRGB'</span>, <span class="string">'COLOR_Lab2RGB'</span>, <span class="string">'COLOR_Luv2BGR'</span>, <span class="string">'COLOR_Luv2LBGR'</span>, <span class="string">'COLOR_Luv2LRGB'</span>, <span class="string">'COLOR_Luv2RGB'</span>, <span class="string">'COLOR_M_RGBA2RGBA'</span>, <span class="string">'COLOR_RGB2BGR'</span>, <span class="string">'COLOR_RGB2BGR555'</span>, <span class="string">'COLOR_RGB2BGR565'</span>, <span class="string">'COLOR_RGB2BGRA'</span>, <span class="string">'COLOR_RGB2GRAY'</span>, <span class="string">'COLOR_RGB2HLS'</span>, <span class="string">'COLOR_RGB2HLS_FULL'</span>, <span class="string">'COLOR_RGB2HSV'</span>, <span class="string">'COLOR_RGB2HSV_FULL'</span>, <span class="string">'COLOR_RGB2LAB'</span>, <span class="string">'COLOR_RGB2LUV'</span>, <span class="string">'COLOR_RGB2Lab'</span>, <span class="string">'COLOR_RGB2Luv'</span>, <span class="string">'COLOR_RGB2RGBA'</span>, <span class="string">'COLOR_RGB2XYZ'</span>, <span class="string">'COLOR_RGB2YCR_CB'</span>, <span class="string">'COLOR_RGB2YCrCb'</span>, <span class="string">'COLOR_RGB2YUV'</span>, <span class="string">'COLOR_RGB2YUV_I420'</span>, <span class="string">'COLOR_RGB2YUV_IYUV'</span>, <span class="string">'COLOR_RGB2YUV_YV12'</span>, <span class="string">'COLOR_RGBA2BGR'</span>, <span class="string">'COLOR_RGBA2BGR555'</span>, <span class="string">'COLOR_RGBA2BGR565'</span>, <span class="string">'COLOR_RGBA2BGRA'</span>, <span class="string">'COLOR_RGBA2GRAY'</span>, <span class="string">'COLOR_RGBA2M_RGBA'</span>, <span class="string">'COLOR_RGBA2RGB'</span>, <span class="string">'COLOR_RGBA2YUV_I420'</span>, <span class="string">'COLOR_RGBA2YUV_IYUV'</span>, <span class="string">'COLOR_RGBA2YUV_YV12'</span>, <span class="string">'COLOR_RGBA2mRGBA'</span>, <span class="string">'COLOR_XYZ2BGR'</span>, <span class="string">'COLOR_XYZ2RGB'</span>, <span class="string">'COLOR_YCR_CB2BGR'</span>, <span class="string">'COLOR_YCR_CB2RGB'</span>, <span class="string">'COLOR_YCrCb2BGR'</span>, <span class="string">'COLOR_YCrCb2RGB'</span>, <span class="string">'COLOR_YUV2BGR'</span>, <span class="string">'COLOR_YUV2BGRA_I420'</span>, <span class="string">'COLOR_YUV2BGRA_IYUV'</span>, <span class="string">'COLOR_YUV2BGRA_NV12'</span>, <span class="string">'COLOR_YUV2BGRA_NV21'</span>, <span class="string">'COLOR_YUV2BGRA_UYNV'</span>, <span class="string">'COLOR_YUV2BGRA_UYVY'</span>, <span class="string">'COLOR_YUV2BGRA_Y422'</span>, <span class="string">'COLOR_YUV2BGRA_YUNV'</span>, <span class="string">'COLOR_YUV2BGRA_YUY2'</span>, <span class="string">'COLOR_YUV2BGRA_YUYV'</span>, <span class="string">'COLOR_YUV2BGRA_YV12'</span>, <span class="string">'COLOR_YUV2BGRA_YVYU'</span>, <span class="string">'COLOR_YUV2BGR_I420'</span>, <span class="string">'COLOR_YUV2BGR_IYUV'</span>, <span class="string">'COLOR_YUV2BGR_NV12'</span>, <span class="string">'COLOR_YUV2BGR_NV21'</span>, <span class="string">'COLOR_YUV2BGR_UYNV'</span>, <span class="string">'COLOR_YUV2BGR_UYVY'</span>, <span class="string">'COLOR_YUV2BGR_Y422'</span>, <span class="string">'COLOR_YUV2BGR_YUNV'</span>, <span class="string">'COLOR_YUV2BGR_YUY2'</span>, <span class="string">'COLOR_YUV2BGR_YUYV'</span>, <span class="string">'COLOR_YUV2BGR_YV12'</span>, <span class="string">'COLOR_YUV2BGR_YVYU'</span>, <span class="string">'COLOR_YUV2GRAY_420'</span>, <span class="string">'COLOR_YUV2GRAY_I420'</span>, <span class="string">'COLOR_YUV2GRAY_IYUV'</span>, <span class="string">'COLOR_YUV2GRAY_NV12'</span>, <span class="string">'COLOR_YUV2GRAY_NV21'</span>, <span class="string">'COLOR_YUV2GRAY_UYNV'</span>, <span class="string">'COLOR_YUV2GRAY_UYVY'</span>, <span class="string">'COLOR_YUV2GRAY_Y422'</span>, <span class="string">'COLOR_YUV2GRAY_YUNV'</span>, <span class="string">'COLOR_YUV2GRAY_YUY2'</span>, <span class="string">'COLOR_YUV2GRAY_YUYV'</span>, <span class="string">'COLOR_YUV2GRAY_YV12'</span>, <span class="string">'COLOR_YUV2GRAY_YVYU'</span>, <span class="string">'COLOR_YUV2RGB'</span>, <span class="string">'COLOR_YUV2RGBA_I420'</span>, <span class="string">'COLOR_YUV2RGBA_IYUV'</span>, <span class="string">'COLOR_YUV2RGBA_NV12'</span>, <span class="string">'COLOR_YUV2RGBA_NV21'</span>, <span class="string">'COLOR_YUV2RGBA_UYNV'</span>, <span class="string">'COLOR_YUV2RGBA_UYVY'</span>, <span class="string">'COLOR_YUV2RGBA_Y422'</span>, <span class="string">'COLOR_YUV2RGBA_YUNV'</span>, <span class="string">'COLOR_YUV2RGBA_YUY2'</span>, <span class="string">'COLOR_YUV2RGBA_YUYV'</span>, <span class="string">'COLOR_YUV2RGBA_YV12'</span>, <span class="string">'COLOR_YUV2RGBA_YVYU'</span>, <span class="string">'COLOR_YUV2RGB_I420'</span>, <span class="string">'COLOR_YUV2RGB_IYUV'</span>, <span class="string">'COLOR_YUV2RGB_NV12'</span>, <span class="string">'COLOR_YUV2RGB_NV21'</span>, <span class="string">'COLOR_YUV2RGB_UYNV'</span>, <span class="string">'COLOR_YUV2RGB_UYVY'</span>, <span class="string">'COLOR_YUV2RGB_Y422'</span>, <span class="string">'COLOR_YUV2RGB_YUNV'</span>, <span class="string">'COLOR_YUV2RGB_YUY2'</span>, <span class="string">'COLOR_YUV2RGB_YUYV'</span>, <span class="string">'COLOR_YUV2RGB_YV12'</span>, <span class="string">'COLOR_YUV2RGB_YVYU'</span>, <span class="string">'COLOR_YUV420P2BGR'</span>, <span class="string">'COLOR_YUV420P2BGRA'</span>, <span class="string">'COLOR_YUV420P2GRAY'</span>, <span class="string">'COLOR_YUV420P2RGB'</span>, <span class="string">'COLOR_YUV420P2RGBA'</span>, <span class="string">'COLOR_YUV420SP2BGR'</span>, <span class="string">'COLOR_YUV420SP2BGRA'</span>, <span class="string">'COLOR_YUV420SP2GRAY'</span>, <span class="string">'COLOR_YUV420SP2RGB'</span>, <span class="string">'COLOR_YUV420SP2RGBA'</span>, <span class="string">'COLOR_YUV420p2BGR'</span>, <span class="string">'COLOR_YUV420p2BGRA'</span>, <span class="string">'COLOR_YUV420p2GRAY'</span>, <span class="string">'COLOR_YUV420p2RGB'</span>, <span class="string">'COLOR_YUV420p2RGBA'</span>, <span class="string">'COLOR_YUV420sp2BGR'</span>, <span class="string">'COLOR_YUV420sp2BGRA'</span>, <span class="string">'COLOR_YUV420sp2GRAY'</span>, <span class="string">'COLOR_YUV420sp2RGB'</span>, <span class="string">'COLOR_YUV420sp2RGBA'</span>, <span class="string">'COLOR_mRGBA2RGBA'</span>]</span><br></pre></td></tr></table></figure></p>
+<p><strong>注意：HSV空间中，H表示色彩/色度，取值范围 [0，179]，S表示饱和度，取值范围 [0，255]，V表示亮度，取值范围 [0，255]。但是不同的软件使用值不同</strong></p>
+<h2 id="Color-Range-Tracking"><a href="#Color-Range-Tracking" class="headerlink" title="Color Range Tracking"></a>Color Range Tracking</h2><p>我们使用<code>cv2.inRange()</code>函数设定取值范围,<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">cv2.inRange(src, lowerb, upperb[, dst]) → dst</span><br><span class="line">@param: src – first input array. 输入矩阵（图像）</span><br><span class="line">@param: lowerb – inclusive lower boundary array or a scalar.阈值下限</span><br><span class="line">@param: upperb – inclusive upper boundary array or a scalar.阈值上限</span><br><span class="line">@output: dst –  output array of the same size as src and CV_8U type.</span><br><span class="line">                输出是一个mask，用于之后的图像混合</span><br></pre></td></tr></table></figure></p>
+<p>如果想通过HSV来跟踪颜色的话，推荐下述步骤：</p>
+<ul>
+<li><p>用<code>cv2.cvtColor()</code>函数来获得RGB对应的HSV值：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> cv2</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">&gt;&gt;&gt;</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>green = np.uint8([[[<span class="number">0</span>,<span class="number">255</span>,<span class="number">0</span> ]]])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>hsv_green = cv2.cvtColor(green,cv2.COLOR_BGR2HSV)</span><br><span class="line">&gt;&gt;&gt;</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>print(hsv_green)</span><br><span class="line">[[[ <span class="number">60</span> <span class="number">255</span> <span class="number">255</span>]]]</span><br><span class="line">&gt;&gt;&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>现在可以使用 <code>[H-10, 100,100]</code> 和 <code>[H+10, 255, 255]</code> 做阈值上下限，来滤波。</p>
+</li>
+<li><strong><code>cv2.inRange()</code>的输出是一个mask，而不是一张图片</strong></li>
+</ul>
+<h3 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h3><p>同时提取红绿蓝三个不同颜色的物体，原图如下：<br><img src="/2018/08/24/2018-08-24-OpenCV-Python教程-8-色彩空间变换/1.png" alt=""><br>我们一步一步来，先是读入图片，并转换成hsv格式；原图和hsv两张图片分别保存，因为之后都要用得到：<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line"><span class="comment"># 读取原图</span></span><br><span class="line">original = cv2.imread(<span class="string">'1.png'</span>)</span><br><span class="line">original = original[:,:,::<span class="number">-1</span>] <span class="comment"># 转换成RGB</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 将原图转换成hsv格式</span></span><br><span class="line">img = cv2.cvtColor(original,cv2.COLOR_RGB2HSV)</span><br></pre></td></tr></table></figure></p>
+<p><strong><em><code>cv2.imread()</code>之后一定要进行BGR2RGB操作，这样之后的数组操作才能默认是RGB的顺序</em></strong></p>
+<p>之后是生成RGB三个上下限：<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment"># 设置hsv格式下的红绿蓝三原色的值</span></span><br><span class="line">hsv_red   = np.array([<span class="number">0</span>,<span class="number">255</span>,<span class="number">255</span>],np.uint8)</span><br><span class="line">hsv_green = np.array([<span class="number">60</span>,<span class="number">255</span>,<span class="number">255</span>],np.uint8)</span><br><span class="line">hsv_blue  = np.array([<span class="number">120</span>,<span class="number">255</span>,<span class="number">255</span>],np.uint8)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置hsv格式下的红绿蓝三原色的上下限</span></span><br><span class="line">hsv_red_lowerb = np.array([hsv_red[<span class="number">0</span>]     , <span class="number">100</span>, <span class="number">100</span>],np.uint8)</span><br><span class="line">hsv_red_upperb = np.array([hsv_red[<span class="number">0</span>] + <span class="number">10</span>, <span class="number">255</span>, <span class="number">255</span>],np.uint8)</span><br><span class="line"></span><br><span class="line">hsv_green_lowerb = np.array([hsv_green[<span class="number">0</span>] - <span class="number">10</span>, <span class="number">100</span>, <span class="number">100</span>],np.uint8)</span><br><span class="line">hsv_green_upperb = np.array([hsv_green[<span class="number">0</span>] + <span class="number">10</span>, <span class="number">255</span>, <span class="number">255</span>],np.uint8)</span><br><span class="line"></span><br><span class="line">hsv_blue_lowerb = np.array([hsv_blue[<span class="number">0</span>] - <span class="number">10</span>, <span class="number">100</span>, <span class="number">100</span>],np.uint8)</span><br><span class="line">hsv_blue_upperb = np.array([hsv_blue[<span class="number">0</span>] + <span class="number">10</span>, <span class="number">255</span>, <span class="number">255</span>],np.uint8)</span><br></pre></td></tr></table></figure></p>
+<p>接下来就是生成mask，以及使用mask进行图片混合了（图片混合内容详见）：<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment"># 产生mask</span></span><br><span class="line">mask_red   = cv2.inRange(img, hsv_red_lowerb,    hsv_red_upperb)</span><br><span class="line">mask_green = cv2.inRange(img, hsv_green_lowerb,  hsv_green_upperb)</span><br><span class="line">mask_blue  = cv2.inRange(img, hsv_blue_lowerb,   hsv_blue_upperb)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 根据mask生成各个部分的图</span></span><br><span class="line">img_red     = cv2.bitwise_and(original,original,mask=mask_red)</span><br><span class="line">img_green   = cv2.bitwise_and(original,original,mask=mask_green)</span><br><span class="line">img_blue    = cv2.bitwise_and(original,original,mask=mask_blue)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 讲各个部分的图加起来</span></span><br><span class="line">img_res   = img_red + img_green + img_blue</span><br></pre></td></tr></table></figure></p>
+<p>最后是一波画图操作了：<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">plt.figure(figsize=(<span class="number">15</span>,<span class="number">8</span>))</span><br><span class="line"></span><br><span class="line">plt.subplot(<span class="number">3</span>,<span class="number">3</span>,<span class="number">2</span>),plt.imshow(original),plt.title(<span class="string">'img'</span>),plt.xticks([]), plt.yticks([])</span><br><span class="line">plt.subplot(<span class="number">3</span>,<span class="number">3</span>,<span class="number">4</span>),plt.imshow(img_red),plt.title(<span class="string">'img_red'</span>),plt.xticks([]), plt.yticks([])</span><br><span class="line">plt.subplot(<span class="number">3</span>,<span class="number">3</span>,<span class="number">5</span>),plt.imshow(img_green),plt.title(<span class="string">'img_green'</span>),plt.xticks([]), plt.yticks([])</span><br><span class="line">plt.subplot(<span class="number">3</span>,<span class="number">3</span>,<span class="number">6</span>),plt.imshow(img_blue),plt.title(<span class="string">'img_blue'</span>),plt.xticks([]), plt.yticks([])</span><br><span class="line">plt.subplot(<span class="number">3</span>,<span class="number">3</span>,<span class="number">8</span>),plt.imshow(img_res),plt.title(<span class="string">'img_res'</span>),plt.xticks([]), plt.yticks([])</span><br><span class="line"></span><br><span class="line">plt.savefig(<span class="string">'1.jpg'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></p>
+<p>结果如下：<br><img src="/2018/08/24/2018-08-24-OpenCV-Python教程-8-色彩空间变换/1.jpg" alt=""></p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a href="https://blog.csdn.net/tengfei461807914/article/details/75910606" target="_blank" rel="noopener">CSDN: python opencv入门 颜色空间转换（9）</a><br><a href="https://opencv-python-tutroals.readthedocs.io/en/latest/py_tutorials/py_imgproc/py_colorspaces/py_colorspaces.html" target="_blank" rel="noopener">OpenCV-Python Tutorials : Changing Colorspaces</a><br><a href="http://ex2tron.top/2017/12/07/Python-OpenCV教程5：颜色空间转换/" target="_blank" rel="noopener">EX2TRON’S BLOG: Python+OpenCV教程5：颜色空间转换</a></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/macOS-10-13-6/" rel="tag"># macOS=10.13.6</a>
+          
+            <a href="/tags/opencv-3-4-1/" rel="tag"># opencv=3.4.1</a>
+          
+            <a href="/tags/python-3-5/" rel="tag"># python=3.5</a>
+          
+            <a href="/tags/图像处理/" rel="tag"># 图像处理</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/23/2018-08-23-OpenCV-Python教程-7-图像上的算术运算/" rel="next" title="OpenCV-Python教程(7) --- 图像上的算术运算">
+                <i class="fa fa-chevron-left"></i> OpenCV-Python教程(7) --- 图像上的算术运算
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Jin ZhangYu</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">4</span>
+                    <span class="site-state-item-name">tags</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Targets"><span class="nav-number">1.</span> <span class="nav-text">Targets</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Changing-Color-Space"><span class="nav-number">2.</span> <span class="nav-text">Changing Color-Space</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Color-Range-Tracking"><span class="nav-number">3.</span> <span class="nav-text">Color Range Tracking</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Example"><span class="nav-number">3.1.</span> <span class="nav-text">Example</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">4.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jin ZhangYu</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> v3.7.1</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Mist</a> v6.4.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.4.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.4.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.4.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.4.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.4.0"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
