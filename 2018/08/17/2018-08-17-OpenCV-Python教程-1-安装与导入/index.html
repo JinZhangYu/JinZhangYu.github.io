@@ -16,7 +16,7 @@
 
 <html class="theme-next mist use-motion" lang="zh-Hans">
 <head>
-  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+  <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
 <meta name="theme-color" content="#222">
@@ -109,14 +109,14 @@
 
 
   <meta name="description" content="Targets 安装Anaconda，安装OpenCV环境，可以在环境中使用OpenCV">
-<meta name="keywords" content="macOS=10.13.6,opencv=3.4.1,python=3.5,图像处理">
+<meta name="keywords" content="macOS=10.13.6,opencv=3.4.1,python=3.5,图像处理,Chinese">
 <meta property="og:type" content="article">
 <meta property="og:title" content="OpenCV-Python教程(1) --- 安装与导入">
 <meta property="og:url" content="https://jinzhangyu.github.io/2018/08/17/2018-08-17-OpenCV-Python教程-1-安装与导入/index.html">
 <meta property="og:site_name" content="Gwyn, Lord of Cinder">
 <meta property="og:description" content="Targets 安装Anaconda，安装OpenCV环境，可以在环境中使用OpenCV">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-08-19T14:11:36.259Z">
+<meta property="og:updated_time" content="2018-08-29T08:57:49.368Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="OpenCV-Python教程(1) --- 安装与导入">
 <meta name="twitter:description" content="Targets 安装Anaconda，安装OpenCV环境，可以在环境中使用OpenCV">
@@ -174,7 +174,7 @@
       .logo-line-after i { right: initial; }
     }
   </style>
-</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</noscript>
 
 </head>
 
@@ -185,7 +185,7 @@
     
   
 
-  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -390,7 +390,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2018-08-19 22:11:36" itemprop="dateModified" datetime="2018-08-19T22:11:36+08:00">2018-08-19</time>
+                <time title="Modified: 2018-08-29 16:57:49" itemprop="dateModified" datetime="2018-08-29T16:57:49+08:00">2018-08-29</time>
               
             
           </span>
@@ -423,18 +423,18 @@
       
 
       
-        <h2 id="Targets"><a href="#Targets" class="headerlink" title="Targets"></a>Targets</h2><ul>
+        <h2><span id="targets">Targets</span></h2><ul>
 <li>安装Anaconda，安装OpenCV环境，可以在环境中使用OpenCV<a id="more"></a>
 </li>
 </ul>
-<h2 id="安装Anaconda"><a href="#安装Anaconda" class="headerlink" title="安装Anaconda"></a>安装Anaconda</h2><ul>
+<h2><span id="安装anaconda">安装Anaconda</span></h2><ul>
 <li>详细内容见<a href="https://zhuanlan.zhihu.com/p/32925500" target="_blank" rel="noopener">Anaconda介绍、安装及使用教程</a></li>
 <li>检查是否安装完成anaconda，在终端输入如下指令</li>
 </ul>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda --version</span><br></pre></td></tr></table></figure>
 <p>会有如下输出，其中4.3.30表示anaconda的版本号</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda 4.3.30</span><br></pre></td></tr></table></figure>
-<h2 id="创建新的OpenCV环境"><a href="#创建新的OpenCV环境" class="headerlink" title="创建新的OpenCV环境"></a>创建新的OpenCV环境</h2><p>Anaconda 创建新环境的语法如下：</p>
+<h2><span id="创建新的opencv环境">创建新的OpenCV环境</span></h2><p>Anaconda 创建新环境的语法如下：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">conda create --name &lt;env_name&gt; &lt;package_names&gt;</span><br><span class="line">@param: &lt;env_name&gt; 即创建的环境名。建议以英文命名，且不加空格。</span><br><span class="line">@param: &lt;package_names&gt; 即安装在环境中的包名。</span><br></pre></td></tr></table></figure>
 <ul>
 <li>如果要安装指定的版本号，则只需要在包名后面以 = 和版本号的形式执行。如： conda create –name python2 python=2.7 ，即创建一个名为“python2”的环境，环境中安装版本为2.7的python。</li>
@@ -443,14 +443,14 @@
 </ul>
 <p>我们选择输入</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda create --name OpenCV python=3.5</span><br></pre></td></tr></table></figure>
-<h2 id="激活与退出OpenCV环境"><a href="#激活与退出OpenCV环境" class="headerlink" title="激活与退出OpenCV环境"></a>激活与退出OpenCV环境</h2><p>想用环境里的包需要激活环境:</p>
+<h2><span id="激活与退出opencv环境">激活与退出OpenCV环境</span></h2><p>想用环境里的包需要激活环境:</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> activate OpenCV</span><br></pre></td></tr></table></figure>
 <p>在不需要用到环境时，退出环境：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> deactivate OpenCV</span><br></pre></td></tr></table></figure>
-<h2 id="安装OpenCV学习需要的库与包"><a href="#安装OpenCV学习需要的库与包" class="headerlink" title="安装OpenCV学习需要的库与包"></a>安装OpenCV学习需要的库与包</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda install numpy tqdm scipy scikit-image matplotlib</span><br></pre></td></tr></table></figure>
+<h2><span id="安装opencv学习需要的库与包">安装OpenCV学习需要的库与包</span></h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda install numpy tqdm scipy scikit-image matplotlib</span><br></pre></td></tr></table></figure>
 <p>但是opencv的安装异常智障，经常会出现各种各样装好了但是无法import cv2的报错，所以经过长时间的验证，只有如下方法是有效的。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda install -c menpo opencv3</span><br></pre></td></tr></table></figure>
-<h2 id="检查是否安装完成"><a href="#检查是否安装完成" class="headerlink" title="检查是否安装完成"></a>检查是否安装完成</h2><p>激活环境后在终端输入</p>
+<h2><span id="检查是否安装完成">检查是否安装完成</span></h2><p>激活环境后在终端输入</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python</span><br></pre></td></tr></table></figure>
 <p>会有如下输出，意味着进入了python的交互，</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Python <span class="number">3.5</span><span class="number">.4</span> |Continuum Analytics, Inc.| (default, Aug <span class="number">14</span> <span class="number">2017</span>, <span class="number">12</span>:<span class="number">43</span>:<span class="number">10</span>)</span><br><span class="line">[GCC <span class="number">4.2</span><span class="number">.1</span> Compatible Apple LLVM <span class="number">6.0</span> (clang<span class="number">-600.0</span><span class="number">.57</span>)] on darwin</span><br><span class="line">Type <span class="string">"help"</span>, <span class="string">"copyright"</span>, <span class="string">"credits"</span> <span class="keyword">or</span> <span class="string">"license"</span> <span class="keyword">for</span> more information.</span><br><span class="line">&gt;&gt;&gt;</span><br></pre></td></tr></table></figure>
@@ -484,6 +484,8 @@
             <a href="/tags/python-3-5/" rel="tag"># python=3.5</a>
           
             <a href="/tags/图像处理/" rel="tag"># 图像处理</a>
+          
+            <a href="/tags/Chinese/" rel="tag"># Chinese</a>
           
         </div>
       
@@ -574,7 +576,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">9</span>
+                    <span class="site-state-item-count">10</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -597,7 +599,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">4</span>
+                      
+                    
+                    <span class="site-state-item-count">5</span>
                     <span class="site-state-item-name">tags</span>
                   
                 </div>
@@ -640,7 +644,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Targets"><span class="nav-number">1.</span> <span class="nav-text">Targets</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装Anaconda"><span class="nav-number">2.</span> <span class="nav-text">安装Anaconda</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建新的OpenCV环境"><span class="nav-number">3.</span> <span class="nav-text">创建新的OpenCV环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#激活与退出OpenCV环境"><span class="nav-number">4.</span> <span class="nav-text">激活与退出OpenCV环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装OpenCV学习需要的库与包"><span class="nav-number">5.</span> <span class="nav-text">安装OpenCV学习需要的库与包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#检查是否安装完成"><span class="nav-number">6.</span> <span class="nav-text">检查是否安装完成</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">Targets</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">2.</span> <span class="nav-text">安装Anaconda</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">3.</span> <span class="nav-text">创建新的OpenCV环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">4.</span> <span class="nav-text">激活与退出OpenCV环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">5.</span> <span class="nav-text">安装OpenCV学习需要的库与包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">6.</span> <span class="nav-text">检查是否安装完成</span></a></li></ol></div>
             
 
           </div>
@@ -784,7 +788,7 @@
   
 
 
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.4.0"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.4.0"></script>
 
 
 
