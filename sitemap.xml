@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://jinzhangyu.github.io/tags/index.html</loc>
+    
+    <lastmod>2018-08-31T11:13:46.557Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://jinzhangyu.github.io/2018/08/31/2018-08-31-OpenCV-Python%E6%95%99%E7%A8%8B-11-%E9%98%88%E5%80%BC%E5%88%86%E5%89%B2-2/</loc>
     
     <lastmod>2018-08-31T10:34:32.658Z</lastmod>
@@ -89,13 +96,6 @@
     <loc>https://jinzhangyu.github.io//404.html</loc>
     
     <lastmod>2018-08-16T14:49:21.918Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jinzhangyu.github.io/tags/index.html</loc>
-    
-    <lastmod>2018-08-16T14:30:02.243Z</lastmod>
     
   </url>
   
