@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.4.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.4.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.4.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.4.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.4.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.4.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="Targets 了解卷积/滤波的基础知识，给图片添加边框。 OpenCV函数：cv2.copyMakeBorder(), cv2.filter2D()">
+<meta name="keywords" content="macOS=10.13.6,opencv=3.4.1,python=3.5,图像处理,Chinese">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OpenCV-Python教程(12) --- 卷积基础">
+<meta property="og:url" content="https://jinzhangyu.github.io/2018/09/03/2018-09-03-OpenCV-Python教程-12-卷积基础-图片边框/index.html">
+<meta property="og:site_name" content="Gwyn, Lord of Cinder">
+<meta property="og:description" content="Targets 了解卷积/滤波的基础知识，给图片添加边框。 OpenCV函数：cv2.copyMakeBorder(), cv2.filter2D()">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://jinzhangyu.github.io/2018/09/03/2018-09-03-OpenCV-Python教程-12-卷积基础-图片边框/1.jpg">
+<meta property="og:image" content="https://jinzhangyu.github.io/2018/09/03/2018-09-03-OpenCV-Python教程-12-卷积基础-图片边框/2.gif">
+<meta property="og:image" content="https://jinzhangyu.github.io/2018/09/03/2018-09-03-OpenCV-Python教程-12-卷积基础-图片边框/2.jpg">
+<meta property="og:image" content="https://jinzhangyu.github.io/2018/09/03/2018-09-03-OpenCV-Python教程-12-卷积基础-图片边框/3.jpg">
+<meta property="og:image" content="https://jinzhangyu.github.io/2018/09/03/2018-09-03-OpenCV-Python教程-12-卷积基础-图片边框/4.jpg">
+<meta property="og:image" content="https://jinzhangyu.github.io/2018/09/03/2018-09-03-OpenCV-Python教程-12-卷积基础-图片边框/5.jpg">
+<meta property="og:image" content="https://jinzhangyu.github.io/2018/09/03/2018-09-03-OpenCV-Python教程-12-卷积基础-图片边框/6.jpg">
+<meta property="og:image" content="https://jinzhangyu.github.io/2018/09/03/2018-09-03-OpenCV-Python教程-12-卷积基础-图片边框/7.jpg">
+<meta property="og:updated_time" content="2018-09-03T07:32:14.335Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="OpenCV-Python教程(12) --- 卷积基础">
+<meta name="twitter:description" content="Targets 了解卷积/滤波的基础知识，给图片添加边框。 OpenCV函数：cv2.copyMakeBorder(), cv2.filter2D()">
+<meta name="twitter:image" content="https://jinzhangyu.github.io/2018/09/03/2018-09-03-OpenCV-Python教程-12-卷积基础-图片边框/1.jpg">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Gwyn, Lord of Cinder" type="application/atom+xml" />
+
+
+
+
+  <link rel="canonical" href="https://jinzhangyu.github.io/2018/09/03/2018-09-03-OpenCV-Python教程-12-卷积基础-图片边框/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>OpenCV-Python教程(12) --- 卷积基础 | Gwyn, Lord of Cinder</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Gwyn, Lord of Cinder</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />About</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />Tags</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />Categories</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-commonweal">
+    <a href="/404/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />Commonweal 404</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://jinzhangyu.github.io/2018/09/03/2018-09-03-OpenCV-Python教程-12-卷积基础-图片边框/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Jin ZhangYu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Gwyn, Lord of Cinder">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">OpenCV-Python教程(12) --- 卷积基础
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-09-03 14:08:16 / Modified: 15:32:14" itemprop="dateCreated datePublished" datetime="2018-09-03T14:08:16+08:00">2018-09-03</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1><span id="targets">Targets</span></h1><ul>
+<li>了解卷积/滤波的基础知识，给图片添加边框。</li>
+<li>OpenCV函数：cv2.copyMakeBorder(), cv2.filter2D()</li>
+</ul>
+<a id="more"></a>
+<h1><span id="concept-of-convolution-卷积的概念">Concept of Convolution 卷积的概念</span></h1><p>卷积 <a href="https://zh.wikipedia.org/wiki/卷积" target="_blank" rel="noopener">Convolution</a> 在各个不同学科都有应用，比如说我大学二年级时候修的<code>VE216</code>信号与系统就学过这玩意，可惜我早就忘了。现在我们要用到的是在<code>图像处理</code>中的卷积，可以用作图像模糊、锐化、边缘检测。</p>
+<p>什么是图像处理中的卷积呢，用下面一张图就可以简单解释了。</p>
+<div align="center"><br><img src="/2018/09/03/2018-09-03-OpenCV-Python教程-12-卷积基础-图片边框/1.jpg" width="" height="" alt="" align="center"><br></div><br>卷积就是循环对图像跟一个核逐个元素相乘再求和得到另外一副图像的操作，比如结果图中第一个元素5是怎么算的呢？原图中3×3的区域与3×3的核逐个元素相乘再相加：$$1×1 + 2×0 + 1×0 + 0×0 + 1×0 + 1×0 + 3×0 + 0×0 + 2×2 = 5$$算完之后，整个框再往右移一步继续计算，横向计算完后，再往下移一步继续计算……网上有一副很经典的动态图，方便我们理解卷积：<br><div align="center"><br><img src="/2018/09/03/2018-09-03-OpenCV-Python教程-12-卷积基础-图片边框/2.gif" width="" height="" alt="" align="center"><br></div>
+
+<h1><span id="padding-边框填充">Padding 边框填充</span></h1><p>不难发现，前面我们用<code>3×3</code>的核对一副<code>6×6</code>的图像进行卷积，得到的是<code>4×4</code>的图，图片缩小了！那怎么办呢？我们可以把原图扩充一圈，再卷积，这个操作叫<code>padding</code>。</p>
+<div align="center"><br><img src="/2018/09/03/2018-09-03-OpenCV-Python教程-12-卷积基础-图片边框/2.jpg" width="" height="" alt="" align="center"><br></div>
+
+<p>可以看到现在我们用<code>3×3</code>的核，对增大之后的<code>8x8</code>的图像进行卷积，得到的是<code>6x6</code>的图。这个结果和没有边框扩充的原图大小是一样的。</p>
+<p>那么扩展的这一层应该填充什么值呢？OpenCV中有好几种填充方式，都用<code>cv2.copyMakeBorder()</code>函数实现，一起来看看。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">cv2.copyMakeBorder(src, top, bottom, left, right, borderType[, dst[, value]]) -&gt; dst</span><br><span class="line">@param: src: 输入图像</span><br><span class="line">@param: top, bottom, left, right</span><br><span class="line">    - Parameter specifying how many pixels in each direction from the source</span><br><span class="line">    image rectangle to extrapolate.</span><br><span class="line">    - For example, top=1, bottom=1, left=1, right=1 mean that 1 pixel-wide</span><br><span class="line">    border needs to be built.</span><br><span class="line">@param: borderType</span><br><span class="line">    - cv2.BORDER_CONSTANT 添加有颜色的常数值边界, 还需要下一个参数(value)</span><br><span class="line">    - cv2.BORDER_REFLECT 边界元素的镜像。比如: fedcba|abcdefgh|hgfedcb</span><br><span class="line">    - cv2.BORDER_REFLECT_101 or cv2.BORDER_DEFAULT 更上面一样，但是稍作改动:</span><br><span class="line">     gfedcb|abcdefgh|gfedcba</span><br><span class="line">    - cv2.BORDER_REPLICATE 重复最后一个元素: aaaaaa|abcdefgh|hhhhhhh</span><br><span class="line">    - cv2.BORDER_WRAP 我也不知道咋说，反正就是后边这样: bcdefgh|abcdefgh|abcdefg</span><br><span class="line">    - cv2.BORDER_DEFAULT 待会儿会讲解</span><br><span class="line">@param: value</span><br><span class="line">    Color of border if border type is cv2.BORDER_CONSTANT</span><br></pre></td></tr></table></figure></p>
+<p>其中默认方式和固定值方式最常用，我们详细说明一下：</p>
+<h2><span id="固定值填充-cv2border_constant">固定值填充 <code>cv2.BORDER_CONSTANT</code></span></h2><p>顾名思义，<code>cv2.BORDER_CONSTANT</code>这种方式就是边框都填充成一个固定的值，比如下面的程序都填充0：<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">img = cv2.imread(<span class="string">'6_by_6.bmp'</span>, <span class="number">0</span>)</span><br><span class="line">print(img)</span><br><span class="line"><span class="comment"># 固定值边框，统一都填充0也称为zero padding</span></span><br><span class="line">cons = cv2.copyMakeBorder(img, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, cv2.BORDER_CONSTANT, value=<span class="number">0</span>)</span><br><span class="line">print(cons)</span><br></pre></td></tr></table></figure></p>
+<div align="center"><br><img src="/2018/09/03/2018-09-03-OpenCV-Python教程-12-卷积基础-图片边框/3.jpg" width="" height="" alt="" align="center"><br></div>
+
+<h2><span id="默认边框类型-cv2border_default">默认边框类型 <code>cv2.BORDER_DEFAULT</code></span></h2><p>默认边框<code>cv2.BORDER_DEFAULT</code>其实是取镜像对称的像素填充，比较拗口，一步步解释：<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">default = cv2.copyMakeBorder(img, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, cv2.BORDER_DEFAULT)</span><br><span class="line">print(default)</span><br></pre></td></tr></table></figure></p>
+<p>首先进行上下填充，填充成与原图像边界对称的值，如下图：</p>
+<div align="center"><br><img src="/2018/09/03/2018-09-03-OpenCV-Python教程-12-卷积基础-图片边框/4.jpg" width="" height="" alt="" align="center"><br></div><br>同理再进行左右两边的填充，最后把四个顶点补充上就好了：<br><div align="center"><br><img src="/2018/09/03/2018-09-03-OpenCV-Python教程-12-卷积基础-图片边框/5.jpg" width="" height="" alt="" align="center"><br></div>
+
+<h2><span id="其他方法">其他方法</span></h2><p>我们现在演示一下所有的borderType，具体代码如下<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> matplotlib <span class="keyword">import</span> pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line">BLUE = [<span class="number">0</span>,<span class="number">0</span>,<span class="number">255</span>]</span><br><span class="line"></span><br><span class="line">img1 = cv2.imread(<span class="string">'lion.png'</span>)</span><br><span class="line">img1 = img1[:,:,::<span class="number">-1</span>]</span><br><span class="line"></span><br><span class="line">replicate = cv2.copyMakeBorder(img1,<span class="number">10</span>,<span class="number">10</span>,<span class="number">10</span>,<span class="number">10</span>,cv2.BORDER_REPLICATE)</span><br><span class="line">reflect = cv2.copyMakeBorder(img1,<span class="number">10</span>,<span class="number">10</span>,<span class="number">10</span>,<span class="number">10</span>,cv2.BORDER_REFLECT)</span><br><span class="line">reflect101 = cv2.copyMakeBorder(img1,<span class="number">10</span>,<span class="number">10</span>,<span class="number">10</span>,<span class="number">10</span>,cv2.BORDER_REFLECT_101)</span><br><span class="line">wrap = cv2.copyMakeBorder(img1,<span class="number">10</span>,<span class="number">10</span>,<span class="number">10</span>,<span class="number">10</span>,cv2.BORDER_WRAP)</span><br><span class="line">constant= cv2.copyMakeBorder(img1,<span class="number">10</span>,<span class="number">10</span>,<span class="number">10</span>,<span class="number">10</span>,cv2.BORDER_CONSTANT,value=BLUE)</span><br><span class="line"></span><br><span class="line">plt.subplot(<span class="number">231</span>),plt.imshow(img1,<span class="string">'gray'</span>)</span><br><span class="line">plt.title(<span class="string">'ORIGINAL'</span>),plt.xticks([]), plt.yticks([])</span><br><span class="line">plt.subplot(<span class="number">232</span>),plt.imshow(replicate,<span class="string">'gray'</span>)</span><br><span class="line">plt.title(<span class="string">'REPLICATE'</span>),plt.xticks([]), plt.yticks([])</span><br><span class="line">plt.subplot(<span class="number">233</span>),plt.imshow(reflect,<span class="string">'gray'</span>)</span><br><span class="line">plt.title(<span class="string">'REFLECT'</span>),plt.xticks([]), plt.yticks([])</span><br><span class="line">plt.subplot(<span class="number">234</span>),plt.imshow(reflect101,<span class="string">'gray'</span>)</span><br><span class="line">plt.title(<span class="string">'REFLECT_101'</span>),plt.xticks([]), plt.yticks([])</span><br><span class="line">plt.subplot(<span class="number">235</span>),plt.imshow(wrap,<span class="string">'gray'</span>)</span><br><span class="line">plt.title(<span class="string">'WRAP'</span>),plt.xticks([]), plt.yticks([])</span><br><span class="line">plt.subplot(<span class="number">236</span>),plt.imshow(constant,<span class="string">'gray'</span>)</span><br><span class="line">plt.title(<span class="string">'CONSTANT'</span>),plt.xticks([]), plt.yticks([])</span><br><span class="line"></span><br><span class="line">plt.savefig(<span class="string">'3.jpg'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></p>
+<p>结果如下</p>
+<div align="center"><br><img src="/2018/09/03/2018-09-03-OpenCV-Python教程-12-卷积基础-图片边框/6.jpg" width="" height="" alt="" align="center"><br></div>
+
+<h2><span id="conclusion-1">Conclusion 1</span></h2><blockquote>
+<p>一般情况下默认方式更加合理，因为边界的像素值更加接近，当然应视场合而定</p>
+</blockquote>
+<blockquote>
+<p>事实上，原图为<code>n×n</code>，卷积核为<code>f×f</code>，最终结果图大小为<code>(n-f+1) × (n-f+1)</code></p>
+</blockquote>
+<blockquote>
+<p>进行卷积操作有时是为了缩小图像大小（多见神经网络），也有时会保持原来图片大小（多见平滑模糊对比度锐度等）。</p>
+</blockquote>
+<h1><span id="concolution-in-opencv-代码中的卷积操作">Concolution in OpenCV 代码中的卷积操作</span></h1><p>我们使用<code>cv2.filter2D()</code>进行二维卷积操作，<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">cv2.filter2D(src, ddepth, kernel[, dst[, anchor[, delta[, borderType]]]]) → dst</span><br><span class="line">@param: src – input image.</span><br><span class="line">@param: ddepth – desired depth of the destination image;</span><br><span class="line">        if it is negative, it will be the same as src.depth(); 一般这个值都取-1</span><br><span class="line">@param: kernel – convolution kernel (or rather a correlation kernel), a single-channel floating point matrix;</span><br><span class="line">        if you want to apply different kernels to different channels, split the image into separate color planes using split() and process them individually.</span><br><span class="line">@param: 其余的参数我完全看不懂，感觉也不是很需要</span><br></pre></td></tr></table></figure></p>
+<h2><span id="example-1">Example 1</span></h2><p>我们对图像进行平均过滤。 一个5x5的平均滤波器内核可以定义如下：<br>$$kernel=\frac{1}{25}\left[<br>\begin{matrix}<br>1 &amp; 1 &amp; 1 &amp; 1 &amp; 1 \\<br>1 &amp; 1 &amp; 1 &amp; 1 &amp; 1 \\<br>1 &amp; 1 &amp; 1 &amp; 1 &amp; 1 \\<br>1 &amp; 1 &amp; 1 &amp; 1 &amp; 1 \\<br>1 &amp; 1 &amp; 1 &amp; 1 &amp; 1 \\<br>\end{matrix}<br>\right]$$<br>将此内核保持在像素上方，添加该内核下方的所有25个像素，取其平均值并用新的平均值替换中心像素.<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 导入库</span></span><br><span class="line"><span class="keyword">import</span> argparse</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line"><span class="comment"># 构造参数解析器</span></span><br><span class="line">ap = argparse.ArgumentParser()</span><br><span class="line">ap.add_argument(<span class="string">"-i"</span>, <span class="string">"--image"</span>, required=<span class="keyword">True</span>, help = <span class="string">"Path to the image"</span>)</span><br><span class="line">args = vars(ap.parse_args())</span><br><span class="line"></span><br><span class="line"><span class="comment"># 加载图像并显示</span></span><br><span class="line">img = cv2.imread(args[<span class="string">"image"</span>], <span class="number">1</span>)</span><br><span class="line">img = img[:,:,::<span class="number">-1</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 进行卷积操作</span></span><br><span class="line">kernel = np.ones((<span class="number">5</span>,<span class="number">5</span>),np.float32)/<span class="number">25</span></span><br><span class="line">dst = cv2.filter2D(src=img, ddepth=<span class="number">-1</span>, kernel=kernel)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 绘制图片</span></span><br><span class="line">images = [img, dst]</span><br><span class="line">titles = [<span class="string">'Original'</span>,<span class="string">'Average Filtering'</span>]</span><br><span class="line">plt.figure(figsize=(<span class="number">10</span>,<span class="number">6</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 绘制原图</span></span><br><span class="line">plt.subplot(<span class="number">1</span>, <span class="number">2</span>, <span class="number">1</span>),plt.imshow(images[<span class="number">0</span>])</span><br><span class="line">plt.title(titles[<span class="number">0</span>], fontsize=<span class="number">18</span>),plt.xticks([]), plt.yticks([])</span><br><span class="line">plt.subplot(<span class="number">1</span>, <span class="number">2</span>, <span class="number">2</span>),plt.imshow(images[<span class="number">1</span>])</span><br><span class="line">plt.title(titles[<span class="number">1</span>], fontsize=<span class="number">18</span>),plt.xticks([]), plt.yticks([])</span><br><span class="line"></span><br><span class="line">plt.savefig(<span class="string">'1_out.jpg'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></p>
+<div align="center"><br><img src="/2018/09/03/2018-09-03-OpenCV-Python教程-12-卷积基础-图片边框/7.jpg" width="" height="" alt="" align="center"><br></div>
+
+<h2><span id="conclusion-2">Conclusion 2</span></h2><p>可以看到这个核对图像进行了模糊处理，这是卷积的众多功能之一。当然卷积还有很多知识没有学到，平滑模糊对比度锐度等一系列操作均是由卷积完成，后面我们再继续深入。</p>
+<blockquote>
+<p>如果要自己写卷积操作的话，一定要注意卷积出来的值不能超过255，推荐使用<code>OpenCV</code>自带的<code>saturate_cast</code>防溢出功能</p>
+</blockquote>
+<h1><span id="reference">Reference</span></h1><p><a href="http://ex2tron.top/2017/12/14/Python-OpenCV教程番外篇7：卷积基础-图片边框/" target="_blank" rel="noopener">EX2TRON’S BLOG: Python+OpenCV教程番外篇7：卷积基础(图片边框)</a><br><a href="https://docs.opencv.org/3.0-beta/modules/imgproc/doc/filtering.html?highlight=cv2.filter2d#cv2.filter2D" target="_blank" rel="noopener">doc.opencv.org</a></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/macOS-10-13-6/" rel="tag"># macOS=10.13.6</a>
+          
+            <a href="/tags/opencv-3-4-1/" rel="tag"># opencv=3.4.1</a>
+          
+            <a href="/tags/python-3-5/" rel="tag"># python=3.5</a>
+          
+            <a href="/tags/图像处理/" rel="tag"># 图像处理</a>
+          
+            <a href="/tags/Chinese/" rel="tag"># Chinese</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/31/2018-08-31-OpenCV-Python教程-11-阈值分割-2/" rel="next" title="OpenCV-Python教程(11) --- 阈值分割(2)">
+                <i class="fa fa-chevron-left"></i> OpenCV-Python教程(11) --- 阈值分割(2)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Jin ZhangYu</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">12</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">Targets</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">2.</span> <span class="nav-text">Concept of Convolution 卷积的概念</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">3.</span> <span class="nav-text">Padding 边框填充</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">3.1.</span> <span class="nav-text">固定值填充 cv2.BORDER_CONSTANT</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">3.2.</span> <span class="nav-text">默认边框类型 cv2.BORDER_DEFAULT</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">3.3.</span> <span class="nav-text">其他方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">3.4.</span> <span class="nav-text">Conclusion 1</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">4.</span> <span class="nav-text">Concolution in OpenCV 代码中的卷积操作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">4.1.</span> <span class="nav-text">Example 1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">4.2.</span> <span class="nav-text">Conclusion 2</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">5.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jin ZhangYu</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> v3.7.1</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Mist</a> v6.4.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.4.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.4.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.4.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.4.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.4.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      },
+      TeX: {equationNumbers: { autoNumber: "AMS" }}
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
