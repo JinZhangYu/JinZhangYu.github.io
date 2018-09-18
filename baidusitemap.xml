@@ -4,12 +4,33 @@
 
     
   <url>
-    <loc>https://jinzhangyu.github.io/2018/08/24/2018-08-24-OpenCV-Python%E6%95%99%E7%A8%8B-8-%E8%89%B2%E5%BD%A9%E7%A9%BA%E9%97%B4%E5%8F%98%E6%8D%A2/</loc>
-    <lastmod>2018-09-09T15:00:48.777Z</lastmod>
+    <loc>https://jinzhangyu.github.io/2018/09/18/2018-09-18-MacPort-%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95/</loc>
+    <lastmod>2018-09-18T13:20:27.377Z</lastmod>
     <data>
         <display>
-        <title>OpenCV-Python教程(8) --- 色彩空间变换</title>
-        <pubTime>2018-08-24T06:09:52.000Z</pubTime>
+        <title>MacPort 基本用法总结</title>
+        <pubTime>2018-09-18T13:01:16.000Z</pubTime>
+        
+        <tag>macOS=10.13.6</tag>
+         
+        <tag>Chinese</tag>
+         
+        <tag>macport</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://jinzhangyu.github.io/2018/09/10/2018-09-10-OpenCV-Python%E6%95%99%E7%A8%8B-17-%E8%BE%B9%E7%BC%98%E6%A3%80%E6%B5%8B-1/</loc>
+    <lastmod>2018-09-10T15:38:05.278Z</lastmod>
+    <data>
+        <display>
+        <title>OpenCV-Python教程(17) --- 边缘检测(1)</title>
+        <pubTime>2018-09-10T09:17:15.000Z</pubTime>
         
         <tag>macOS=10.13.6</tag>
          
@@ -30,11 +51,36 @@
     
   <url>
     <loc>https://jinzhangyu.github.io/2018/09/06/2018-09-06-OpenCV-Python%E6%95%99%E7%A8%8B-16-%E5%B9%B3%E6%BB%91%E5%9B%BE%E5%83%8F-3/</loc>
-    <lastmod>2018-09-08T09:22:18.294Z</lastmod>
+    <lastmod>2018-09-09T15:14:05.340Z</lastmod>
     <data>
         <display>
         <title>OpenCV-Python教程(16) --- 平滑图像(3)之导向滤波</title>
         <pubTime>2018-09-06T13:40:16.000Z</pubTime>
+        
+        <tag>macOS=10.13.6</tag>
+         
+        <tag>opencv=3.4.1</tag>
+         
+        <tag>python=3.5</tag>
+         
+        <tag>图像处理</tag>
+         
+        <tag>Chinese</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://jinzhangyu.github.io/2018/08/24/2018-08-24-OpenCV-Python%E6%95%99%E7%A8%8B-8-%E8%89%B2%E5%BD%A9%E7%A9%BA%E9%97%B4%E5%8F%98%E6%8D%A2/</loc>
+    <lastmod>2018-09-09T15:00:48.777Z</lastmod>
+    <data>
+        <display>
+        <title>OpenCV-Python教程(8) --- 色彩空间变换</title>
+        <pubTime>2018-08-24T06:09:52.000Z</pubTime>
         
         <tag>macOS=10.13.6</tag>
          

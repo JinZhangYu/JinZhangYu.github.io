@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.4.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.4.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.4.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.4.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.4.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.4.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="Targets Canny 边缘检测 OpenCV函数：cv2.Canny()">
+<meta name="keywords" content="macOS=10.13.6,opencv=3.4.1,python=3.5,图像处理,Chinese">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OpenCV-Python教程(17) --- 边缘检测(1)">
+<meta property="og:url" content="https://jinzhangyu.github.io/2018/09/10/2018-09-10-OpenCV-Python教程-17-边缘检测-1/index.html">
+<meta property="og:site_name" content="Gwyn, Lord of Cinder">
+<meta property="og:description" content="Targets Canny 边缘检测 OpenCV函数：cv2.Canny()">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://jinzhangyu.github.io/2018/09/10/2018-09-10-OpenCV-Python教程-17-边缘检测-1/1.jpg">
+<meta property="og:image" content="https://jinzhangyu.github.io/2018/09/10/2018-09-10-OpenCV-Python教程-17-边缘检测-1/2.bmp">
+<meta property="og:image" content="https://jinzhangyu.github.io/2018/09/10/2018-09-10-OpenCV-Python教程-17-边缘检测-1/3.png">
+<meta property="og:image" content="https://jinzhangyu.github.io/2018/09/10/2018-09-10-OpenCV-Python教程-17-边缘检测-1/4.gif">
+<meta property="og:updated_time" content="2018-09-10T15:38:05.278Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="OpenCV-Python教程(17) --- 边缘检测(1)">
+<meta name="twitter:description" content="Targets Canny 边缘检测 OpenCV函数：cv2.Canny()">
+<meta name="twitter:image" content="https://jinzhangyu.github.io/2018/09/10/2018-09-10-OpenCV-Python教程-17-边缘检测-1/1.jpg">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Gwyn, Lord of Cinder" type="application/atom+xml" />
+
+
+
+
+  <link rel="canonical" href="https://jinzhangyu.github.io/2018/09/10/2018-09-10-OpenCV-Python教程-17-边缘检测-1/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>OpenCV-Python教程(17) --- 边缘检测(1) | Gwyn, Lord of Cinder</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Gwyn, Lord of Cinder</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />About</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />Tags</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />Categories</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-commonweal">
+    <a href="/404/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />Commonweal 404</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://jinzhangyu.github.io/2018/09/10/2018-09-10-OpenCV-Python教程-17-边缘检测-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Jin ZhangYu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Gwyn, Lord of Cinder">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">OpenCV-Python教程(17) --- 边缘检测(1)
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-09-10 17:17:15 / Modified: 23:38:05" itemprop="dateCreated datePublished" datetime="2018-09-10T17:17:15+08:00">2018-09-10</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1><span id="targets">Targets</span></h1><ul>
+<li>Canny 边缘检测</li>
+<li>OpenCV函数：cv2.Canny()</li>
+</ul>
+<a id="more"></a>
+<h1><span id="1-introduction">1 Introduction</span></h1><ul>
+<li>图象的边缘是指图象局部区域亮度变化显著的部分，该区域的灰度剖面一般可以看作是一个阶跃，既从一个灰度值在很小的缓冲区域内急剧变化到另一个灰度相差较大的灰度值。图象的边缘部分集中了图象的大部分信息，图象边缘的确定与提取对于整个图象场景的识别与理解是非常重要的，同时也是图象分割所依赖的重要特征，边缘检测主要是图象的灰度变化的度量、检测和定位，自从1959提出边缘检测以来，经过五十多年的发展，已有许多中不同的边缘检测方法。根据作者的理解和实践，本文对边缘检测的原理进行了描述，在此基础上着重对Canny检测算法的实现进行详述。</li>
+<li>Canny 边缘检测是一种异常流行的边缘检测算法，是 John F.Canny 在 1986 年提出的，其被称为 <strong>无监督学习中最常用效果最好的边缘检测算法</strong>。它是一个有很多步构成的算法虽我们接下来会逐步介绍。</li>
+</ul>
+<h1><span id="2-canny-detector-理论基础">2 Canny Detector 理论基础</span></h1><h2><span id="21-边缘检测原理及步骤">2.1 边缘检测原理及步骤</span></h2><p>在具体介绍之前，先来一起看看边缘检测的一般步骤吧。</p>
+<ol>
+<li><p><strong><em>滤波</em></strong>：边缘检测的算法主要是基于图像灰度图的一阶和二阶导数，但导数通常对噪声很敏感，因此必须采用滤波器来改善与噪声有关的边缘检测器的性能。常见的滤波方法主要有 <strong>高斯滤波</strong>。</p>
+</li>
+<li><p><strong><em>增强</em></strong>：增强边缘的基础是确定图像各点邻域强度的变化值。增强算法可以将图像灰度点邻域强度值有显著变化的点凸显出来。<strong><em>在具体编程实现时，可通过计算梯度幅值来确定</em></strong>。</p>
+</li>
+<li><p><strong><em>检测</em></strong>：经过增强的图像，往往邻域中有很多点的梯度值比较大，而在特定的应用中，这些点并不是我们要找的边缘点，所以应该采用某种方法来对这些点进行取舍。实际工程中，常用的方法是通过阈值化方法来检测。</p>
+</li>
+</ol>
+<p>当然 <code>Canny</code> 算法也是基于这样的边缘检测步骤，接下来就一步步讲一下具体的操作。</p>
+<h2><span id="22-canny边缘检测算法原理">2.2 Canny边缘检测算法原理</span></h2><h3><span id="221-对原始图像进行灰度化">2.2.1 对原始图像进行灰度化</span></h3><p><code>Canny</code> 算法通常处理的图像为灰度图，因为灰度图反映的是图像的深浅程度。因此如果摄像机获取的是彩色图像，那首先就得进行灰度化。对一幅彩色图进行灰度化，就是根据图像各个通道的采样值进行加权平均。我们通常选择<code>cv2.cvtColor()</code>函数来完成。</p>
+<h3><span id="222-对图像进行高斯滤波">2.2.2 对图像进行高斯滤波</span></h3><p>通常滤波和边缘检测是矛盾的概念，抑制了噪声会使得图像边缘模糊，这会增加边缘定位的不确定性；而如果要提高边缘检测的灵敏度，同时对噪声也提高了灵敏度。实际工程经验表明，高斯函数确定的核可以在抗噪声干扰和边缘检测精确定位之间提供较好的折衷方案。</p>
+<p>高斯滤波的操作我们就简单的选择内置函数<code>cv2.GaussianBlur()</code>即可，详细做法请见 <a href="/2018/09/04/2018-09-04-OpenCV-Python教程-14-平滑图像-1/" title="高斯滤波">高斯滤波</a>。</p>
+<h3><span id="223-计算梯度幅值和方向">2.2.3 计算梯度幅值和方向</span></h3><p>关于图像灰度值得梯度可使用一阶有限差分来进行近似，这样就可以得图像在x和y方向上偏导数的两个矩阵。常用的梯度算子有很多种，一般我们要用<code>cv2.Canny()</code>都用的是一种比较常见的 <code>Sobel</code>算子：$$<br>s_x=\left[\begin{matrix}-1&amp;0&amp;1\\-2&amp;0&amp;2\\-1&amp;0&amp;1\\\end{matrix}\right]<br>\qquad<br>s_y=\left[\begin{matrix}-1&amp;-2&amp;-1\\0&amp;0&amp;0\\1&amp;2&amp;1\\\end{matrix}\right]<br>\qquad<br>M=\left[\begin{matrix}a_{0}&amp;a_{1}&amp;a_{2}\\a_{3}&amp;a_{ij}&amp;a_{4}\\a_{5}&amp;a_{6}&amp;a_{7}\\\end{matrix}\right]<br>$$上式三个矩阵分别为该算子的x向卷积模板、y向卷积模板以及待处理点的邻域点标记矩阵，据此可用数学公式表达算子$s_x,s_y$施加在中心在 $(i,j)$ 上窗口的梯度幅值以及梯度方向：<br>$$<br>A_x(i,j)=(a_2+2a_4+a_7)-(a_0+2a_3+a_5)$$$$<br>A_y(i,j)=(a_5+2a_6+a_7)-(a_0+2a_2+a_2)$$$$<br>A(i,j) = \sqrt{A_x^2+A_y^2}$$$$<br>\theta(i,j)=\arctan{(A_y/A_x)}<br>$$<br>我们可以来看一下这两个算子的效果，代码就不上了：</p>
+<div align="center"><br><img src="/2018/09/10/2018-09-10-OpenCV-Python教程-17-边缘检测-1/1.jpg" width="" height="" alt="" align="center"><br></div>
+
+<p>可以看到这两个算子真的算是在横纵方向上能识别到边缘，但是如果边缘的方向不是横纵方向，而是斜着的呢？这个时候就需要计算角度$\theta$了。</p>
+<h3><span id="224-非极大值抑制">2.2.4 非极大值抑制</span></h3><p>图像梯度幅值矩阵中的元素值越大，说明图像中该点的梯度值越大，但这不不能说明该点就是边缘。</p>
+<div align="center"><br><img src="/2018/09/10/2018-09-10-OpenCV-Python教程-17-边缘检测-1/2.bmp" width="" height="" alt="" align="center"><br></div>
+
+<p>举例来说，蓝色的线条方向为C点的梯度方向，说明 <strong><em>灰度图在这条线上深浅变化最大</em></strong>，这样就可以确定其局部的最大值肯定分布在这条线上，也即出了C点外，梯度方向的交点dTmp1和dTmp2这两个点的值也可能会是局部最大值。</p>
+<p>因此，判断C点灰度与这两个点灰度大小即可判断C点是否为其邻域内的局部最大灰度点。如果经过判断，C点灰度值小于这两个点中的任一个，那就说明C点不是局部极大值，形象点来说就是大斜坡上的一段小斜坡。那么则可以排除C点为边缘。这就是非极大值抑制的工作原理。</p>
+<p>但实际上，我们只能得到C点邻域的8个点的值，而dTmp1和dTmp2并不在其中，要得到这两个值就需要 <strong><em>对该两个点两端的已知灰度进行线性插值</em></strong>，也即根上图中的g1和g2对dTmp1进行插值，根据g3和g4对dTmp2进行插值，这要用到其梯度方向，这是上文 <code>Canny</code> 算法中要求解梯度方向矩阵 $\theta$ 的原因。</p>
+<p><strong>还需要注意一点的是，梯度方向垂直于边缘方向。</strong></p>
+<p>完成非极大值抑制后，会得到一个二值图像，非边缘的点灰度值均为0，可以为边缘的局部灰度极大值点设置其灰度为128。根据下文的具体测试图像可以看出，这样一个检测结果还是包含了很多由噪声及其他原因造成的假边缘。因此还需要进一步的处理。</p>
+<h3><span id="225-双阈值甄选">2.2.5 双阈值甄选</span></h3><p>现在需要确定哪些边界是真正的边界，需要两个阈值，minVal和maxVal。图像灰度梯度 高于maxVal被认为是真正的边界，低于minVal的舍弃。两者之间的值要判断是否与真正的边界相连，相连就保留，不相连舍弃。那一张图来举例：</p>
+<div align="center"><br><img src="/2018/09/10/2018-09-10-OpenCV-Python教程-17-边缘检测-1/3.png" width="" height="" alt="" align="center"><br></div>
+
+<p>A高于maxVal，是真正边界。C低于maxVal，但是与真正边界相连，也认为是真正边界。B没有和真正阈值相连，而且低于maxVal，抛弃。</p>
+<p>可以看到这两个阈值 <code>maxVal</code> 和 <code>minVal</code> 的选取十分重要，关乎双阈值法的效果，但是这两个阈值也没有什么标准的说法，大概就是凭感觉调。其中 <a href="https://blog.csdn.net/likezhaobin/article/details/6892629" target="_blank" rel="noopener">Canny边缘检测算法原理及其VC实现详解(二)</a> 一文中提出按照灰度值从低到高的顺序，选取前79%个灰度值中的最大的灰度值为高阈值，低阈值大约为高阈值的一半，此说法并非标准但是可用性尚可。</p>
+<p>我们可以来展示一下如何调这两个阈值，具体代码就不上了:</p>
+<div align="center"><br><img src="/2018/09/10/2018-09-10-OpenCV-Python教程-17-边缘检测-1/4.gif" width="" height="" alt="" align="center"><br></div>
+
+<h3><span id="226-conclusion-1">2.2.6 Conclusion 1</span></h3><p><code>Canny</code>算法介绍到这里就算是结束了，可以说是留下了很多调参的工作，但是作为一个1986的算法来说，已经做得很不错了，而且一直到现在还能用，并且也被很多人推崇为当今最优的边缘检测的算法。</p>
+<p>当然现在的很多科研和市面上的产品已经不是简单的<code>Canny</code>可以解决的了，现今多是深度神经网络来做边框识别这个工作了，只要有了数据集，一切都好说。</p>
+<h1><span id="3-implementation-实现-canny-算法">3 Implementation 实现 Canny 算法</span></h1>
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/macOS-10-13-6/" rel="tag"># macOS=10.13.6</a>
+          
+            <a href="/tags/opencv-3-4-1/" rel="tag"># opencv=3.4.1</a>
+          
+            <a href="/tags/python-3-5/" rel="tag"># python=3.5</a>
+          
+            <a href="/tags/图像处理/" rel="tag"># 图像处理</a>
+          
+            <a href="/tags/Chinese/" rel="tag"># Chinese</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/09/06/2018-09-06-OpenCV-Python教程-16-平滑图像-3/" rel="next" title="OpenCV-Python教程(16) --- 平滑图像(3)之导向滤波">
+                <i class="fa fa-chevron-left"></i> OpenCV-Python教程(16) --- 平滑图像(3)之导向滤波
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/09/18/2018-09-18-MacPort-基本用法/" rel="prev" title="MacPort 基本用法总结">
+                MacPort 基本用法总结 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Jin ZhangYu</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">18</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">6</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jin ZhangYu</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> v3.7.1</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Pisces</a> v6.4.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.4.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.4.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.4.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.4.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.4.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.4.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.4.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      },
+      TeX: {equationNumbers: { autoNumber: "AMS" }}
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
