@@ -6,7 +6,7 @@
       <title>CV</title>
       <link href="/2019/04/07/CV/"/>
       <url>/2019/04/07/CV/</url>
-      <content type="html"><![CDATA[<h1><span id="targets">Targets</span></h1><ul><li>CV</li></ul><a id="more"></a><embed src="" width="100%" height="550" type="./CV.pdf">]]></content>
+      <content type="html"><![CDATA[<h1><span id="targets">Targets</span></h1><ul><li>CV</li></ul><a id="more"></a><p><br></p><div class="row">    <embed src="./CV.pdf" width="100%" height="550" type="application/pdf"></div><p><br></p>]]></content>
       
       
         <tags>

@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://jinzhangyu.github.io/"/>
-  <updated>2019-04-07T15:19:11.824Z</updated>
+  <updated>2019-04-07T15:21:37.860Z</updated>
   <id>https://jinzhangyu.github.io/</id>
   
   <author>
@@ -21,9 +21,9 @@
     <link href="https://jinzhangyu.github.io/2019/04/07/CV/"/>
     <id>https://jinzhangyu.github.io/2019/04/07/CV/</id>
     <published>2019-04-07T15:13:55.000Z</published>
-    <updated>2019-04-07T15:19:11.824Z</updated>
+    <updated>2019-04-07T15:21:37.860Z</updated>
     
-    <content type="html"><![CDATA[<h1><span id="targets">Targets</span></h1><ul><li>CV</li></ul><a id="more"></a><embed src="" width="100%" height="550" type="./CV.pdf">]]></content>
+    <content type="html"><![CDATA[<h1><span id="targets">Targets</span></h1><ul><li>CV</li></ul><a id="more"></a><p><br></p><div class="row">    <embed src="./CV.pdf" width="100%" height="550" type="application/pdf"></div><p><br></p>]]></content>
     
     <summary type="html">
     
