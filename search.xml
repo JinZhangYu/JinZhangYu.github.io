@@ -3,6 +3,21 @@
   
     
     <entry>
+      <title>CV</title>
+      <link href="/2019/04/07/CV/"/>
+      <url>/2019/04/07/CV/</url>
+      <content type="html"><![CDATA[<h1><span id="targets">Targets</span></h1><ul><li>CV</li></ul><a id="more"></a><div class="row">    <embed src="./CV.pdf" width="100%" height="550" type="application/pdf"></div>]]></content>
+      
+      
+        <tags>
+            
+            <tag> CV </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
       <title>MacPort 基本用法总结</title>
       <link href="/2018/09/18/2018-09-18-MacPort-%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95/"/>
       <url>/2018/09/18/2018-09-18-MacPort-%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95/</url>

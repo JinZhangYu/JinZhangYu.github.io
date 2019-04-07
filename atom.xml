@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://jinzhangyu.github.io/"/>
-  <updated>2018-09-18T13:24:27.337Z</updated>
+  <updated>2019-04-07T15:15:27.946Z</updated>
   <id>https://jinzhangyu.github.io/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>CV</title>
+    <link href="https://jinzhangyu.github.io/2019/04/07/CV/"/>
+    <id>https://jinzhangyu.github.io/2019/04/07/CV/</id>
+    <published>2019-04-07T15:13:55.000Z</published>
+    <updated>2019-04-07T15:15:27.946Z</updated>
+    
+    <content type="html"><![CDATA[<h1><span id="targets">Targets</span></h1><ul><li>CV</li></ul><a id="more"></a><div class="row">    <embed src="./CV.pdf" width="100%" height="550" type="application/pdf"></div>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;Targets&quot;&gt;&lt;a href=&quot;#Targets&quot; class=&quot;headerlink&quot; title=&quot;Targets&quot;&gt;&lt;/a&gt;Targets&lt;/h1&gt;&lt;ul&gt;
+&lt;li&gt;CV&lt;/li&gt;
+&lt;/ul&gt;
+    
+    </summary>
+    
+    
+      <category term="CV" scheme="https://jinzhangyu.github.io/tags/CV/"/>
+    
+  </entry>
   
   <entry>
     <title>MacPort 基本用法总结</title>
