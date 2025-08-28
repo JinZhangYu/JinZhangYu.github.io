@@ -8,6 +8,7 @@
 
 # Basic Site Settings
 locale                   : "en-US"
+remote_theme             : "academicpages/academicpages.github.io"
 site_theme               : "default"
 title                    : "About"
 title_separator          : "-"
@@ -268,6 +269,7 @@ plugins:
   - jekyll-sitemap
   - jekyll-redirect-from
   - jemoji
+  - jekyll-remote-theme
 
 # Mimic GitHub Pages with --safe
 whitelist:
@@ -277,6 +279,7 @@ whitelist:
   - jekyll-sitemap
   - jekyll-redirect-from
   - jemoji
+  - jekyll-remote-theme
 
 
 # Archives
