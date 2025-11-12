@@ -16,7 +16,10 @@ My research interests mainly are in 3D Generative Models, Portrait Animation, an
 Publications
 ======
 
-<div style="display: flex; align-items: flex-start; margin-bottom: 30px; padding: 15px; border: 1px solid #e0e0e0; border-radius: 8px;">
+<div style="display: flex; align-items: flex-start; margin-bottom: 30px; padding: 15px; border: 1px solid #e0e0e0; border-radius: 8px; position: relative;">
+  <div style="position: absolute; top: 10px; left: 10px; background: #1f9aad; color: #fff; padding: 6px 10px; font-size: 13px; font-weight: 700; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.15);">
+    3DV 2026
+  </div>
   <img src="/images/Publications/SatSkylines_Teaser.png" alt="Paper 1 Thumbnail" style="width: 200px; margin-right: 20px; border-radius: 5px;">
   <div>
     <h3 style="margin: 0 0 10px 0; font-size: 18px; font-weight: bold;">
@@ -26,16 +29,19 @@ Publications
       <strong>Zhangyu Jin</strong>, Andrew Feng
     </p>
     <p style="margin: 0 0 10px 0; font-style: italic; font-size: 14px; color: #555;">
-      Under Review.
+      International Conference on 3D Vision (<strong>3DV</strong>), 2026
     </p>
     <div>
-      <a href="https://arxiv.org/pdf/2508.18531" style="background: #28a745; color: white; padding: 4px 8px; text-decoration: none; font-size: 12px; border-radius: 3px; margin-right: 5px;">Paper</a>
+      <a href="https://arxiv.org/abs/2508.18531" style="background: #28a745; color: white; padding: 4px 8px; text-decoration: none; font-size: 12px; border-radius: 3px; margin-right: 5px;">Paper</a>
     </div>
   </div>
 </div>
 
-<div style="display: flex; align-items: flex-start; margin-bottom: 30px; padding: 15px; border: 1px solid #e0e0e0; border-radius: 8px;">
-  <img src="/images/Publications/White.png" alt="Paper 2 Thumbnail" style="width: 200px; margin-right: 20px; border-radius: 5px;">
+<div style="display: flex; align-items: flex-start; margin-bottom: 30px; padding: 15px; border: 1px solid #e0e0e0; border-radius: 8px; position: relative;">
+  <div style="position: absolute; top: 10px; left: 10px; background: #1f9aad; color: #fff; padding: 6px 10px; font-size: 13px; font-weight: 700; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.15);">
+    WACV 2026
+  </div>
+  <img src="/images/Publications/Discrete_Facial_Encoding_Teaser.png" alt="Paper 2 Thumbnail" style="width: 200px; margin-right: 20px; border-radius: 5px;">
   <div>
     <h3 style="margin: 0 0 10px 0; font-size: 18px; font-weight: bold;">
       <a href="#" style="text-decoration: none; color: #333;">Discrete Facial Encoding: A Framework for Data-driven Facial Display Discovery</a>
@@ -44,12 +50,18 @@ Publications
       Minh Tran, Maksim Siniukov, <strong>Zhangyu Jin</strong>, Mohammad Soleymani
     </p>
     <p style="margin: 0 0 10px 0; font-style: italic; font-size: 14px; color: #555;">
-      Under Review.
+      IEEE/CVF Winter Conference on Applications of Computer Vision (<strong>WACV</strong>), 2026.
     </p>
+    <div>
+      <a href="https://arxiv.org/abs/2510.01662" style="background: #28a745; color: white; padding: 4px 8px; text-decoration: none; font-size: 12px; border-radius: 3px; margin-right: 5px;">Paper</a>
+    </div>
   </div>
 </div>
 
-<div style="display: flex; align-items: flex-start; margin-bottom: 30px; padding: 15px; border: 1px solid #e0e0e0; border-radius: 8px;">
+<div style="display: flex; align-items: flex-start; margin-bottom: 30px; padding: 15px; border: 1px solid #e0e0e0; border-radius: 8px; position: relative;">
+  <div style="position: absolute; top: 10px; left: 10px; background: #1f9aad; color: #fff; padding: 6px 10px; font-size: 13px; font-weight: 700; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.15);">
+    WACV 2026
+  </div>
   <img src="/images/Publications/PromptGAR_Teaser.png" alt="Paper 3 Thumbnail" style="width: 200px; margin-right: 20px; border-radius: 5px;">
   <div>
     <h3 style="margin: 0 0 10px 0; font-size: 18px; font-weight: bold;">
@@ -59,10 +71,10 @@ Publications
       <strong>Zhangyu Jin</strong>, Andrew Feng, Ankur Chemburkar, Celso M. De Melo
     </p>
     <p style="margin: 0 0 10px 0; font-style: italic; font-size: 14px; color: #555;">
-      Under Review
+      IEEE/CVF Winter Conference on Applications of Computer Vision (<strong>WACV</strong>), 2026.
     </p>
     <div>
-      <a href="https://arxiv.org/pdf/2503.08933" style="background: #28a745; color: white; padding: 4px 8px; text-decoration: none; font-size: 12px; border-radius: 3px; margin-right: 5px;">Paper</a>
+      <a href="https://arxiv.org/abs/2503.08933" style="background: #28a745; color: white; padding: 4px 8px; text-decoration: none; font-size: 12px; border-radius: 3px; margin-right: 5px;">Paper</a>
     </div>
   </div>
 </div>
@@ -118,5 +130,3 @@ For more info
 ------
 More info about configuring Academic Pages can be found in [the guide](https://academicpages.github.io/markdown/), the [growing wiki](https://github.com/academicpages/academicpages.github.io/wiki), and you can always [ask a question on GitHub](https://github.com/academicpages/academicpages.github.io/discussions). The [guides for the Minimal Mistakes theme](https://mmistakes.github.io/minimal-mistakes/docs/configuration/) (which this theme was forked from) might also be helpful. 
 -->
-
-
