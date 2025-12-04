@@ -22,8 +22,8 @@ Publications
   </div>
   <img src="/images/Publications/SatSkylines_Teaser.png" alt="Paper 1 Thumbnail" style="width: 200px; margin-right: 20px; border-radius: 5px;">
   <div>
-    <h3 style="margin: 0 0 10px 0; font-size: 18px; font-weight: bold;">
-      <a href="#" style="text-decoration: none; color: #333;">SAT-SKYLINES: 3D Building Generation from Satellite Imagery and Coarse Geometric Priors</a>
+    <h3 style="margin: 0 0 10px 0; font-size: 18px; font-weight: bold; color: #333;">
+      SAT-SKYLINES: 3D Building Generation from Satellite Imagery and Coarse Geometric Priors
     </h3>
     <p style="margin: 0 0 8px 0; font-size: 14px; color: #666;">
       <strong>Zhangyu Jin</strong>, Andrew Feng
@@ -43,8 +43,8 @@ Publications
   </div>
   <img src="/images/Publications/Discrete_Facial_Encoding_Teaser.png" alt="Paper 2 Thumbnail" style="width: 200px; margin-right: 20px; border-radius: 5px;">
   <div>
-    <h3 style="margin: 0 0 10px 0; font-size: 18px; font-weight: bold;">
-      <a href="#" style="text-decoration: none; color: #333;">Discrete Facial Encoding: A Framework for Data-driven Facial Display Discovery</a>
+    <h3 style="margin: 0 0 10px 0; font-size: 18px; font-weight: bold; color: #333;">
+      Discrete Facial Encoding: A Framework for Data-driven Facial Display Discovery
     </h3>
     <p style="margin: 0 0 8px 0; font-size: 14px; color: #666;">
       Minh Tran, Maksim Siniukov, <strong>Zhangyu Jin</strong>, Mohammad Soleymani
@@ -64,8 +64,8 @@ Publications
   </div>
   <img src="/images/Publications/PromptGAR_Teaser.png" alt="Paper 3 Thumbnail" style="width: 200px; margin-right: 20px; border-radius: 5px;">
   <div>
-    <h3 style="margin: 0 0 10px 0; font-size: 18px; font-weight: bold;">
-      <a href="#" style="text-decoration: none; color: #333;">PromptGAR: Flexible Promptive Group Activity Recognition</a>
+    <h3 style="margin: 0 0 10px 0; font-size: 18px; font-weight: bold; color: #333;">
+      PromptGAR: Flexible Promptive Group Activity Recognition
     </h3>
     <p style="margin: 0 0 8px 0; font-size: 14px; color: #666;">
       <strong>Zhangyu Jin</strong>, Andrew Feng, Ankur Chemburkar, Celso M. De Melo
