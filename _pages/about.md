@@ -14,7 +14,7 @@ I received my Master’s degree from [University of Southern California, Institu
 My research interests mainly are in 
 1. 3D Generation, 3D/4D Reconstruction, and Sparse-view Reconstruction.
 2. Face/Portrait Generation, Facial Expression Analysis, and Affective Computing.
-3. Video Understanding, including Group Activity Recognition, Multi-Object Tracking, and related areas.
+3. Video Understanding, including Group Activity Recognition, Multi-Object Tracking, etc.
 
 Publications
 ======
