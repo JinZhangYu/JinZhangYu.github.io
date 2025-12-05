@@ -11,7 +11,10 @@ I am a second-year PhD student (2024 Fall-) in Computer Science at the [Universi
 
 I received my Master’s degree from [University of Southern California, Institute for Creative Technologies](https://ict.usc.edu/). During my Master’s, I took Research Internships at [Motorola Solutions](https://www.motorolasolutions.com/en_us.html) and at [TuSimple](https://www.tusimple.com/). Previously, I was a Research Engineer at [YITU Technology](https://www.yitutech.com/en) for one year. Prior to that, I got my Bachelor degree from [Shanghai Jiao Tong University](https://www.ji.sjtu.edu.cn/).
 
-My research interests mainly are in 3D Generative Models, Portrait Animation, and Video Perception.
+My research interests mainly are in 
+1. 3D Generation, 3D/4D Reconstruction, and Sparse-view Reconstruction.
+2. Face/Portrait Generation, Facial Expression Analysis, and Affective Computing.
+3. Video Understanding, including Group Activity Recognition, Multi-Object Tracking, and related areas.
 
 Publications
 ======
