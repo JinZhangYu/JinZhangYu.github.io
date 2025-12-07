@@ -224,6 +224,7 @@ defaults:
       path: ""
       type: posts
     values:
+      published: false
       layout: single
       author_profile: true
       read_time: true
@@ -235,6 +236,7 @@ defaults:
       path: ""
       type: pages
     values:
+      published: false
       layout: single
       author_profile: true
   # _publications

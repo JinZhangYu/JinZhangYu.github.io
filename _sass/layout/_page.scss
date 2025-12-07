@@ -399,3 +399,43 @@
   font-size: $type-size-6;
   text-transform: uppercase;
 }
+
+/*
+   Error page
+   ========================================================================== */
+
+.error-page-body {
+  background: #f7f9fb;
+  padding: 0;
+}
+
+.error-page {
+  max-width: 720px;
+  margin: 6rem auto 0;
+  padding: 0 1.5rem 4rem;
+  color: var(--global-text-color);
+}
+
+.error-page__code {
+  margin: 0 0 0.25rem;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #3f5169;
+}
+
+.error-page__title {
+  margin: 0 0 1.5rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--global-text-color);
+}
+
+.error-page__home {
+  font-weight: 600;
+  color: var(--global-link-color);
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
