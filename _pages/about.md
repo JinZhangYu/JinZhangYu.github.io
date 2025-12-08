@@ -79,6 +79,7 @@ Publications
     </p>
     <div>
       <a href="https://arxiv.org/abs/2503.08933" style="background: #28a745; color: white; padding: 4px 8px; text-decoration: none; font-size: 12px; border-radius: 3px; margin-right: 5px;">Paper</a>
+      <a href="/projects/PromptGAR/" style="background: #1f77d4; color: white; padding: 4px 8px; text-decoration: none; font-size: 12px; border-radius: 3px;">Project</a>
     </div>
   </div>
 </div>

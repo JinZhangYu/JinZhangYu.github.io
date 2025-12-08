@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>PromptGAR: Flexible Promptive Group Activity Recognition</title>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-PYVRSFMDRL');
+  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/favicon.svg">
+
+  <!-- MathJax for inline LaTeX (\(...\)) rendering -->
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async
+          src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">PromptGAR: Flexible Promptive Group Activity Recognition</h1>
+          <div class="venue-row">
+            <div class="publication-venue" style="font-size: 2rem; text-align: center;">
+              WACV 2026
+            </div>
+          </div>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://jinzhangyu.github.io/">Zhangyu Jin</a><sup>1</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://scholar.google.com/citations?hl=en&user=JKWxGfsAAAAJ">Andrew Feng</a><sup>1</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://scholar.google.com/citations?hl=en&user=BiFtMrAAAAAJ">Ankur Chemburkar</a><sup>1</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://scholar.google.com/citations?hl=en&user=3ftbE9oAAAAJ">Celso M. De Melo</a><sup>2</sup>
+            </span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>1</sup>University of Southern California, Institute for Creative Technologies</span>
+          </div>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>2</sup>Army Research Laboratory</span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <!-- <span class="link-block">
+                <a href="https://arxiv.org/pdf/2011.12948"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span> -->
+              <span class="link-block">
+                <a href="https://arxiv.org/abs/2503.08933"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a href="#"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code (Coming Soon)</span>
+                  </a>
+              </span>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <img id="teaser"
+           class="teaser-image"
+           src="./static/images/PromptGAR_Teaser.drawio.png"
+           alt="Overview diagram of the PromptGAR framework.">
+      <h2 class="subtitle has-text-centered">
+        This diagram illustrates PromptGAR's performance and key capabilities. 
+        Compared to existing methods, PromptGAR achieves competitive group activity recognition accuracy and superior input flexibility without the need for retraining, including: 
+        <em>(a)</em> flexible visual prompt inputs, 
+        <em>(b)</em> flexible instance counts, and 
+        <em>(c)</em> flexible frame sampling. 
+      </h2>
+    </div>
+  </div>
+</section>
+
+
+<section class="hero is-light">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            We present PromptGAR, a novel framework for Group Activity Recognition (GAR) that offers both input flexibility and high recognition accuracy. 
+          </p>
+          <p>
+            The existing approaches suffer from limited real-world applicability due to their reliance on full prompt annotations, fixed number of frames and instances, and the lack of actor consistency.
+            To bridge the gap, we proposed PromptGAR, which is the first GAR model to provide input flexibility across prompts, frames, and instances without the need for retraining.
+            We leverage diverse visual prompts—like bounding boxes, skeletal keypoints, and instance identities—by unifying them as point prompts. 
+            A recognition decoder then cross-updates class and prompt tokens for enhanced performance.
+          </p>
+          <p>
+            To ensure actor consistency for extended activity durations, we also introduce a relative instance attention mechanism that directly encodes instance identities.
+            Comprehensive evaluations demonstrate that PromptGAR achieves competitive performances both on full prompts and partial prompt inputs, establishing its effectiveness on input flexibility and generalization ability for real-world applications.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+    </div>
+  </div>
+</section>
+
+
+<section class="section architecture-section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column">
+        <h2 class="title is-3">PromptGAR Architecture</h2>
+        <img
+          src="./static/images/PromptGAR_Overview.drawio.png"
+          alt="High-level architecture diagram of the PromptGAR model."
+          class="architecture-image">
+        <p class="architecture-caption has-text-centered">
+          A sequence of frames \( I \) is processed by the video encoder, yielding RGB features
+          \( F_I \) and GAR class token \( X_{\mathrm{gar}} \).
+          Prompts, such as bounding boxes and skeletal keypoints, are transformed to prompt tokens
+          \( F_p \) by the prompt encoder.
+          These tokens, along with instance identities, are then fed into the recognition decoder
+          to obtain the group activity prediction \( Y_{\mathrm{gar}} \).
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+
+      <div class="column">
+        <h2 class="title is-3">Prompt Encoder</h2>
+        <p>
+          <em>(a)</em> Bounding boxes are represented by three points (upper-left, center, lower-right).
+          <em>(b)</em> Skeletal keypoints consist of 17 points.
+          <em>(c)</em> Positional encoding captures both spatial and temporal coordinates.
+          <em>(d)</em> Point types are distinguished using learnable embeddings.
+          <em>(e)</em> Depth-wise prompt pooling reduces temporal and type dimensions to 1, then up-projects to the number of pooled prompts \( O \).
+        </p>
+        <img
+          src="./static/images/Prompt_Encoder.drawio.png"
+          alt="Diagram of the Prompt Encoder module."
+          class="component-image">
+      </div>
+
+      <div class="column">
+        <h2 class="title is-3">Recognition Decoder</h2>
+        <p>
+          The decoder processes <em>(a)</em> RGB features \( F_I \) with positional embeddings and
+          <em>(b)</em> the GAR class token \( X_{\mathrm{gar}} \) together with prompt tokens
+          \( F_p \).
+          <em>(c)</em> The two-way transformer performs cross-updating between these features.
+          <em>(d)</em> Relative instance self-attention, using instance identities, ensures actor consistency.
+          <em>(e)</em> The GAR head takes the updated GAR class token \( \hat{X}_{\mathrm{gar}} \) and the average of
+          updated prompt tokens \( \hat{F}_{p} \) to predict the group activity label \( Y_{\mathrm{gar}} \).
+        </p>
+        <img
+          src="./static/images/Recognition_Decoder.drawio.png"
+          alt="Diagram of the Recognition Decoder module."
+          class="component-image">
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column">
+        <h2 class="title is-3">Relative Instance Attention</h2>
+        <p>
+          Prior GAR approaches rely on a fixed player order. 
+          Their performance degrades when this order changes.
+          Namely, the interaction between two prompts becomes dependent on their arbitrary instance IDs, even if they refer to the same underlying object or entity. 
+          Inspired by relative positional embedding, we introduce the relative instance identity embedding to address this issue by focusing on whether two tokens belong to the same instance.
+        </p>
+        <img
+          src="./static/images/Relative Instance ID Embedding for Project Page.jpg"
+          alt="Diagram of the relative instance attention mechanism."
+          class="architecture-image">
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+
+      <div class="column">
+        <h2 class="title is-3">Benchmark Results</h2>
+        <img
+          src="./static/images/Table1_Volleyball.png"
+          alt="Quantitative comparisons on the Volleyball dataset."
+          class="component-image">
+      </div>
+
+      <div class="column">
+        <h2 class="title is-3">&nbsp;</h2>
+        <img
+          src="./static/images/Table2_NBA.png"
+          alt="Quantitative comparisons on the NBA dataset."
+          class="component-image">
+      </div>
+
+    </div>
+
+    <div class="columns is-centered" style="margin-top: 2rem;">
+      <div class="column">
+        <img
+          src="./static/images/Feature Results for Project Page.jpg"
+          alt="Detailed flexible prompts, instances, frames, and actor order results."
+          class="component-image">
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>@article{jin2025promptgar,
+  title={PromptGAR: Flexible Promptive Group Activity Recognition},
+  author={Jin, Zhangyu and Feng, Andrew and Chemburkar, Ankur and De Melo, Celso M},
+  journal={arXiv preprint arXiv:2503.08933},
+  year={2025}
+}</code></pre>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop content">
+    <h2 class="title">Acknowledgement</h2>
+    <p>
+      The project or effort depicted was or is sponsored by the DEVCOM Army Research Lab under contract number W911QX-21-D-0001. 
+      The content of the information does not necessarily reflect the position or the policy of the Government, and no official endorsement should be inferred.
+    </p>
+  </div>
+</section>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+          This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template">Academic Project Page Template</a> which was adopted from the <a href="https://nerfies.github.io/">Nerfies</a> project page. 
+          You are free to borrow the design of this website, we just ask that you link back to this page in the footer.
+          </p>
+          <p>
+            This website is licensed under a <a rel="license"
+                                                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
