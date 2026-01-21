@@ -20,12 +20,12 @@ My research interests mainly are in
 Publications
 ======
 
-<div style="display: flex; align-items: flex-start; margin-bottom: 30px; padding: 15px; border: 1px solid #e0e0e0; border-radius: 8px; position: relative;">
+<div class="publication-item">
   <div style="position: absolute; top: 10px; left: 10px; background: #1f9aad; color: #fff; padding: 6px 10px; font-size: 13px; font-weight: 700; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.15);">
     3DV 2026
   </div>
-  <img src="/images/Publications/SatSkylines_Teaser.png" alt="Paper 1 Thumbnail" style="width: 200px; margin-right: 20px; border-radius: 5px;">
-  <div>
+  <img src="/images/Publications/SatSkylines_Teaser.png" alt="Paper 1 Thumbnail" class="publication-item-image">
+  <div class="publication-item-content">
     <h3 style="margin: 0 0 10px 0; font-size: 18px; font-weight: bold; color: #333;">
       SAT-SKYLINES: 3D Building Generation from Satellite Imagery and Coarse Geometric Priors
     </h3>
@@ -42,12 +42,12 @@ Publications
   </div>
 </div>
 
-<div style="display: flex; align-items: flex-start; margin-bottom: 30px; padding: 15px; border: 1px solid #e0e0e0; border-radius: 8px; position: relative;">
+<div class="publication-item">
   <div style="position: absolute; top: 10px; left: 10px; background: #1f9aad; color: #fff; padding: 6px 10px; font-size: 13px; font-weight: 700; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.15);">
     WACV 2026
   </div>
-  <img src="/images/Publications/PromptGAR_Teaser.png" alt="Paper 3 Thumbnail" style="width: 200px; margin-right: 20px; border-radius: 5px;">
-  <div>
+  <img src="/images/Publications/PromptGAR_Teaser.png" alt="Paper 3 Thumbnail" class="publication-item-image">
+  <div class="publication-item-content">
     <h3 style="margin: 0 0 10px 0; font-size: 18px; font-weight: bold; color: #333;">
       PromptGAR: Flexible Promptive Group Activity Recognition
     </h3>
@@ -64,12 +64,12 @@ Publications
   </div>
 </div>
 
-<div style="display: flex; align-items: flex-start; margin-bottom: 30px; padding: 15px; border: 1px solid #e0e0e0; border-radius: 8px; position: relative;">
+<div class="publication-item">
   <div style="position: absolute; top: 10px; left: 10px; background: #1f9aad; color: #fff; padding: 6px 10px; font-size: 13px; font-weight: 700; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.15);">
     WACV 2026
   </div>
-  <img src="/images/Publications/Discrete_Facial_Encoding_Teaser.png" alt="Paper 2 Thumbnail" style="width: 200px; margin-right: 20px; border-radius: 5px;">
-  <div>
+  <img src="/images/Publications/Discrete_Facial_Encoding_Teaser.png" alt="Paper 2 Thumbnail" class="publication-item-image">
+  <div class="publication-item-content">
     <h3 style="margin: 0 0 10px 0; font-size: 18px; font-weight: bold; color: #333;">
       Discrete Facial Encoding: A Framework for Data-driven Facial Display Discovery
     </h3>
