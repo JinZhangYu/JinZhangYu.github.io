@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>SAT-SKYLINES: 3D Building Generation from Satellite Imagery and Coarse Geometric Priors</title>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-PYVRSFMDRL');
+  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/favicon.svg">
+
+  <!-- MathJax for inline LaTeX (\(...\)) rendering -->
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async
+          src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+
+  <style>
+    .publication-title {
+      max-width: 40em;
+      margin-left: auto;
+      margin-right: auto;
+      padding-left: 1rem;
+      padding-right: 1rem;
+      line-height: 1.08;
+      text-wrap: balance;
+      font-size: clamp(1.6rem, 4.2vw, 3.25rem) !important;
+    }
+
+    .publication-title .title-line {
+      display: block;
+      white-space: nowrap;
+    }
+  </style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">
+            <span class="title-line">SAT-SKYLINES: 3D Building Generation from</span>
+            <span class="title-line">Satellite Imagery and Coarse Geometric Priors</span>
+          </h1>
+          <div class="venue-row">
+            <div class="publication-venue" style="font-size: 2rem; text-align: center;">
+              3DV 2026
+            </div>
+          </div>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://jinzhangyu.github.io/">Zhangyu Jin</a><sup>1</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://scholar.google.com/citations?hl=en&user=JKWxGfsAAAAJ">Andrew Feng</a><sup>1</sup>,
+            </span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>1</sup>University of Southern California, Institute for Creative Technologies</span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <!-- <span class="link-block">
+                <a href="https://arxiv.org/pdf/2011.12948"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span> -->
+              <span class="link-block">
+                <a href="https://arxiv.org/abs/2508.18531"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a href="#"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code & Dataset (Coming Soon)</span>
+                  </a>
+              </span>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <video id="teaser" autoplay muted loop playsinline controls height="100%">
+        <source src="./static/videos/0820.mp4" type="video/mp4">
+      </video>
+    </div>
+  </div>
+</section>
+
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <img id="teaser" class="teaser-image" src="./static/images/Teaser.jpg" alt="SatSkylines Teaser Image">
+      <h2 class="subtitle has-text-centered">
+        This diagram illustrates <strong>SatSkylines</strong>'s performance and key capabilities. 
+        3D building assets generated by our method using satellite imagery and coarse geometric priors. 
+        Our method not only demonstrates versatile generation, but also produces realistic performance in real-world scenarios.
+      </h2>
+    </div>
+  </div>
+</section>
+
+<section class="hero is-light">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Abstract</h2>
+          <div class="content has-text-justified">
+            <p>
+              We present <strong>SatSkylines</strong>, a 3D building generation approach that takes satellite imagery and coarse geometric priors.
+            </p>
+            <p>
+              Without proper geometric guidance, existing image-based 3D generation methods struggle to recover accurate building structures from the top-down views of satellite images alone. 
+              On the other hand, 3D detailization methods tend to rely heavily on highly detailed voxel inputs and fail to produce satisfying results from simple priors such as cuboids.
+              To address these issues, our key idea is to model the transformation from interpolated noisy coarse priors to detailed geometries, enabling flexible geometric control without additional computational cost. 
+            </p>
+          <p>
+            We have further developed <strong>Skylines-50K</strong>, a large-scale dataset of over 50,000 unique and stylized 3D building assets in order to support the generations of detailed building models. 
+            Extensive evaluations indicate the effectiveness of our model and strong generalization ability.
+          </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column">
+        <h2 class="title is-3">Necessity of Our Method</h2>
+        <img src="./static/images/Necessity_of_Topic.jpg" alt="Necessity of Our Method" class="architecture-image">
+        <div class="content has-text-justified">
+          <p>
+            Trellis fails to recover building heights (upper-middle). 
+            CLAY requires highly detailed voxels to work well (lower-middle). 
+            Our method takes top-down images and coarse geometric priors to generate realistic 3D buildings (right).
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section architecture-section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column">
+        <h2 class="title is-3">SatSkylines Architecture</h2>
+        <img src="./static/images/Model_Architecture.jpg" alt="SatSkylines Architecture" class="architecture-image">
+        <div class="content has-text-justified">
+          <p>
+            The coarse geometric prior \( \mathcal{O} \) is encoded by the SS VAE to obtain \( Z_{\mathcal{O}} \). 
+            (a) A channel-wise latent normalization is applied to produce \( Z_{\mathcal{O}}^{'} \). 
+            (b) The cosine geometric interpolation is then performed between \( Z_{\mathcal{O}}^{'} \) and gaussian noise \( \epsilon \), with \( \lambda \) controlling geometric guidance strength. 
+            Finally, the SS and SLat flow transformers generate detailed geometry and appearance.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column">
+        <h2 class="title is-3">Skylines-50K: 3D Building Dataset</h2>
+        <img src="./static/images/Skylines-50k_overview_Combined.png" alt="Skylines-50K 3D Building Dataset" class="architecture-image">
+        <div class="content has-text-justified">
+          <p>
+            <strong>Skylines-50K</strong> is a large-scale, diverse, high quality 3D building dataset. 
+            These assets are sourced from the Steam Workshop of the famous city-building and simulation game '<em>Cities: Skylines</em>'. 
+            Examples of rendered buildings are shown here to demonstrate style diversity.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column">
+        <h2 class="title is-3">Visualization Comparisons</h2>
+        <img src="./static/images/Main_Comparison_Cities_Skylines.jpg" alt="Visualization Comparisons" class="architecture-image">
+        <div class="content has-text-justified">
+          <p>
+            Visual comparisons of generated 3D building assets between our method and previous approaches. 
+            The first three rows are from the <strong>Skylines-50K</strong> test set, and the last three rows are real-world examples. 
+            Here \( \star \) indicates that Trellis does not natively support coarse geometric control, but our cosine geometric interpolation can be applied to incorporate geometric priors into its input. 
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column">
+        <h2 class="title is-3">Geometric Prior Variations</h2>
+        <div class="content has-text-justified">
+          <p>
+            The first two rows are examples from <strong>Skylines-50K</strong> dataset, while the last two rows are real-world cases.
+          </p>
+        </div>
+        <img src="./static/images/Coarseness_improves_performance.drawio.png" alt="Geometric Prior Variations" class="component-image">
+      </div>
+      <div class="column">
+        <h2 class="title is-3">Satellite Image Refinement</h2>
+        <div class="content has-text-justified">
+          <p>
+            Blue circles highlight zoomed-in details from 2D satellite images, while red circles mark the corresponding regions in <strong>SatSkylines</strong> generated 3D buildings. 
+            All examples are randomly sampled from real-world data.
+          </p>
+        </div>
+        <img src="./static/images/GPT_Refine_Comparison.jpg" alt="Satellite Image Refinement" class="component-image" style="width: 80%; display: block; margin: 0 auto;">
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column">
+        <h2 class="title is-3">Benchmark Results</h2>
+        <img src="./static/images/Table1.png" alt="Benchmark Results Table 1" class="component-image">
+      </div>
+      <div class="column">
+        <h2 class="title is-3">&nbsp;</h2>
+        <img src="./static/images/Table2.png" alt="Benchmark Results Table 2" class="component-image" style="width: 90%; display: block; margin: 0 auto;">
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>@article{jin2025sat,
+  title={SAT-SKYLINES: 3D Building Generation from Satellite Imagery and Coarse Geometric Priors},
+  author={Jin, Zhangyu and Feng, Andrew},
+  journal={arXiv preprint arXiv:2508.18531},
+  year={2025}
+}</code></pre>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop content">
+    <h2 class="title">Acknowledgement</h2>
+    <p>
+      The project or effort depicted was or is sponsored by the DEVCOM Army Research Lab under contract number W911QX-21-D-0001. 
+      The content of the information does not necessarily reflect the position or the policy of the Government, and no official endorsement should be inferred.
+    </p>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+          This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template">Academic Project Page Template</a> which was adopted from the <a href="https://nerfies.github.io/">Nerfies</a> project page. 
+          You are free to borrow the design of this website, we just ask that you link back to this page in the footer.
+          </p>
+          <p>
+            This website is licensed under a <a rel="license"
+                                                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

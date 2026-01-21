@@ -37,27 +37,7 @@ Publications
     </p>
     <div>
       <a href="https://arxiv.org/abs/2508.18531" style="background: #28a745; color: white; padding: 4px 8px; text-decoration: none; font-size: 12px; border-radius: 3px; margin-right: 5px;">Paper</a>
-    </div>
-  </div>
-</div>
-
-<div style="display: flex; align-items: flex-start; margin-bottom: 30px; padding: 15px; border: 1px solid #e0e0e0; border-radius: 8px; position: relative;">
-  <div style="position: absolute; top: 10px; left: 10px; background: #1f9aad; color: #fff; padding: 6px 10px; font-size: 13px; font-weight: 700; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.15);">
-    WACV 2026
-  </div>
-  <img src="/images/Publications/Discrete_Facial_Encoding_Teaser.png" alt="Paper 2 Thumbnail" style="width: 200px; margin-right: 20px; border-radius: 5px;">
-  <div>
-    <h3 style="margin: 0 0 10px 0; font-size: 18px; font-weight: bold; color: #333;">
-      Discrete Facial Encoding: A Framework for Data-driven Facial Display Discovery
-    </h3>
-    <p style="margin: 0 0 8px 0; font-size: 14px; color: #666;">
-      Minh Tran, Maksim Siniukov, <strong>Zhangyu Jin</strong>, Mohammad Soleymani
-    </p>
-    <p style="margin: 0 0 10px 0; font-style: italic; font-size: 14px; color: #555;">
-      IEEE/CVF Winter Conference on Applications of Computer Vision (<strong>WACV</strong>), 2026.
-    </p>
-    <div>
-      <a href="https://arxiv.org/abs/2510.01662" style="background: #28a745; color: white; padding: 4px 8px; text-decoration: none; font-size: 12px; border-radius: 3px; margin-right: 5px;">Paper</a>
+      <a href="/projects/SatSkylines/" style="background: #1f77d4; color: white; padding: 4px 8px; text-decoration: none; font-size: 12px; border-radius: 3px;">Project</a>
     </div>
   </div>
 </div>
@@ -84,6 +64,26 @@ Publications
   </div>
 </div>
 
+<div style="display: flex; align-items: flex-start; margin-bottom: 30px; padding: 15px; border: 1px solid #e0e0e0; border-radius: 8px; position: relative;">
+  <div style="position: absolute; top: 10px; left: 10px; background: #1f9aad; color: #fff; padding: 6px 10px; font-size: 13px; font-weight: 700; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.15);">
+    WACV 2026
+  </div>
+  <img src="/images/Publications/Discrete_Facial_Encoding_Teaser.png" alt="Paper 2 Thumbnail" style="width: 200px; margin-right: 20px; border-radius: 5px;">
+  <div>
+    <h3 style="margin: 0 0 10px 0; font-size: 18px; font-weight: bold; color: #333;">
+      Discrete Facial Encoding: A Framework for Data-driven Facial Display Discovery
+    </h3>
+    <p style="margin: 0 0 8px 0; font-size: 14px; color: #666;">
+      Minh Tran, Maksim Siniukov, <strong>Zhangyu Jin</strong>, Mohammad Soleymani
+    </p>
+    <p style="margin: 0 0 10px 0; font-style: italic; font-size: 14px; color: #555;">
+      IEEE/CVF Winter Conference on Applications of Computer Vision (<strong>WACV</strong>), 2026.
+    </p>
+    <div>
+      <a href="https://arxiv.org/abs/2510.01662" style="background: #28a745; color: white; padding: 4px 8px; text-decoration: none; font-size: 12px; border-radius: 3px; margin-right: 5px;">Paper</a>
+    </div>
+  </div>
+</div>
 
 
 <!-- 
