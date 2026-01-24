@@ -43,8 +43,8 @@ Publications
 </div>
 
 <div class="publication-item">
-  <div style="position: absolute; top: 10px; left: 10px; background: #1f9aad; color: #fff; padding: 6px 10px; font-size: 13px; font-weight: 700; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.15);">
-    WACV 2026
+  <div style="position: absolute; top: 10px; left: 10px; background: #1f9aad; color: #fff; padding: 6px 10px; font-size: 13px; font-weight: 700; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.15); white-space: nowrap;">
+    WACV 2026 Oral
   </div>
   <img src="/images/Publications/PromptGAR_Teaser.png" alt="Paper 3 Thumbnail" class="publication-item-image">
   <div class="publication-item-content">
@@ -55,7 +55,7 @@ Publications
       <strong>Zhangyu Jin</strong>, Andrew Feng, Ankur Chemburkar, Celso M. De Melo
     </p>
     <p style="margin: 0 0 10px 0; font-style: italic; font-size: 14px; color: #555;">
-      IEEE/CVF Winter Conference on Applications of Computer Vision (<strong>WACV</strong>), 2026.
+      IEEE/CVF Winter Conference on Applications of Computer Vision (<strong>WACV</strong>), 2026&nbsp;(<strong>Oral</strong>).
     </p>
     <div>
       <a href="https://arxiv.org/abs/2503.08933" style="background: #28a745; color: white; padding: 4px 8px; text-decoration: none; font-size: 12px; border-radius: 3px; margin-right: 5px;">Paper</a>
