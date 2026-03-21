@@ -37,7 +37,8 @@ Publications
     </p>
     <div>
       <a href="https://arxiv.org/abs/2508.18531" style="background: #28a745; color: white; padding: 4px 8px; text-decoration: none; font-size: 12px; border-radius: 3px; margin-right: 5px;">Paper</a>
-      <a href="/projects/SatSkylines/" style="background: #1f77d4; color: white; padding: 4px 8px; text-decoration: none; font-size: 12px; border-radius: 3px;">Project</a>
+      <a href="/projects/SatSkylines/" style="background: #1f77d4; color: white; padding: 4px 8px; text-decoration: none; font-size: 12px; border-radius: 3px; margin-right: 5px;">Project</a>
+      <a href="https://github.com/JinZhangYu/SatSkylines/blob/main/DATASET.md" style="background: #d97706; color: white; padding: 4px 8px; text-decoration: none; font-size: 12px; border-radius: 3px;">Dataset</a>
     </div>
   </div>
 </div>
