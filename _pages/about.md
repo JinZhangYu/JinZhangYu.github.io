@@ -13,12 +13,31 @@ I am a second-year PhD student (2024 Fall-) in Computer Science at the [Universi
 I received my Master’s degree from [University of Southern California, Institute for Creative Technologies](https://ict.usc.edu/). During my Master’s, I took Research Internships at [Motorola Solutions](https://www.motorolasolutions.com/en_us.html) and at [TuSimple](https://www.tusimple.com/). Previously, I was a Research Engineer at [YITU Technology](https://www.yitutech.com/en) for one year. Prior to that, I got my Bachelor degree from [Shanghai Jiao Tong University](https://www.ji.sjtu.edu.cn/).
 
 My research interests mainly are in 
-1. 3D Generation, 3D/4D Reconstruction, and Sparse-view Reconstruction.
-2. Face/Portrait Generation, Facial Expression Analysis, and Affective Computing.
+1. 3D/4D Generation, 3D/4D Reconstruction.
+2. Interactive Face/Head Generation, Reinforcement Learning for Visual Generation.
 3. Video Understanding, including Group Activity Recognition, Multi-Object Tracking, etc.
 
 Publications
 ======
+
+<div class="publication-item">
+  <img src="/images/Publications/GDPO_Listener_Architecture.png" alt="GDPO-Listener Thumbnail" class="publication-item-image" style="height: 160px; object-fit: contain; object-position: center;">
+  <div class="publication-item-content">
+    <h3 style="margin: 0 0 10px 0; font-size: 18px; font-weight: bold; color: #333;">
+      GDPO-Listener: Expressive Interactive Head Generation via Auto-Regressive Flow Matching and Group reward-Decoupled Policy Optimization
+    </h3>
+    <p style="margin: 0 0 8px 0; font-size: 14px; color: #666;">
+      <strong>Zhangyu Jin</strong>, Maksim Siniukov, Deuksin Kwon, Ashutosh Chaubey, Mohammad Soleymani
+    </p>
+    <p style="margin: 0 0 10px 0; font-style: italic; font-size: 14px; color: #555;">
+      arXiv, 2026.
+    </p>
+    <div>
+      <a href="https://arxiv.org/abs/2603.25020" style="background: #28a745; color: white; padding: 4px 8px; text-decoration: none; font-size: 12px; border-radius: 3px; margin-right: 5px;">Paper</a>
+      <a href="/projects/GDPO-Listener/" style="background: #1f77d4; color: white; padding: 4px 8px; text-decoration: none; font-size: 12px; border-radius: 3px;">Project</a>
+    </div>
+  </div>
+</div>
 
 <div class="publication-item">
   <div style="position: absolute; top: 10px; left: 10px; background: #1f9aad; color: #fff; padding: 6px 10px; font-size: 13px; font-weight: 700; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.15);">

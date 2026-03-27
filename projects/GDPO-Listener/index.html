@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>GDPO-Listener: Expressive Interactive Head Generation via Auto-Regressive Flow Matching and Group reward-Decoupled Policy Optimization</title>
+  <link rel="icon" href="./static/images/favicon.svg" type="image/svg+xml">
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans"
+        rel="stylesheet">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <style>
+    body {
+      font-family: "Noto Sans", sans-serif;
+    }
+
+    .publication-title {
+      font-family: "Google Sans", sans-serif;
+      max-width: 40em;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.08;
+      text-wrap: balance;
+      font-size: clamp(1.6rem, 4.2vw, 3.25rem) !important;
+    }
+
+    .publication-title .title-line {
+      display: block;
+      white-space: nowrap;
+    }
+
+    .publication-authors {
+      font-family: "Google Sans", sans-serif;
+      margin-top: 0;
+    }
+
+    .publication-authors a {
+      color: hsl(204, 86%, 53%) !important;
+    }
+
+    .publication-authors a:hover {
+      text-decoration: underline;
+    }
+
+    .author-block {
+      display: inline-block;
+    }
+
+    .teaser .hero-body {
+      padding-top: 0;
+      padding-bottom: 3rem;
+    }
+
+    .hero.teaser .container.is-max-desktop {
+      max-width: 1200px;
+    }
+
+    .teaser-video {
+      display: block;
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto 1.5rem;
+      border-radius: 10px;
+    }
+
+    .architecture-image {
+      display: block;
+      width: 100%;
+      max-width: 1100px;
+      margin: 0 auto 1.5rem;
+      border-radius: 10px;
+    }
+
+    .architecture-image.is-narrow {
+      max-width: 860px;
+    }
+  </style>
+</head>
+<body>
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title">
+              <span class="title-line">GDPO-Listener: Expressive Interactive Head</span>
+              <span class="title-line">Generation via Auto-Regressive Flow Matching</span>
+              <span class="title-line">and Group reward-Decoupled Policy Optimization</span>
+            </h1>
+            <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://jinzhangyu.github.io/">Zhangyu Jin</a><sup>1</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://scholar.google.com/citations?user=5w0f0OQAAAAJ">Maksim Siniukov</a><sup>1</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://scholar.google.com/citations?user=6_WZd6AAAAAJ">Deuksin Kwon</a><sup>1</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://ashutoshchaubey.com/">Ashutosh Chaubey</a><sup>1</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://people.ict.usc.edu/~soleymani/">Mohammad Soleymani</a><sup>1</sup>
+            </span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>1</sup>University of Southern California, Institute for Creative Technologies</span>
+          </div>
+          
+          
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <!-- <span class="link-block">
+                <a href="https://arxiv.org/pdf/2011.12948"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span> -->
+              <span class="link-block">
+                <a href="https://arxiv.org/abs/2603.25020"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="#"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code & Dataset (Comming Soon)</span>
+                  </a>
+              </span>
+            </div>
+          </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <video id="teaser" class="teaser-video" playsinline controls preload="auto" poster="./static/images/Demo_Cover.png" style="background-color: #FFFFFF; width: 100%; height: auto;">
+        <source src="./static/videos/GDPO_final_crop.mp4" type="video/mp4">
+      </video>
+    </div>
+  </div>
+</section>
+
+<section class="hero is-light">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Generating realistic 3D head motion for dyadic interactions is a significant challenge in virtual human synthesis. 
+            While recent methods achieve impressive results with speaking heads, they frequently suffer from the `Regression-to-the-Mean' problem in listener motions, collapsing into static faces, and lack the parameter space for complex nonverbal motions. 
+            In this paper, we propose GDPO-Listener, a novel framework that achieves highly expressive speaking and listening motion generation. 
+            First, we introduce an Auto-Regressive Flow Matching architecture enabling stable supervised learning. 
+            Second, to overcome kinematic stillness, we apply the Group reward-Decoupled Policy Optimization (GDPO). 
+            By isolating reward normalization across distinct FLAME parameter groups, GDPO explicitly incentivizes high variance expressive generations. 
+            Finally, we enable explicit semantic text control for customizable responses. 
+            Extensive evaluations across the Seamless Interaction and DualTalk datasets demonstrate superior performance compared to existing baselines on long-term kinematic variance, visual expressivity and semantic controllability.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column">
+        <h2 class="title is-3">Overview of GDPO-Listener</h2>
+        <img src="./static/images/Teaser.drawio.png" class="architecture-image">
+        <div class="content has-text-justified">
+          <p>
+            Our framework generates expressive speaking and listening head reactions from multimodal dyadic conversational inputs. 
+            By utilizing an expanded FLAME parameter space, it naturally supports eye blinking and head nodding. 
+            Furthermore, it enables explicit semantic text control to ensure contextually appropriate responses and maintains stable dynamics during long-sequence inference.
+        </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column">
+        <h2 class="title is-3">GDPO-Listener Architecture</h2>
+        <img src="./static/images/Main_Architecture.drawio.png" class="architecture-image is-narrow">
+        <div class="content has-text-justified">
+          <p>
+              Our framework has two training stages. 
+              (a) Supervised Learning. 
+              Multimodal inputs are encoded as prefix conditions, and an Auto-Regressive Flow Matching model iteratively predicts actor motion latents from noise and history via ODE sampling. 
+              (b) Reinforcement Learning. 
+              We then post-train the policy model via GDPO. 
+              We compute fine-grained, decoupled rewards for distinct FLAME parameters under SDE sampling to explicitly optimize expressiveness.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column">
+        <h2 class="title is-3">Visualization Comparisons</h2>
+        <img src="./static/images/Main_Comparisons.jpg" class="architecture-image">
+        <div class="content has-text-justified">
+          <p>
+              Qualitative comparisons show that other methods have low-expressive speaking and static listening, but our method shows better lip sync and highly expressive reactions.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column">
+        <h2 class="title is-3">Advanced Generation Capabilities</h2>
+        <img src="./static/images/Advanced_Visualization.jpg" class="architecture-image">
+        <div class="content has-text-justified">
+          <p>
+              (Top) Semantic text explicitly controls emotional states. 
+              (Middle) We sustain dynamic reactions during long sequences, avoiding baseline static decay. 
+              (Bottom) CFG scaling seamlessly modulates expressiveness intensity without retraining.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column">
+        <h2 class="title is-3">Benchmark Results</h2>
+        <img src="./static/images/Seamless_Interaction_Table.png" class="architecture-image is-narrow">
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+          This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template">Academic Project Page Template</a> which was adopted from the <a href="https://nerfies.github.io/">Nerfies</a> project page. 
+          You are free to borrow the design of this website, we just ask that you link back to this page in the footer.
+          </p>
+          <p>
+            This website is licensed under a <a rel="license"
+                                                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+</body>
+</html>
