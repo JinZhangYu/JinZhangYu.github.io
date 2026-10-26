@@ -1,298 +1,518 @@
 <!DOCTYPE html>
-<html>
+
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>GDPO-Listener: Expressive Interactive Head Generation via Auto-Regressive Flow Matching and Group reward-Decoupled Policy Optimization</title>
-  <link rel="icon" href="./static/images/favicon.svg" type="image/svg+xml">
-  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans"
-        rel="stylesheet">
-  <link rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
-  <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-  <link rel="stylesheet"
-        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
-  <style>
-    body {
-      font-family: "Noto Sans", sans-serif;
-    }
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="GDPO-Listener generates expressive speaking and listening head motion with auto-regressive flow matching and group reward-decoupled policy optimization." name="description"/>
+<meta content="GDPO-Listener, interactive head generation, listener motion, flow matching, reinforcement learning, FLAME, semantic control" name="keywords"/>
+<meta content="GDPO-Listener: Expressive Interactive Head Generation" property="og:title"/>
+<meta content="Expressive speaking and listening head generation with semantic control and stable long-sequence dynamics." property="og:description"/>
+<meta content="website" property="og:type"/>
+<meta property="og:url" content="https://jinzhangyu.github.io/projects/GDPO-Listener/"/>
+<meta property="og:image" content="https://jinzhangyu.github.io/projects/GDPO-Listener/static/images/Demo_Cover.png"/>
 
-    .publication-title {
-      font-family: "Google Sans", sans-serif;
-      max-width: 40em;
-      margin-left: auto;
-      margin-right: auto;
-      line-height: 1.08;
-      text-wrap: balance;
-      font-size: clamp(1.6rem, 4.2vw, 3.25rem) !important;
-    }
 
-    .publication-title .title-line {
-      display: block;
-      white-space: nowrap;
-    }
+<meta content="summary_large_image" name="twitter:card"/>
+<title>GDPO-Listener: Expressive Interactive Head Generation</title>
+<link href="./static/images/favicon.svg" rel="icon" type="image/svg+xml"/>
 
-    .publication-authors {
-      font-family: "Google Sans", sans-serif;
-      margin-top: 0;
-    }
 
-    .publication-authors a {
-      color: hsl(204, 86%, 53%) !important;
-    }
+<link href="./static/css/fonts.css" rel="stylesheet"/>
+<link href="./static/css/bulma.min.css" rel="stylesheet"/>
 
-    .publication-authors a:hover {
-      text-decoration: underline;
-    }
 
-    .author-block {
-      display: inline-block;
-    }
-
-    .teaser .hero-body {
-      padding-top: 0;
-      padding-bottom: 3rem;
-    }
-
-    .hero.teaser .container.is-max-desktop {
-      max-width: 1200px;
-    }
-
-    .teaser-video {
-      display: block;
-      width: 100%;
-      max-width: 1200px;
-      margin: 0 auto 1.5rem;
-      border-radius: 10px;
-    }
-
-    .architecture-image {
-      display: block;
-      width: 100%;
-      max-width: 1100px;
-      margin: 0 auto 1.5rem;
-      border-radius: 10px;
-    }
-
-    .architecture-image.is-narrow {
-      max-width: 860px;
-    }
-  </style>
+<link href="./static/css/index.css?v=20261026-1" rel="stylesheet"/>
+<script defer="" src="./static/js/index.js?v=20261026-1"></script>
 </head>
 <body>
-  <section class="hero">
-    <div class="hero-body">
-      <div class="container is-max-desktop">
-        <div class="columns is-centered">
-          <div class="column has-text-centered">
-            <h1 class="title is-1 publication-title">
-              <span class="title-line">GDPO-Listener: Expressive Interactive Head</span>
-              <span class="title-line">Generation via Auto-Regressive Flow Matching</span>
-              <span class="title-line">and Group reward-Decoupled Policy Optimization</span>
-            </h1>
-            <div class="is-size-5 publication-authors">
-            <span class="author-block">
-              <a href="https://jinzhangyu.github.io/">Zhangyu Jin</a><sup>1</sup>,
-            </span>
-            <span class="author-block">
-              <a href="https://scholar.google.com/citations?user=5w0f0OQAAAAJ">Maksim Siniukov</a><sup>1</sup>,
-            </span>
-            <span class="author-block">
-              <a href="https://scholar.google.com/citations?user=6_WZd6AAAAAJ">Deuksin Kwon</a><sup>1</sup>,
-            </span>
-            <span class="author-block">
-              <a href="https://ashutoshchaubey.com/">Ashutosh Chaubey</a><sup>1</sup>,
-            </span>
-            <span class="author-block">
-              <a href="https://people.ict.usc.edu/~soleymani/">Mohammad Soleymani</a><sup>1</sup>
-            </span>
-          </div>
+<a class="skip-link" href="#main-content">Skip to content</a>
+<nav aria-label="GDPO-Listener section navigation" class="project-nav">
+<div class="project-nav-inner">
+<a href="#abstract"><span class="nav-number">1</span>Abstract</a>
+<a href="#overview"><span class="nav-number">2</span>Overview</a>
+<a href="#method"><span class="nav-number">3</span>Method</a>
+<a href="#speaking-comparison"><span class="nav-number">4</span>Speaking Comparison</a>
+<a href="#listening-comparison"><span class="nav-number">5</span>Listening Comparison</a>
+<span aria-hidden="true" class="nav-row-break"></span>
+<a href="#text-control"><span class="nav-number">6</span>Text Control</a>
+<a href="#expressiveness-control"><span class="nav-number">7</span>Expressiveness Control</a>
+<a href="#long-sequence"><span class="nav-number">8</span>Long Sequence Inference</a>
+<a href="#gaussian-avatar-integration"><span class="nav-number">9</span>Gaussian Avatar Integration</a>
+</div>
+</nav>
+<header class="publication-header">
+<div class="project-container publication-header-inner">
+<h1 class="publication-title">
+<span class="gdpo-title">GDPO-Listener</span><span aria-hidden="true">:</span>
+        Expressive Interactive Head Generation via Auto-Regressive Flow Matching and Group Reward-Decoupled Policy Optimization
+      </h1>
 
-          <div class="is-size-5 publication-authors">
-            <span class="author-block"><sup>1</sup>University of Southern California, Institute for Creative Technologies</span>
-          </div>
-          
-          
-          <div class="column has-text-centered">
-            <div class="publication-links">
-              <!-- PDF Link. -->
-              <!-- <span class="link-block">
-                <a href="https://arxiv.org/pdf/2011.12948"
-                   class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                      <i class="fas fa-file-pdf"></i>
-                  </span>
-                  <span>Paper</span>
-                </a>
-              </span> -->
-              <span class="link-block">
-                <a href="https://arxiv.org/abs/2603.25020"
-                   class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                      <i class="ai ai-arxiv"></i>
-                  </span>
-                  <span>arXiv</span>
-                </a>
-              </span>
-              <span class="link-block">
-                <a href="#"
-                   class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                      <i class="fab fa-github"></i>
-                  </span>
-                  <span>Code & Dataset (Comming Soon)</span>
-                  </a>
-              </span>
-            </div>
-          </div>
-
-          </div>
-        </div>
+      <div class="publication-authors" aria-label="Authors">
+        <span class="author-block"><a href="https://jinzhangyu.github.io/">Zhangyu Jin</a><sup>1</sup>,</span>
+        <span class="author-block"><a href="https://scholar.google.com/citations?user=5w0f0OQAAAAJ">Maksim Siniukov</a><sup>1</sup>,</span>
+        <span class="author-block"><a href="https://scholar.google.com/citations?user=6_WZd6AAAAAJ">Deuksin Kwon</a><sup>1</sup>,</span>
+        <span class="author-block"><a href="https://ashutoshchaubey.com/">Ashutosh Chaubey</a><sup>1</sup>,</span>
+        <span class="author-block"><a href="https://people.ict.usc.edu/~soleymani/">Mohammad Soleymani</a><sup>1</sup></span>
       </div>
-    </div>
-  </section>
 
-<section class="hero teaser">
-  <div class="container is-max-desktop">
-    <div class="hero-body">
-      <video id="teaser" class="teaser-video" loop playsinline controls preload="auto" poster="./static/images/Demo_Cover.png" style="background-color: #FFFFFF; width: 100%; height: auto;">
-        <source src="./static/videos/GDPO_final_crop.mp4" type="video/mp4">
-      </video>
-    </div>
-  </div>
+      <p class="publication-affiliation">
+        <sup>1</sup>University of Southern California, Institute for Creative Technologies
+      </p>
+
+      <div class="publication-links" aria-label="Project resources">
+        <a class="project-button" href="https://arxiv.org/abs/2603.25020" target="_blank" rel="noopener noreferrer">
+          <span>arXiv</span>
+        </a>
+        <span class="project-button is-disabled" aria-disabled="true">
+          <span>Code &amp; Dataset (Coming Soon)</span>
+        </span>
+      </div>
+
+
+
+
+</div>
+</header>
+<main id="main-content">
+<section aria-labelledby="teaser-summary" class="teaser-section">
+<div class="project-container">
+<figure class="video-figure">
+<div class="video-frame">
+<video controls="" playsinline="" poster="./static/images/Demo_Cover.png" preload="metadata">
+<source src="./static/videos/GDPO_final_crop.mp4" type="video/mp4"/>
+              Your browser does not support the video tag.
+            </video>
+</div>
+<figcaption class="teaser-summary" id="teaser-summary">
+<strong>GDPO-Listener</strong> generates expressive <strong>speaking and listening reactions</strong> from multimodal dyadic context, with explicit semantic control and stable dynamics over long sequences.
+          </figcaption>
+</figure>
+</div>
 </section>
-
-<section class="hero is-light">
-  <div class="hero-body">
-    <div class="container is-max-desktop">
-    <!-- Abstract. -->
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-four-fifths">
-        <h2 class="title is-3">Abstract</h2>
-        <div class="content has-text-justified">
-          <p>
-            Generating realistic 3D head motion for dyadic interactions is a significant challenge in virtual human synthesis. 
-            While recent methods achieve impressive results with speaking heads, they frequently suffer from the `Regression-to-the-Mean' problem in listener motions, collapsing into static faces, and lack the parameter space for complex nonverbal motions. 
-            In this paper, we propose GDPO-Listener, a novel framework that achieves highly expressive speaking and listening motion generation. 
-            First, we introduce an Auto-Regressive Flow Matching architecture enabling stable supervised learning. 
-            Second, to overcome kinematic stillness, we apply the Group reward-Decoupled Policy Optimization (GDPO). 
-            By isolating reward normalization across distinct FLAME parameter groups, GDPO explicitly incentivizes high variance expressive generations. 
-            Finally, we enable explicit semantic text control for customizable responses. 
-            Extensive evaluations across the Seamless Interaction and DualTalk datasets demonstrate superior performance compared to existing baselines on long-term kinematic variance, visual expressivity and semantic controllability.
+<section class="paper-section section-soft" id="abstract">
+<div class="project-container prose-narrow">
+<div class="section-heading is-centered">
+<h2 class="section-title-accent">Abstract</h2>
+</div>
+<div class="paper-copy has-text-justified">
+<p>
+            Generating realistic 3D head motion for dyadic interactions is a significant challenge in virtual human synthesis. While recent methods achieve impressive results with speaking heads, they frequently suffer from the “regression-to-the-mean” problem in listener motions, collapsing into static faces, and lack the parameter space for complex nonverbal motions.
           </p>
-        </div>
-      </div>
-    </div>
-    <!--/ Abstract. -->
-    </div>
-  </div>
-</section>
-
-<section class="section">
-  <div class="container is-max-desktop">
-    <div class="columns is-centered has-text-centered">
-      <div class="column">
-        <h2 class="title is-3">Overview of GDPO-Listener</h2>
-        <img src="./static/images/Teaser.drawio.png" class="architecture-image">
-        <div class="content has-text-justified">
-          <p>
-            Our framework generates expressive speaking and listening head reactions from multimodal dyadic conversational inputs. 
-            By utilizing an expanded FLAME parameter space, it naturally supports eye blinking and head nodding. 
-            Furthermore, it enables explicit semantic text control to ensure contextually appropriate responses and maintains stable dynamics during long-sequence inference.
-        </p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="section">
-  <div class="container is-max-desktop">
-    <div class="columns is-centered has-text-centered">
-      <div class="column">
-        <h2 class="title is-3">GDPO-Listener Architecture</h2>
-        <img src="./static/images/Main_Architecture.drawio.png" class="architecture-image is-narrow">
-        <div class="content has-text-justified">
-          <p>
-              Our framework has two training stages. 
-              (a) Supervised Learning. 
-              Multimodal inputs are encoded as prefix conditions, and an Auto-Regressive Flow Matching model iteratively predicts actor motion latents from noise and history via ODE sampling. 
-              (b) Reinforcement Learning. 
-              We then post-train the policy model via GDPO. 
-              We compute fine-grained, decoupled rewards for distinct FLAME parameters under SDE sampling to explicitly optimize expressiveness.
+<p>
+            We propose <strong>GDPO-Listener</strong>, a framework for highly expressive speaking and listening motion generation. First, an <strong>Auto-Regressive Flow Matching</strong> architecture enables stable supervised learning. Second, <strong>Group Reward-Decoupled Policy Optimization (GDPO)</strong> isolates reward normalization across distinct FLAME parameter groups, explicitly incentivizing high-variance expressive generations.
           </p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="section">
-  <div class="container is-max-desktop">
-    <div class="columns is-centered has-text-centered">
-      <div class="column">
-        <h2 class="title is-3">Visualization Comparisons</h2>
-        <img src="./static/images/Main_Comparisons.jpg" class="architecture-image">
-        <div class="content has-text-justified">
-          <p>
-              Qualitative comparisons show that other methods have low-expressive speaking and static listening, but our method shows better lip sync and highly expressive reactions.
+<p>
+            The framework also enables explicit semantic text control for customizable responses. Extensive evaluations on the Seamless Interaction and DualTalk datasets demonstrate improved long-term kinematic variance, visual expressivity, and semantic controllability over existing baselines.
           </p>
-        </div>
-      </div>
-    </div>
-  </div>
+</div>
+</div>
 </section>
-
-<section class="section">
-  <div class="container is-max-desktop">
-    <div class="columns is-centered has-text-centered">
-      <div class="column">
-        <h2 class="title is-3">Advanced Generation Capabilities</h2>
-        <img src="./static/images/Advanced_Visualization.jpg" class="architecture-image">
-        <div class="content has-text-justified">
-          <p>
-              (Top) Semantic text explicitly controls emotional states. 
-              (Middle) We sustain dynamic reactions during long sequences, avoiding baseline static decay. 
-              (Bottom) CFG scaling seamlessly modulates expressiveness intensity without retraining.
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
+<section class="paper-section" id="overview">
+<div class="project-container">
+<div class="section-heading">
+<h2 class="section-title-accent">Overview of GDPO-Listener</h2>
+</div>
+<figure class="figure-block">
+<div class="figure-surface">
+<img alt="Overview of GDPO-Listener inputs, speaking and listening outputs, semantic controls, expanded FLAME parameters, and long-sequence inference." decoding="async" height="1191" loading="lazy" src="./static/images/Teaser.drawio.png" width="3252"/>
+</div>
+<figcaption class="overview-summary">
+            One unified model supports expressive speaking, lifelike listening, expanded FLAME motion, text-directed emotion, and long-horizon generation.
+          </figcaption>
+</figure>
+</div>
 </section>
-
-<section class="section">
-  <div class="container is-max-desktop">
-    <div class="columns is-centered has-text-centered">
-      <div class="column">
-        <h2 class="title is-3">Benchmark Results</h2>
-        <img src="./static/images/Seamless_Interaction_Table.png" class="architecture-image is-narrow">
-      </div>
-    </div>
-  </div>
+<section class="paper-section section-soft" id="method">
+<div class="project-container">
+<div class="section-heading">
+<h2 class="section-title-accent">Method</h2>
+</div>
+<figure class="figure-block">
+<div class="figure-surface is-method">
+<img alt="Two-stage GDPO-Listener architecture with auto-regressive flow matching for supervised learning and decoupled group rewards for reinforcement learning." decoding="async" height="2385" loading="lazy" src="./static/images/Main_Architecture.drawio.png" width="2586"/>
+</div>
+</figure>
+<div class="method-grid">
+<article class="method-card">
+<span class="method-step">Stage 01</span>
+<h3>Supervised Learning</h3>
+<p>
+              Multimodal inputs form prefix conditions, and an auto-regressive flow-matching model iteratively predicts actor-motion latents from noise and motion history through ODE sampling.
+            </p>
+</article>
+<article class="method-card">
+<span class="method-step is-green">Stage 02</span>
+<h3>GDPO Post-Training</h3>
+<p>
+              The policy is post-trained with SDE sampling and decoupled rewards for distinct FLAME parameter groups, directly optimizing expressive motion without collapsing the reward signal across groups.
+            </p>
+</article>
+</div>
+</div>
 </section>
+<section class="paper-section comparison-section" id="speaking-comparison">
+<div class="project-container">
+<div class="section-heading">
+<h2 class="section-title-accent">Speaking Comparison</h2>
+<p class="comparison-lead">
+            Each sample shows the same speaking moment across all five panels for direct comparison. <em>(Click the video to enable audio.)</em>
+</p>
+</div>
+<div aria-label="Speaking comparison categories" class="comparison-legend">
+<span class="legend-chip"><span class="legend-swatch is-gt"></span>GT — Ground Truth</span>
+<span class="legend-chip"><span class="legend-swatch is-baseline"></span>Baselines</span>
+<span class="legend-chip"><span class="legend-swatch is-ours"></span>GDPO-Listener (Ours)</span>
+</div>
+<div aria-label="Speaking comparison videos" aria-roledescription="carousel" class="comparison-carousel" data-carousel-name="Speaking comparison" data-video-carousel="" role="region" tabindex="0">
+<div class="comparison-item">
+<div class="model-strip">
+<div aria-label="Video panel order" class="model-strip-labels">
+<span class="is-gt">Partner GT</span>
+<span class="is-gt">Actor GT</span>
+<span>DualTalk</span>
+<span>UniLS</span>
+<span class="is-ours">GDPO-Listener (Ours)</span>
+</div>
+<div class="comparison-stage">
+<video aria-label="Speaking comparison video 1 of 10" autoplay="" class="comparison-video" controls="" data-carousel-video="" loop="" muted="" playsinline="" preload="metadata">
+<source src="./static/videos/comparisons/speaking-09.mp4" type="video/mp4"/>
+                  Your browser does not support the video tag.
+                </video>
+</div>
+</div>
+</div>
+<button aria-label="Previous speaking comparison sample" class="carousel-arrow is-previous" data-carousel-previous="" type="button">
+<svg aria-hidden="true" focusable="false" viewbox="0 0 50 80">
+<polyline fill="currentColor" points="45.63,75.8 0.375,38.087 45.63,0.375" stroke-linecap="round" stroke-linejoin="round" stroke-width=".5em"></polyline>
+</svg>
+</button>
+<button aria-label="Next speaking comparison sample" class="carousel-arrow is-next" data-carousel-next="" type="button">
+<svg aria-hidden="true" focusable="false" viewbox="0 0 50 80">
+<polyline fill="currentColor" points="0.375,0.375 45.63,38.087 0.375,75.8" stroke-linecap="round" stroke-linejoin="round" stroke-width=".5em"></polyline>
+</svg>
+</button>
+<div aria-label="Select a speaking comparison sample" class="carousel-pagination" data-carousel-pagination=""></div>
+<p aria-live="polite" class="is-sr-only" data-carousel-status="">Sample 1 of 10</p>
+<script data-carousel-sources="" type="application/json">
+            [
+              "./static/videos/comparisons/speaking-09.mp4",
+              "./static/videos/comparisons/speaking-01.mp4",
+              "./static/videos/comparisons/speaking-02.mp4",
+              "./static/videos/comparisons/speaking-04.mp4",
+              "./static/videos/comparisons/speaking-05.mp4",
+              "./static/videos/comparisons/speaking-06.mp4",
+              "./static/videos/comparisons/speaking-07.mp4",
+              "./static/videos/comparisons/speaking-08.mp4",
+              "./static/videos/comparisons/speaking-10.mp4",
+              "./static/videos/comparisons/speaking-11.mp4"
+            ]
+          </script>
+</div>
+</div>
+</section>
+<section class="paper-section comparison-section section-soft" id="listening-comparison">
+<div class="project-container">
+<div class="section-heading">
+<h2 class="section-title-accent">Listening Comparison</h2>
+<p class="comparison-lead">
+            Each sample shows the same listening moment across all five panels for direct comparison. <em>(Click the video to enable audio.)</em>
+</p>
+</div>
+<div aria-label="Listening comparison categories" class="comparison-legend">
+<span class="legend-chip"><span class="legend-swatch is-gt"></span>GT — Ground Truth</span>
+<span class="legend-chip"><span class="legend-swatch is-baseline"></span>Baselines</span>
+<span class="legend-chip"><span class="legend-swatch is-ours"></span>GDPO-Listener (Ours)</span>
+</div>
+<div aria-label="Listening comparison videos" aria-roledescription="carousel" class="comparison-carousel" data-carousel-name="Listening comparison" data-video-carousel="" role="region" tabindex="0">
+<div class="comparison-item">
+<div class="model-strip">
+<div aria-label="Video panel order" class="model-strip-labels">
+<span class="is-gt">Partner GT</span>
+<span class="is-gt">Actor GT</span>
+<span>DualTalk</span>
+<span>UniLS</span>
+<span class="is-ours">GDPO-Listener (Ours)</span>
+</div>
+<div class="comparison-stage">
+<video aria-label="Listening comparison video 1 of 10" autoplay="" class="comparison-video" controls="" data-carousel-video="" loop="" muted="" playsinline="" preload="metadata">
+<source src="./static/videos/comparisons/listening-01.mp4" type="video/mp4"/>
+                  Your browser does not support the video tag.
+                </video>
+</div>
+</div>
+</div>
+<button aria-label="Previous listening comparison sample" class="carousel-arrow is-previous" data-carousel-previous="" type="button">
+<svg aria-hidden="true" focusable="false" viewbox="0 0 50 80">
+<polyline fill="currentColor" points="45.63,75.8 0.375,38.087 45.63,0.375" stroke-linecap="round" stroke-linejoin="round" stroke-width=".5em"></polyline>
+</svg>
+</button>
+<button aria-label="Next listening comparison sample" class="carousel-arrow is-next" data-carousel-next="" type="button">
+<svg aria-hidden="true" focusable="false" viewbox="0 0 50 80">
+<polyline fill="currentColor" points="0.375,0.375 45.63,38.087 0.375,75.8" stroke-linecap="round" stroke-linejoin="round" stroke-width=".5em"></polyline>
+</svg>
+</button>
+<div aria-label="Select a listening comparison sample" class="carousel-pagination" data-carousel-pagination=""></div>
+<p aria-live="polite" class="is-sr-only" data-carousel-status="">Sample 1 of 10</p>
+<script data-carousel-sources="" type="application/json">
+            [
+              "./static/videos/comparisons/listening-01.mp4",
+              "./static/videos/comparisons/listening-02.mp4",
+              "./static/videos/comparisons/listening-03.mp4",
+              "./static/videos/comparisons/listening-04.mp4",
+              "./static/videos/comparisons/listening-05.mp4",
+              "./static/videos/comparisons/listening-06.mp4",
+              "./static/videos/comparisons/listening-07.mp4",
+              "./static/videos/comparisons/listening-08.mp4",
+              "./static/videos/comparisons/listening-09.mp4",
+              "./static/videos/comparisons/listening-10.mp4"
+            ]
+          </script>
+</div>
+</div>
+</section>
+<section class="paper-section text-control-section" id="text-control">
+<div class="project-container">
+<div class="section-heading">
+<h2 class="section-title-accent">Text Control</h2>
+<p class="comparison-lead">
+            Natural-language prompts guide GDPO-Listener toward distinct emotional responses while preserving the underlying conversational context.
+          </p>
+</div>
+<div aria-label="Text-controlled emotion videos" aria-roledescription="carousel" class="comparison-carousel text-control-carousel" data-carousel-name="Text control" data-video-carousel="" role="region" tabindex="0">
+<div class="comparison-item">
+<div class="model-strip">
+<div aria-label="Text control categories" class="comparison-legend text-control-legend">
+<span class="legend-chip"><span class="legend-swatch is-gt"></span>GT — Ground Truth</span>
+<span class="legend-chip"><span class="legend-swatch is-ours"></span>GDPO-Listener (Ours)</span>
+</div>
+<div aria-label="Video layout: top row, Partner ground truth, GDPO-Listener calm, GDPO-Listener happy; bottom row, Actor ground truth, GDPO-Listener sad, GDPO-Listener surprised" class="text-control-label-grid">
+<span class="is-gt">Partner</span>
+<q class="is-prompt"><strong>Calm</strong> and contemplative, with a steady gaze directed downward.</q>
+<q class="is-prompt"><strong>Happy</strong> and warm, with eyes crinkling at the corners and a genuine smile.</q>
+<span class="is-gt">Actor</span>
+<q class="is-prompt"><strong>Sad</strong> and vulnerable, with downcast eyes and a bowed head.</q>
+<q class="is-prompt"><strong>Surprised</strong> and startled, with wide eyes and a fixed, open-mouthed stare.</q>
+</div>
+<div class="text-control-stage">
+<video aria-label="Text control video 1 of 2" autoplay="" class="text-control-video" controls="" data-carousel-video="" loop="" muted="" playsinline="" preload="metadata">
+<source src="./static/videos/text-control/text-control-02.mp4" type="video/mp4"/>
+                  Your browser does not support the video tag.
+                </video>
+<button aria-label="Previous text control sample" class="carousel-arrow is-previous" data-carousel-previous="" type="button">
+<svg aria-hidden="true" focusable="false" viewbox="0 0 50 80">
+<polyline fill="currentColor" points="45.63,75.8 0.375,38.087 45.63,0.375" stroke-linecap="round" stroke-linejoin="round" stroke-width=".5em"></polyline>
+</svg>
+</button>
+<button aria-label="Next text control sample" class="carousel-arrow is-next" data-carousel-next="" type="button">
+<svg aria-hidden="true" focusable="false" viewbox="0 0 50 80">
+<polyline fill="currentColor" points="0.375,0.375 45.63,38.087 0.375,75.8" stroke-linecap="round" stroke-linejoin="round" stroke-width=".5em"></polyline>
+</svg>
+</button>
+</div>
+</div>
+</div>
+<div aria-label="Select a text control sample" class="carousel-pagination" data-carousel-pagination=""></div>
+<p aria-live="polite" class="is-sr-only" data-carousel-status="">Sample 1 of 2</p>
+<script data-carousel-sources="" type="application/json">
+            [
+              "./static/videos/text-control/text-control-02.mp4",
+              "./static/videos/text-control/text-control-01.mp4"
+            ]
+          </script>
+</div>
+</div>
+</section>
+<section class="paper-section comparison-section section-soft" id="expressiveness-control">
+<div class="project-container">
+<div class="section-heading">
+<h2 class="section-title-accent">Expressiveness Control</h2>
+<p class="comparison-lead">
+            The same conversational input is rendered at low and high expressiveness to show direct control over motion intensity.
+          </p>
+</div>
+<div aria-label="Expressiveness control categories" class="comparison-legend">
+<span class="legend-chip"><span class="legend-swatch is-gt"></span>GT — Ground Truth</span>
+<span class="legend-chip"><span class="legend-swatch is-ours"></span>GDPO-Listener (Ours)</span>
+</div>
+<div aria-label="Expressiveness control videos" aria-roledescription="carousel" class="comparison-carousel expressiveness-carousel" data-carousel-name="Expressiveness control" data-video-carousel="" role="region" tabindex="0">
+<div class="comparison-item">
+<div class="model-strip">
+<div aria-label="Video panel order" class="model-strip-labels expressiveness-labels">
+<span class="is-gt">Partner</span>
+<span class="is-gt">Actor</span>
+<span class="is-control"><strong>Low</strong> Expressiveness</span>
+<span class="is-control"><strong>High</strong> Expressiveness</span>
+</div>
+<div class="comparison-stage">
+<video aria-label="Expressiveness control video 1 of 2" autoplay="" class="expressiveness-video" controls="" data-carousel-video="" loop="" muted="" playsinline="" preload="metadata">
+<source src="./static/videos/expressiveness-control/expressiveness-control-02.mp4" type="video/mp4"/>
+                  Your browser does not support the video tag.
+                </video>
+</div>
+</div>
+</div>
+<button aria-label="Previous expressiveness control sample" class="carousel-arrow is-previous" data-carousel-previous="" type="button">
+<svg aria-hidden="true" focusable="false" viewbox="0 0 50 80">
+<polyline fill="currentColor" points="45.63,75.8 0.375,38.087 45.63,0.375" stroke-linecap="round" stroke-linejoin="round" stroke-width=".5em"></polyline>
+</svg>
+</button>
+<button aria-label="Next expressiveness control sample" class="carousel-arrow is-next" data-carousel-next="" type="button">
+<svg aria-hidden="true" focusable="false" viewbox="0 0 50 80">
+<polyline fill="currentColor" points="0.375,0.375 45.63,38.087 0.375,75.8" stroke-linecap="round" stroke-linejoin="round" stroke-width=".5em"></polyline>
+</svg>
+</button>
+<div aria-label="Select an expressiveness control sample" class="carousel-pagination" data-carousel-pagination=""></div>
+<p aria-live="polite" class="is-sr-only" data-carousel-status="">Sample 1 of 2</p>
+<script data-carousel-sources="" type="application/json">
+            [
+              "./static/videos/expressiveness-control/expressiveness-control-02.mp4",
+              "./static/videos/expressiveness-control/expressiveness-control-01.mp4"
+            ]
+          </script>
+</div>
+</div>
+</section>
+<section class="paper-section comparison-section" id="long-sequence">
+<div class="project-container">
+<div class="section-heading">
+<h2 class="section-title-accent">Long Sequence Inference</h2>
+<p class="comparison-lead">
+            GDPO-Listener sustains expressive, context-aware motion throughout a two-minute rollout, demonstrating stable long-horizon generation.
+          </p>
+</div>
+<div aria-label="Long sequence comparison categories" class="comparison-legend">
+<span class="legend-chip"><span class="legend-swatch is-gt"></span>GT — Ground Truth</span>
+<span class="legend-chip"><span class="legend-swatch is-baseline"></span>Baselines</span>
+<span class="legend-chip"><span class="legend-swatch is-ours"></span>GDPO-Listener (Ours)</span>
+</div>
+<div class="long-sequence-content">
+<div aria-label="Video panel order" class="model-strip-labels long-sequence-labels">
+<span class="is-gt">Partner GT</span>
+<span class="is-gt">Actor GT</span>
+<span>DualTalk</span>
+<span>UniLS</span>
+<span class="is-ours">GDPO-Listener (Ours)</span>
+</div>
+<div class="comparison-stage">
+<video aria-label="Long sequence comparison video" autoplay="" class="long-sequence-video" controls="" loop="" muted="" playsinline="" preload="metadata">
+<source src="./static/videos/long-sequence/long-sequence-1x5.mp4" type="video/mp4"/>
+              Your browser does not support the video tag.
+            </video>
+</div>
+</div>
+</div>
+</section>
+<section class="paper-section comparison-section section-soft" id="gaussian-avatar-integration">
+<div class="project-container">
+<div class="section-heading">
+<h2 class="section-title-accent">Gaussian Avatar Integration</h2>
+<p class="comparison-lead">
+            GDPO-Listener motion is transferred consistently across diverse Gaussian-avatar identities for both speaking and listening interactions.
+          </p>
+</div>
+<div aria-label="Gaussian avatar comparison categories" class="comparison-legend">
+<span class="legend-chip"><span class="legend-swatch is-gt"></span>GT — Ground Truth</span>
+<span class="legend-chip"><span class="legend-swatch is-baseline"></span>Baselines</span>
+<span class="legend-chip"><span class="legend-swatch is-ours"></span>GDPO-Listener (Ours)</span>
+</div>
+<div class="gaussian-avatar-subsection">
+<h3 class="gaussian-avatar-subtitle">Speaking Comparison</h3>
+<div aria-label="Gaussian avatar speaking comparison videos" aria-roledescription="carousel" class="comparison-carousel gaussian-avatar-carousel" data-carousel-name="Gaussian avatar speaking comparison" data-video-carousel="" role="region" tabindex="0">
+<div class="comparison-item">
+<div class="model-strip">
+<div aria-label="Video panel order" class="model-strip-labels">
+<span class="is-gt">Partner GT</span>
+<span class="is-gt">Actor GT</span>
+<span>DualTalk</span>
+<span>UniLS</span>
+<span class="is-ours">GDPO-Listener (Ours)</span>
+</div>
+<div class="comparison-stage">
+<video aria-label="Gaussian avatar speaking comparison video 1 of 4" autoplay="" class="gaussian-avatar-video" controls="" data-carousel-video="" loop="" muted="" playsinline="" preload="metadata">
+<source src="./static/videos/gaussian-avatar/speaking/gaussian-speaking-01.mp4" type="video/mp4"/>
+                    Your browser does not support the video tag.
+                  </video>
+</div>
+</div>
+</div>
+<button aria-label="Previous Gaussian avatar speaking sample" class="carousel-arrow is-previous" data-carousel-previous="" type="button">
+<svg aria-hidden="true" focusable="false" viewbox="0 0 50 80">
+<polyline fill="currentColor" points="45.63,75.8 0.375,38.087 45.63,0.375" stroke-linecap="round" stroke-linejoin="round" stroke-width=".5em"></polyline>
+</svg>
+</button>
+<button aria-label="Next Gaussian avatar speaking sample" class="carousel-arrow is-next" data-carousel-next="" type="button">
+<svg aria-hidden="true" focusable="false" viewbox="0 0 50 80">
+<polyline fill="currentColor" points="0.375,0.375 45.63,38.087 0.375,75.8" stroke-linecap="round" stroke-linejoin="round" stroke-width=".5em"></polyline>
+</svg>
+</button>
+<div aria-label="Select a Gaussian avatar speaking sample" class="carousel-pagination" data-carousel-pagination=""></div>
+<p aria-live="polite" class="is-sr-only" data-carousel-status="">Sample 1 of 4</p>
+<script data-carousel-sources="" type="application/json">
+              [
+                "./static/videos/gaussian-avatar/speaking/gaussian-speaking-01.mp4",
+                "./static/videos/gaussian-avatar/speaking/gaussian-speaking-02.mp4",
+                "./static/videos/gaussian-avatar/speaking/gaussian-speaking-03.mp4",
+                "./static/videos/gaussian-avatar/speaking/gaussian-speaking-04.mp4"
+              ]
+            </script>
+</div>
+</div>
+<div class="gaussian-avatar-subsection">
+<h3 class="gaussian-avatar-subtitle">Listening Comparison</h3>
+<div aria-label="Gaussian avatar listening comparison videos" aria-roledescription="carousel" class="comparison-carousel gaussian-avatar-carousel" data-carousel-name="Gaussian avatar listening comparison" data-video-carousel="" role="region" tabindex="0">
+<div class="comparison-item">
+<div class="model-strip">
+<div aria-label="Video panel order" class="model-strip-labels">
+<span class="is-gt">Partner GT</span>
+<span class="is-gt">Actor GT</span>
+<span>DualTalk</span>
+<span>UniLS</span>
+<span class="is-ours">GDPO-Listener (Ours)</span>
+</div>
+<div class="comparison-stage">
+<video aria-label="Gaussian avatar listening comparison video 1 of 3" autoplay="" class="gaussian-avatar-video" controls="" data-carousel-video="" loop="" muted="" playsinline="" preload="metadata">
+<source src="./static/videos/gaussian-avatar/listening/gaussian-listening-01.mp4" type="video/mp4"/>
+                    Your browser does not support the video tag.
+                  </video>
+</div>
+</div>
+</div>
+<button aria-label="Previous Gaussian avatar listening sample" class="carousel-arrow is-previous" data-carousel-previous="" type="button">
+<svg aria-hidden="true" focusable="false" viewbox="0 0 50 80">
+<polyline fill="currentColor" points="45.63,75.8 0.375,38.087 45.63,0.375" stroke-linecap="round" stroke-linejoin="round" stroke-width=".5em"></polyline>
+</svg>
+</button>
+<button aria-label="Next Gaussian avatar listening sample" class="carousel-arrow is-next" data-carousel-next="" type="button">
+<svg aria-hidden="true" focusable="false" viewbox="0 0 50 80">
+<polyline fill="currentColor" points="0.375,0.375 45.63,38.087 0.375,75.8" stroke-linecap="round" stroke-linejoin="round" stroke-width=".5em"></polyline>
+</svg>
+</button>
+<div aria-label="Select a Gaussian avatar listening sample" class="carousel-pagination" data-carousel-pagination=""></div>
+<p aria-live="polite" class="is-sr-only" data-carousel-status="">Sample 1 of 3</p>
+<script data-carousel-sources="" type="application/json">
+              [
+                "./static/videos/gaussian-avatar/listening/gaussian-listening-01.mp4",
+                "./static/videos/gaussian-avatar/listening/gaussian-listening-02.mp4",
+                "./static/videos/gaussian-avatar/listening/gaussian-listening-03.mp4"
+              ]
+            </script>
+</div>
+</div>
+</div>
+</section>
+</main>
 
-<footer class="footer">
-  <div class="container">
-    <div class="columns is-centered">
-      <div class="column is-8">
-        <div class="content">
-          <p>
-          This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template">Academic Project Page Template</a> which was adopted from the <a href="https://nerfies.github.io/">Nerfies</a> project page. 
-          You are free to borrow the design of this website, we just ask that you link back to this page in the footer.
-          </p>
-          <p>
-            This website is licensed under a <a rel="license"
-                                                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
-            Commons Attribution-ShareAlike 4.0 International License</a>.
-          </p>
-        </div>
-      </div>
-    </div>
+<footer class="page-footer">
+  <div class="project-container footer-inner">
+    <p>
+      This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank" rel="noopener noreferrer">Academic Project Page Template</a> which was adopted from the <a href="https://nerfies.github.io/" target="_blank" rel="noopener noreferrer">Nerfies</a> project page.
+      You are free to borrow the design of this website, we just ask that you link back to this page in the footer.
+    </p>
+    <p>
+      This website is licensed under a <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="license noopener noreferrer">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+    </p>
   </div>
 </footer>
-
-
 </body>
 </html>
