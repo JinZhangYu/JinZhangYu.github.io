@@ -8,7 +8,9 @@
 
 # Basic Site Settings
 locale                   : "en-US"
-remote_theme             : "academicpages/academicpages.github.io"
+# Pin the theme used by the successful 2026-06-26 Pages build. Newer revisions
+# require Sass features unsupported by the built-in GitHub Pages compiler.
+remote_theme             : "academicpages/academicpages.github.io@482bc2b22db0500a12c2297d96ba5db44e1d0929"
 site_theme               : "default"
 title                    : "About"
 title_separator          : "-"
