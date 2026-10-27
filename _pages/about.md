@@ -8,7 +8,7 @@ redirect_from:
   - /about.html
 ---
 
-I am a second-year PhD student (2024 Fall-) in Computer Science at the [University of Southern California, Institute for Creative Technologies](https://ict.usc.edu/), supervised by Prof. [Mohammad Soleymani](https://people.ict.usc.edu/~soleymani/) and Prof. [Andrew (Wei-Wen) Feng](https://scholar.google.com/citations?user=JKWxGfsAAAAJ&hl=en).
+I am a third-year PhD student (2024 Fall-) in Computer Science at the [University of Southern California, Institute for Creative Technologies](https://ict.usc.edu/), supervised by Prof. [Mohammad Soleymani](https://people.ict.usc.edu/~soleymani/) and Prof. [Andrew (Wei-Wen) Feng](https://scholar.google.com/citations?user=JKWxGfsAAAAJ&hl=en).
 
 I received my Master’s degree from [University of Southern California, Institute for Creative Technologies](https://ict.usc.edu/). During my Master’s, I took Research Internships at [Motorola Solutions](https://www.motorolasolutions.com/en_us.html) and at [TuSimple](https://www.tusimple.com/). Prior to that, I got my Bachelor degree from [Shanghai Jiao Tong University](https://www.ji.sjtu.edu.cn/).
 
